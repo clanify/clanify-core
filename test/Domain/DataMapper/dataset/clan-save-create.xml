@@ -1,0 +1,27 @@
+<?xml version="1.0" ?>
+<dataset>
+    <table name="clan">
+        <column>id</column>
+        <column>name</column>
+        <column>tag</column>
+        <column>website</column>
+        <row>
+            <value>1</value>
+            <value>Nightmare Gaming</value>
+            <value>NM</value>
+            <value>http://nm-gaming.de</value>
+        </row>
+        <row>
+            <value>2</value>
+            <value>Clanify eSport</value>
+            <value>CeS</value>
+            <value>http://clanify.rocks</value>
+        </row>
+        <row>
+            <value>3</value>
+            <value>Killerbees eSport</value>
+            <value>KBE</value>
+            <value>http://example.com/</value>
+        </row>
+    </table>
+</dataset>

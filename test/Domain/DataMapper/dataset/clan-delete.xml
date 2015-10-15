@@ -1,0 +1,15 @@
+<?xml version="1.0" ?>
+<dataset>
+    <table name="clan">
+        <column>id</column>
+        <column>name</column>
+        <column>tag</column>
+        <column>website</column>
+        <row>
+            <value>1</value>
+            <value>Nightmare Gaming</value>
+            <value>NM</value>
+            <value>http://nm-gaming.de</value>
+        </row>
+    </table>
+</dataset>
