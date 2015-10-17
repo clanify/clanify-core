@@ -1,6 +1,6 @@
 <?php
 /**
- * Namespace for all tests data mapper of Clanify (for Test).
+ * Namespace to test the DataMappers of Clanify.
  * @since 0.0.1-dev
  */
 namespace Clanify\Test\Domain\DataMapper;
@@ -45,14 +45,39 @@ class ClanMapperTest extends \PHPUnit_Extensions_Database_TestCase
      */
     public function getDataset()
     {
-        return $this->createXMLDataSet(__DIR__.'/dataset/clan.xml');
+        return $this->createXMLDataSet(__DIR__.'/DataSets/Clan/clan.xml');
     }
 
     /**
-     * Method to test if the method save() works.
+     * Method to test if the method delete() works.
      * @since 0.0.1-dev
+     * @test
      */
-    public function testSaveCreateClan()
+    public function testDelete()
+    {
+        //The Clan which will be deleted on database.
+        $clan = new Clan();
+        $clan->id = 2;
+
+        //The ClanMapper to delete the Clan on database.
+        $clanMapper = new ClanMapper($this->pdo);
+        $clanMapper->delete($clan);
+
+        //Get the actual and expected table.
+        $queryTable = $this->getConnection()->createQueryTable('clan', 'SELECT * FROM clan');
+        $expectedDataSet = __DIR__.'/DataSets/Clan/clan-delete.xml';
+        $expectedTable = $this->createXMLDataSet($expectedDataSet)->getTable('clan');
+
+        //Check if the tables are equal.
+        $this->assertTablesEqual($expectedTable, $queryTable);
+    }
+
+    /**
+     * Method to test if the method create() works.
+     * @since 0.0.1-dev
+     * @test
+     */
+    public function testSaveCreate()
     {
         //The Clan which will be created on database.
         $clan = new Clan();
@@ -66,7 +91,8 @@ class ClanMapperTest extends \PHPUnit_Extensions_Database_TestCase
 
         //Get the actual and expected table.
         $queryTable = $this->getConnection()->createQueryTable('clan', 'SELECT * FROM clan');
-        $expectedTable = $this->createXMLDataSet(__DIR__.'/dataset/clan-save-create.xml')->getTable('clan');
+        $expectedDataSet = __DIR__.'/DataSets/Clan/clan-save-create.xml';
+        $expectedTable = $this->createXMLDataSet($expectedDataSet)->getTable('clan');
 
         //Check if the tables are equal.
         $this->assertTablesEqual($expectedTable, $queryTable);
@@ -75,45 +101,25 @@ class ClanMapperTest extends \PHPUnit_Extensions_Database_TestCase
     /**
      * Method to test if the method update() works.
      * @since 0.0.1-dev
+     * @test
      */
-    public function testSaveUpdateClan()
+    public function testSaveUpdate()
     {
-        //The Clan which will be created on database.
+        //The Clan which will be updated on database.
         $clan = new Clan();
         $clan->id = 2;
         $clan->name = 'Clanify eSport';
         $clan->tag = 'CeS';
         $clan->website = 'http://clanify.rocks/esport';
 
-        //The ClanMapper to create the Clan on database.
+        //The ClanMapper to update the Clan on database.
         $clanMapper = new ClanMapper($this->pdo);
         $clanMapper->save($clan);
 
         //Get the actual and expected table.
         $queryTable = $this->getConnection()->createQueryTable('clan', 'SELECT * FROM clan');
-        $expectedTable = $this->createXMLDataSet(__DIR__.'/dataset/clan-save-update.xml')->getTable('clan');
-
-        //Check if the tables are equal.
-        $this->assertTablesEqual($expectedTable, $queryTable);
-    }
-
-    /**
-     * Method to test if the methode delete() works.
-     * @since 0.0.1-dev
-     */
-    public function testDeleteClan()
-    {
-        //The Clan which will be deleted on database.
-        $clan = new Clan();
-        $clan->id = 2;
-
-        //The ClanMapper to delete the Clan on database.
-        $clanMapper = new ClanMapper($this->pdo);
-        $clanMapper->delete($clan);
-
-        //Get the actual and expected table.
-        $queryTable = $this->getConnection()->createQueryTable('clan', 'SELECT * FROM clan');
-        $expectedTable = $this->createXMLDataSet(__DIR__.'/dataset/clan-delete.xml')->getTable('clan');
+        $expectedDataSet = __DIR__.'/DataSets/Clan/clan-save-update.xml';
+        $expectedTable = $this->createXMLDataSet($expectedDataSet)->getTable('clan');
 
         //Check if the tables are equal.
         $this->assertTablesEqual($expectedTable, $queryTable);
