@@ -1,0 +1,21 @@
+<?xml version="1.0" ?>
+<dataset>
+    <table name="team">
+        <column>id</column>
+        <column>name</column>
+        <column>tag</column>
+        <column>website</column>
+        <row>
+            <value>1</value>
+            <value>Killerbees eSport</value>
+            <value>KBE</value>
+            <value>http://example.com</value>
+        </row>
+        <row>
+            <value>2</value>
+            <value>Example Team</value>
+            <value>ET</value>
+            <value>http://example.com/esport</value>
+        </row>
+    </table>
+</dataset>

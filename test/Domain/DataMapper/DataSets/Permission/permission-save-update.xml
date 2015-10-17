@@ -1,0 +1,15 @@
+<?xml version="1.0" ?>
+<dataset>
+    <table name="permission">
+        <column>id</column>
+        <column>name</column>
+        <row>
+            <value>1</value>
+            <value>user_create</value>
+        </row>
+        <row>
+            <value>2</value>
+            <value>user_export</value>
+        </row>
+    </table>
+</dataset>

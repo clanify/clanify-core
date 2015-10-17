@@ -1,0 +1,43 @@
+<?xml version="1.0" ?>
+<dataset>
+    <table name="user">
+        <column>id</column>
+        <column>birthday</column>
+        <column>email</column>
+        <column>firstname</column>
+        <column>gender</column>
+        <column>lastname</column>
+        <column>password</column>
+        <column>username</column>
+        <row>
+            <value>1</value>
+            <value>1969-06-27</value>
+            <value>AlexMHarlow@teleworm.us</value>
+            <value>Alex M.</value>
+            <value>M</value>
+            <value>Harlow</value>
+            <value>Shoghef3pi</value>
+            <value>Opery1969</value>
+        </row>
+        <row>
+            <value>2</value>
+            <value>1952-01-16</value>
+            <value>SueCJacobus@teleworm.us</value>
+            <value>Sue C.</value>
+            <value>F</value>
+            <value>Jacobus</value>
+            <value>oe7Thier</value>
+            <value>Womak1952</value>
+        </row>
+        <row>
+            <value>3</value>
+            <value>1974-08-19</value>
+            <value>CaseyVWade@dayrep.com</value>
+            <value>Casey V.</value>
+            <value>F</value>
+            <value>Wade</value>
+            <value>athee6aiNg</value>
+            <value>Proothe</value>
+        </row>
+    </table>
+</dataset>

@@ -1,0 +1,33 @@
+<?xml version="1.0" ?>
+<dataset>
+    <table name="user">
+        <column>id</column>
+        <column>birthday</column>
+        <column>email</column>
+        <column>firstname</column>
+        <column>gender</column>
+        <column>lastname</column>
+        <column>password</column>
+        <column>username</column>
+        <row>
+            <value>1</value>
+            <value>1969-06-27</value>
+            <value>AlexMHarlow@teleworm.us</value>
+            <value>Alex M.</value>
+            <value>M</value>
+            <value>Harlow</value>
+            <value>Shoghef3pi</value>
+            <value>Opery1969</value>
+        </row>
+        <row>
+            <value>2</value>
+            <value>1996-08-17</value>
+            <value>IdaQGarnes@rhyta.com</value>
+            <value>Ida Q.</value>
+            <value>F</value>
+            <value>Garnes</value>
+            <value>Wooch1gei</value>
+            <value>Stions</value>
+        </row>
+    </table>
+</dataset>
