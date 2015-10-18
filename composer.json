@@ -1,0 +1,36 @@
+{
+  "name": "clanify/clanify",
+  "description": "A system to organize Clans, eSport-Teams and Gaming-Communities.",
+  "minimum-stability": "stable",
+  "type": "project",
+  "keywords": [
+    "gaming",
+    "esport",
+    "clan"
+  ],
+  "license": "GPL-3.0",
+
+  "authors": [
+    {
+      "email": "contact@sebastianbrosch.de",
+      "homepage": "http://sebastianbrosch.de",
+      "name": "Sebastian Brosch",
+      "role": "Developer"
+    }
+  ],
+
+  "support": {
+    "issues": "https://github.com/Clanify/Clanify/issues",
+    "source": "https://github.com/Clanify/Clanify/archive/master.zip"
+  },
+
+  "require-dev": {
+    "phpunit/phpunit": "5.0.*",
+    "phpunit/dbunit": "2.*",
+    "halleck45/phpmetrics": "1.3.*",
+    "squizlabs/php_codesniffer": "2.*",
+    "phploc/phploc": "2.1.4",
+    "phpmd/phpmd": "2.3.*",
+    "apigen/apigen": "4.*"
+  }
+}
