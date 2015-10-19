@@ -22,4 +22,42 @@ abstract class Entity
      * @var int
      */
     public $id = 0;
+
+    /**
+     * Method to load an array to the object.
+     * @param array $array The array which will be loaded to the object.
+     * @param string $prefix Optional. The prefix of the keys of the array.
+     * @since 0.0.1-dev
+     */
+    public function loadFromArray($array, $prefix = '')
+    {
+        //run through all class properties.
+        foreach (array_keys(get_class_vars(get_class($this))) as $property) {
+            $arrayProperty = $prefix.$property;
+
+            //check if the property name exists on the assoc array.
+            if (isset($array[$arrayProperty]) === true) {
+                $this->$property = $array[$arrayProperty];
+            }
+        }
+    }
+
+    /**
+     * Method to load an object to the object.
+     * @param object $object The object which will be loaded to the object.
+     * @param string $prefix Optional. The prefix of the properties of the object.
+     * @since 0.0.1-dev
+     */
+    public function loadFromObject($object, $prefix = '')
+    {
+        //run through all class properties.
+        foreach (array_keys(get_class_vars(get_class($this))) as $property) {
+            $objectProperty = $prefix.$property;
+
+            //check if the property name exists on the object.
+            if (isset($object->$objectProperty) === true) {
+                $this->$property = $object->$objectProperty;
+            }
+        }
+    }
 }
