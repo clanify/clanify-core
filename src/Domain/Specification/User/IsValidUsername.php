@@ -8,7 +8,7 @@ namespace Clanify\Domain\Specification\User;
 use Clanify\Domain\Entity\User;
 
 /**
- * Class UsernameIsValid
+ * Class IsValidUsername
  *
  * @author Sebastian Brosch <contact@sebastianbrosch.de>
  * @copyright 2015 Clanify
@@ -16,7 +16,7 @@ use Clanify\Domain\Entity\User;
  * @package Clanify\Domain\Specification\User
  * @version 0.0.1-dev
  */
-class UsernameIsValid implements IUserSpecification
+class IsValidUsername implements IUserSpecification
 {
     /**
      * Method to check if the User satisfies the Specification.

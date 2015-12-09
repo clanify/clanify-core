@@ -8,7 +8,7 @@ namespace Clanify\Domain\Specification\User;
 use Clanify\Domain\Entity\User;
 
 /**
- * Class EmailIsValid
+ * Class IsValidPassword
  *
  * @author Sebastian Brosch <contact@sebastianbrosch.de>
  * @copyright 2015 Clanify
@@ -16,7 +16,7 @@ use Clanify\Domain\Entity\User;
  * @package Clanify\Domain\Specification\User
  * @version 0.0.1-dev
  */
-class EmailIsValid implements IUserSpecification
+class IsValidPassword implements IUserSpecification
 {
     /**
      * Method to check if the User satisfies the Specification.
@@ -26,6 +26,6 @@ class EmailIsValid implements IUserSpecification
      */
     public function isSatisfiedBy(User $user)
     {
-        return (filter_var($user->email, FILTER_VALIDATE_EMAIL) === false);
+        return (preg_match('/^[a-zA-Z0-9$/', $user->password) !== 1);
     }
 }
