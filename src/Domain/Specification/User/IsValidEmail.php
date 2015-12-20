@@ -5,6 +5,8 @@
  */
 namespace Clanify\Domain\Specification\User;
 
+use Clanify\Domain\Entity\IEntity;
+use Clanify\Domain\Specification\ISpecification;
 use Clanify\Domain\Entity\User;
 
 /**
@@ -16,16 +18,21 @@ use Clanify\Domain\Entity\User;
  * @package Clanify\Domain\Specification\User
  * @version 0.0.1-dev
  */
-class IsValidEmail implements IUserSpecification
+class IsValidEmail implements ISpecification
 {
     /**
      * Method to check if the User satisfies the Specification.
-     * @param User $user The User which will be checked.
-     * @return boolean The state if the User satisfies the Specification.
+     * @param IEntity $user The User which will be checked.
+     * @return bool The state if the User satisfies the Specification.
      * @since 0.0.1-dev
      */
-    public function isSatisfiedBy(User $user)
+    public function isSatisfiedBy(IEntity $user)
     {
-        return (filter_var($user->email, FILTER_VALIDATE_EMAIL) === false);
+        //check if the Entity is a User.
+        if ($user instanceof User) {
+            return (filter_var($user->email, FILTER_VALIDATE_EMAIL) === false);
+        } else {
+            return false;
+        }
     }
 }
