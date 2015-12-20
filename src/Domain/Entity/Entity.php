@@ -14,7 +14,7 @@ namespace Clanify\Domain\Entity;
  * @package Clanify\Domain\Entity
  * @version 0.0.1-dev
  */
-abstract class Entity
+abstract class Entity implements IEntity
 {
     /**
      * The id of the Entity.
@@ -24,8 +24,8 @@ abstract class Entity
     public $id = 0;
 
     /**
-     * Method to load an array to the object.
-     * @param array $array The array which will be loaded to the object.
+     * Method to load an array to the Entity.
+     * @param array $array The array which will be loaded to the Entity.
      * @param string $prefix Optional. The prefix of the keys of the array.
      * @since 0.0.1-dev
      */
@@ -43,8 +43,8 @@ abstract class Entity
     }
 
     /**
-     * Method to load an object to the object.
-     * @param object $object The object which will be loaded to the object.
+     * Method to load an object to the Entity.
+     * @param object $object The object which will be loaded to the Entity.
      * @param string $prefix Optional. The prefix of the properties of the object.
      * @since 0.0.1-dev
      */
