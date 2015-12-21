@@ -47,7 +47,7 @@ class Clanify
         $url = $this->parseUrl();
 
         //check if a controller exists.
-        if (isset($url[0]) && file_exists('../src/Controller/'.$this->normalize($url[0]).'Controller.php')) {
+        if (isset($url[0]) && file_exists(APP.'Controller/'.$this->normalize($url[0]).'Controller.php')) {
             $this->controller = $this->normalize($url[0]);
             unset($url[0]);
         }
@@ -92,10 +92,11 @@ class Clanify
      * Method to parse the url to get the parts (controller, method and parameters).
      * @return array
      * @since 0.0.1-dev
-     * @SuppressWarnings(PHPMD.Superglobals)
      */
     private function parseUrl()
     {
-        return (isset($_GET['url'])) ? explode('/', filter_var(rtrim($_GET['url'], '/'), FILTER_SANITIZE_URL)) : [];
+        //return the array with the different parts and return.
+        $url = filter_input(INPUT_GET, 'url', FILTER_SANITIZE_URL);
+        return ($url !== null && $url !== false) ? explode('/', rtrim($url, '/')) : [];
     }
 }
