@@ -67,24 +67,18 @@ class User extends Entity
 
     /**
      * Method to get the age of the User.
-     * @return int
+     * @return int The age of the User (>= 0) or -1 on failure.
      * @since 0.0.1-dev
      */
     public function getAge()
     {
-        //convert the date string to a date object.
-        $date = \DateTime::createFromFormat('Y-m-d', $this->birthday);
+        //create both dates (birthday and today).
+        $birthday = date_create($this->birthday);
+        $today = date_create(date('Y-m-d'));
 
-        //check if the date is valid.
-        if ($date && $date->format('Y-m-d') == $this->birthday) {
-            $birthDate = explode('-', $this->birthday);
-
-            //check if the actual year can be used.
-            if (date('md', date('U', mktime(0, 0, 0, $birthDate[2], $birthDate[1], $birthDate[0]))) > date('md')) {
-                return ((date('Y') - $birthDate[0]) - 1);
-            } else {
-                return (date('Y') - $birthDate[0]);
-            }
+        //check if the dates are valid.
+        if (($birthday !== false && $today !== false) && ($birthday < $today)) {
+            return date_diff($birthday, $today)->y;
         } else {
             return -1;
         }
