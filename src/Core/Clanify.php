@@ -47,7 +47,7 @@ class Clanify
         $url = $this->parseUrl();
 
         //check if a controller exists.
-        if (isset($url[0]) && file_exists(APP.'Controller/'.$this->normalize($url[0]).'Controller.php')) {
+        if (isset($url[0]) && file_exists(getcwd().'/src/Controller/'.$this->normalize($url[0]).'Controller.php')) {
             $this->controller = $this->normalize($url[0]);
             unset($url[0]);
         }
@@ -77,12 +77,7 @@ class Clanify
     private function normalize($value, $isMethod = false)
     {
         //reset the normalized value.
-        $normalized = '';
-
-        //run through all parts of the value.
-        foreach (explode('_', strtolower($value)) as $item) {
-            $normalized .= ucfirst($item);
-        }
+        $normalized = implode(array_map('ucfirst', explode('_', strtolower($value))));
 
         //return the normalized value.
         return ($isMethod) ? lcfirst($normalized) : $normalized;
