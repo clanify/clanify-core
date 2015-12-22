@@ -70,22 +70,20 @@ class Clanify
     /**
      * Method to normalize a value to use with controller and method.
      * @param string $value The value which will be normalized.
-     * @param bool|false $isMethod The state if the value is a method.
+     * @param bool $isMethod The state if the value is a method.
      * @return string The normalized value.
      * @since 0.0.1-dev
      */
     private function normalize($value, $isMethod = false)
     {
-        //reset the normalized value.
+        //reset the normalized value return the normalized value.
         $normalized = implode(array_map('ucfirst', explode('_', strtolower($value))));
-
-        //return the normalized value.
         return ($isMethod) ? lcfirst($normalized) : $normalized;
     }
 
     /**
      * Method to parse the url to get the parts (controller, method and parameters).
-     * @return array
+     * @return array The array with all parts of the url (controller, method and parameters).
      * @since 0.0.1-dev
      */
     private function parseUrl()
