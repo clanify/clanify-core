@@ -30,7 +30,7 @@ class IsValidUsername implements ISpecification
     {
         //check if the Entity is a User.
         if ($user instanceof User) {
-            return (preg_match('/^[a-zA-Z0-9]{5,100}$/', $user->username) !== 1);
+            return (preg_match('/^[a-zA-Z0-9]{5,100}$/', $user->username) === 1);
         } else {
             return false;
         }

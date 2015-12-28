@@ -30,7 +30,7 @@ class IsValidEmail implements ISpecification
     {
         //check if the Entity is a User.
         if ($user instanceof User) {
-            return (filter_var($user->email, FILTER_VALIDATE_EMAIL) === false);
+            return (filter_var($user->email, FILTER_VALIDATE_EMAIL));
         } else {
             return false;
         }

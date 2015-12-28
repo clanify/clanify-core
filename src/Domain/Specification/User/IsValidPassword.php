@@ -30,7 +30,7 @@ class IsValidPassword implements ISpecification
     {
         //check if the Entity is a User.
         if ($user instanceof User) {
-            return (preg_match('/^[a-zA-Z0-9!?$%&@]{8,}$/', $user->password) !== 1);
+            return (preg_match('/^[a-zA-Z0-9!?$%&@]{8,}$/', $user->password) === 1);
         } else {
             return false;
         }
