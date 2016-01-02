@@ -1,6 +1,6 @@
 <?php
 /**
- * Namespace for all entities of Clanify.
+ * Namespace for all Entities of Clanify.
  * @since 0.0.1-dev
  */
 namespace Clanify\Domain\Entity;

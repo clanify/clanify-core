@@ -1,6 +1,6 @@
 <?php
 /**
- * Namespace for all entities of Clanify.
+ * Namespace for all Entities of Clanify.
  * @since 0.0.1-dev
  */
 namespace Clanify\Domain\Entity;
@@ -57,6 +57,13 @@ class User extends Entity
      * @var string
      */
     public $password = '';
+
+    /**
+     * The salt of the password (for hashing).
+     * @since 0.0.1-dev
+     * @var string
+     */
+    public $salt = '';
 
     /**
      * The username of the User.
