@@ -8,6 +8,7 @@
         <column>gender</column>
         <column>lastname</column>
         <column>password</column>
+        <column>salt</column>
         <column>username</column>
         <row>
             <value>1</value>
@@ -17,6 +18,7 @@
             <value>M</value>
             <value>Harlow</value>
             <value>Shoghef3pi</value>
+            <value>00807432eae173f652f2064bdca1b61b290b52d40e429a7d295d76a71084aa96c0233b82f1feac45529e0726559645acaed6f3ae58a286b9f075916ebf66cacc</value>
             <value>Opery1969</value>
         </row>
         <row>
@@ -27,6 +29,7 @@
             <value>F</value>
             <value>Garnes</value>
             <value>Wooch1gei</value>
+            <value>d02991c2a8e062a6d419883b6e3a1e58c4090029d1078b58c89c0f096177c379f0552bce705aaf47d7263a70cbf3e527c3662965d62d7cdf34df0053702c50ad</value>
             <value>Stions</value>
         </row>
     </table>

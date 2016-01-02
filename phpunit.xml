@@ -29,10 +29,10 @@
         </testsuite>
     </testsuites>
     <php>
-        <var name="DB_DSN" value="mysql:dbname=clanify_test;host=localhost" />
-        <var name="DB_USER" value="root" />
-        <var name="DB_PASSWD" value="12345" />
-        <var name="DB_DBNAME" value="clanify_test" />
+        <env name="DB_DSN" value="mysql:dbname=clanify_test;host=localhost" />
+        <env name="DB_USER" value="root" />
+        <env name="DB_PASSWD" value="12345" />
+        <env name="DB_DBNAME" value="clanify_test" />
     </php>
     <filter>
         <whitelist processUncoveredFilesFromWhitelist="true">

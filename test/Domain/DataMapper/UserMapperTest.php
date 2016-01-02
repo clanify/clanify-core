@@ -1,6 +1,6 @@
 <?php
 /**
- * Namespace to test the DataMappers of Clanify.
+ * Namespace for testing the DataMapper of Clanify.
  * @since 0.0.1-dev
  */
 namespace Clanify\Test\Domain\DataMapper;
@@ -30,12 +30,18 @@ class UserMapperTest extends \PHPUnit_Extensions_Database_TestCase
      * Method to get the database connection for test.
      * @return \PHPUnit_Extensions_Database_DB_DefaultDatabaseConnection
      * @since 0.0.1-dev
-     * @SuppressWarnings(PHPMD.Superglobals)
      */
     public function getConnection()
     {
-        $this->pdo = new \PDO($GLOBALS['DB_DSN'], $GLOBALS['DB_USER'], $GLOBALS['DB_PASSWD']);
-        return $this->createDefaultDBConnection($this->pdo, $GLOBALS['DB_DBNAME']);
+        //get the database information.
+        $dsn = getenv('DB_DSN');
+        $user = getenv('DB_USER');
+        $password = getenv('DB_PASSWD');
+        $database = getenv('DB_DBNAME');
+
+        //create the database connection.
+        $this->pdo = new \PDO($dsn, $user, $password);
+        return $this->createDefaultDBConnection($this->pdo, $database);
     }
 
     /**
@@ -87,6 +93,7 @@ class UserMapperTest extends \PHPUnit_Extensions_Database_TestCase
         $user->gender = 'F';
         $user->lastname = 'Wade';
         $user->password = 'athee6aiNg';
+        $user->salt = 'd02991c2a8e062a6d419883b6e3a1e58c4090029d1078b58c89c0f096177c379f0552bce705aaf47d7263a70cbf3e527c3662965d62d7cdf34df0053702c50ad';
         $user->username = 'Proothe';
 
         //The UserMapper to create the User on database.
@@ -118,6 +125,7 @@ class UserMapperTest extends \PHPUnit_Extensions_Database_TestCase
         $user->gender = 'F';
         $user->lastname = 'Garnes';
         $user->password = 'Wooch1gei';
+        $user->salt = 'd02991c2a8e062a6d419883b6e3a1e58c4090029d1078b58c89c0f096177c379f0552bce705aaf47d7263a70cbf3e527c3662965d62d7cdf34df0053702c50ad';
         $user->username = 'Stions';
 
         //The UserMapper to update the User on database.

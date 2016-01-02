@@ -1,6 +1,6 @@
 <?php
 /**
- * Namespace to test the DataMappers of Clanify.
+ * Namespace for testing the DataMapper of Clanify.
  * @since 0.0.1-dev
  */
 namespace Clanify\Test\Domain\DataMapper;
@@ -30,12 +30,18 @@ class TeamMapperTest extends \PHPUnit_Extensions_Database_TestCase
      * Method to get the database connection for test.
      * @return \PHPUnit_Extensions_Database_DB_DefaultDatabaseConnection
      * @since 0.0.1-dev
-     * @SuppressWarnings(PHPMD.Superglobals)
      */
     public function getConnection()
     {
-        $this->pdo = new \PDO($GLOBALS['DB_DSN'], $GLOBALS['DB_USER'], $GLOBALS['DB_PASSWD']);
-        return $this->createDefaultDBConnection($this->pdo, $GLOBALS['DB_DBNAME']);
+        //get the database information.
+        $dsn = getenv('DB_DSN');
+        $user = getenv('DB_USER');
+        $password = getenv('DB_PASSWD');
+        $database = getenv('DB_DBNAME');
+
+        //create the database connection.
+        $this->pdo = new \PDO($dsn, $user, $password);
+        return $this->createDefaultDBConnection($this->pdo, $database);
     }
 
     /**
