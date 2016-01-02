@@ -1,3 +1,17 @@
+# remove tables
+DROP TABLE IF EXISTS `clan_role`;
+DROP TABLE IF EXISTS `clan_team`;
+DROP TABLE IF EXISTS `clan_user`;
+DROP TABLE IF EXISTS `role_permission`;
+DROP TABLE IF EXISTS `team_role`;
+DROP TABLE IF EXISTS `team_user`;
+DROP TABLE IF EXISTS `user_role`;
+DROP TABLE IF EXISTS `clan`;
+DROP TABLE IF EXISTS `permission`;
+DROP TABLE IF EXISTS `role`;
+DROP TABLE IF EXISTS `team`;
+DROP TABLE IF EXISTS `user`;
+
 # entities
 CREATE TABLE clan (
   id INT UNSIGNED NOT NULL AUTO_INCREMENT,
