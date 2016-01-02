@@ -7,6 +7,7 @@ namespace Clanify\Test\Domain\DataMapper;
 
 use Clanify\Domain\Entity\User;
 use Clanify\Domain\DataMapper\UserMapper;
+use Clanify\Test\MySQL55Truncate;
 
 /**
  * Class UserMapperTest
@@ -61,19 +62,10 @@ class UserMapperTest extends \PHPUnit_Extensions_Database_TestCase
      */
     protected function getSetUpOperation()
     {
-        return \PHPUnit_Extensions_Database_Operation_Factory::CLEAN_INSERT(true);
-    }
-
-    /**
-     * Performs operation returned by getSetUpOperation().
-     * @since 0.0.1-dev
-     */
-    public function setUp()
-    {
-        $connection = $this->getConnection();
-        $connection->getConnection()->query("SET FOREIGN_KEY_CHECKS=0");
-        parent::setUp();
-        $connection->getConnection()->query("SET FOREIGN_KEY_CHECKS=1");
+        return new \PHPUnit_Extensions_Database_Operation_Composite(array(
+            new MySQL55Truncate(false),
+            \PHPUnit_Extensions_Database_Operation_Factory::INSERT()
+        ));
     }
 
     /**
