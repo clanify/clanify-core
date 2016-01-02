@@ -1,6 +1,6 @@
 <?php
 /**
- * Namespace for all data mapper of Clanify.
+ * Namespace for all DataMapper of Clanify.
  * @since 0.0.1-dev
  */
 namespace Clanify\Domain\DataMapper;

@@ -1,6 +1,6 @@
 <?php
 /**
- * Namespace for all data mapper of Clanify.
+ * Namespace for all DataMapper of Clanify.
  * @since 0.0.1-dev
  */
 namespace Clanify\Domain\DataMapper;
@@ -34,8 +34,8 @@ class UserMapper extends DataMapper
     private function create(User $user)
     {
         //create and set the sql query.
-        $sql = 'INSERT INTO '.$this->table.' (birthday, email, firstname, gender, lastname, password, username) ';
-        $sql .= 'VALUES (:birthday, :email, :firstname, :gender, :lastname, :password, :username);';
+        $sql = 'INSERT INTO '.$this->table.' (birthday, email, firstname, gender, lastname, password, salt, username) ';
+        $sql .= 'VALUES (:birthday, :email, :firstname, :gender, :lastname, :password, :salt, :username);';
         $sth = $this->pdo->prepare($sql);
 
         //bind the values to the query.
@@ -45,6 +45,7 @@ class UserMapper extends DataMapper
         $sth->bindParam(':gender', $user->gender, \PDO::PARAM_STR);
         $sth->bindParam(':lastname', $user->lastname, \PDO::PARAM_STR);
         $sth->bindParam(':password', $user->password, \PDO::PARAM_STR);
+        $sth->bindParam(':salt', $user->salt, \PDO::PARAM_STR);
         $sth->bindParam(':username', $user->username, \PDO::PARAM_STR);
 
         //execute the query and return state.
@@ -71,6 +72,36 @@ class UserMapper extends DataMapper
     }
 
     /**
+     * Method to find a User using the username property.
+     * @param string $username The username of the User.
+     * @return array The array with all User Entities.
+     * @since 0.0.1-dev
+     */
+    public function findByUsername($username)
+    {
+        //reset the result array.
+        $users = [];
+
+        //create and set the sql query.
+        $sql = 'SELECT * FROM '.$this->table.' WHERE username = :username;';
+        $sth = $this->pdo->prepare($sql);
+
+        //bind the values to the query and execute the query.
+        $sth->bindParam(':username', $username, \PDO::PARAM_STR);
+        $sth->execute();
+
+        //run through all results and load the User Entities.
+        foreach ($sth->fetchAll() as $result) {
+            $user = new User();
+            $user->loadFromArray($result);
+            $users[] = $user;
+        }
+
+        //return the User Entities.
+        return $users;
+    }
+
+    /**
      * Method to save a User on database.
      * @param User $user The Entity of the User.
      * @return bool The state if the User was successfully saved.
@@ -91,7 +122,8 @@ class UserMapper extends DataMapper
     {
         //create and set the sql query.
         $sql = 'UPDATE '.$this->table.' SET birthday = :birthday, email = :email, firstname = :firstname, ';
-        $sql .= 'gender = :gender, lastname = :lastname, password = :password, username = :username WHERE id = :id';
+        $sql .= 'gender = :gender, lastname = :lastname, password = :password, salt = :salt, ';
+        $sql .= 'username = :username WHERE id = :id';
         $sth = $this->pdo->prepare($sql);
 
         //bind the values to the query.
@@ -101,6 +133,7 @@ class UserMapper extends DataMapper
         $sth->bindParam(':gender', $user->gender, \PDO::PARAM_STR);
         $sth->bindParam(':lastname', $user->lastname, \PDO::PARAM_STR);
         $sth->bindParam(':password', $user->password, \PDO::PARAM_STR);
+        $sth->bindParam(':salt', $user->salt, \PDO::PARAM_STR);
         $sth->bindParam(':username', $user->username, \PDO::PARAM_STR);
         $sth->bindParam(':id', $user->id, \PDO::PARAM_INT);
 
