@@ -7,19 +7,22 @@ php:
   - hhvm
   - nightly
 
+services:
+  - mysql
+
 env:
   - DB=mysql
 
 mysql:
   database: clanify_test
   username: root
-  password: 12345
   encoding: utf8
 
 before_script:
+  - composer install
   - mysql -e 'create database clanify_test'
 
-script: phpunit
+script: phpunit --configuration phpunit.xml --coverage-text
 
 notifications:
   email:

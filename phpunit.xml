@@ -29,9 +29,9 @@
         </testsuite>
     </testsuites>
     <php>
-        <env name="DB_DSN" value="mysql:dbname=clanify_test;host=localhost" />
+        <env name="DB_DSN" value="mysql:dbname=clanify_test;host=127.0.0.1" />
         <env name="DB_USER" value="root" />
-        <env name="DB_PASSWD" value="12345" />
+        <env name="DB_PASSWD" value="" />
         <env name="DB_DBNAME" value="clanify_test" />
     </php>
     <filter>
