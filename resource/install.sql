@@ -30,7 +30,8 @@ CREATE TABLE user (
   firstname VARCHAR(255) NOT NULL DEFAULT '',
   gender CHAR(1) NOT NULL DEFAULT '',
   lastname VARCHAR(255) NOT NULL DEFAULT '',
-  password VARCHAR(255) NOT NULL DEFAULT '',
+  password CHAR(128) NOT NULL DEFAULT '',
+  salt CHAR(128) NOT NULL DEFAULT '',
   username VARCHAR(100) NOT NULL DEFAULT '',
   PRIMARY KEY (id)
 );
