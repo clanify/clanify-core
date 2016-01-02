@@ -19,6 +19,7 @@ mysql:
 before_script:
   - composer install
   - mysql -e 'create database clanify_test'
+  - mysql clanify_test < resource/install.sql
 
 script: phpunit --configuration phpunit.xml --coverage-text
 
