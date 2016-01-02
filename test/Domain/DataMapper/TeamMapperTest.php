@@ -55,6 +55,17 @@ class TeamMapperTest extends \PHPUnit_Extensions_Database_TestCase
     }
 
     /**
+     * Performs operation returned by getSetUpOperation().
+     */
+    public function setUp()
+    {
+        $connection = $this->getConnection();
+        $connection->getConnection()->query("SET FOREIGN_KEY_CHECKS=0");
+        parent::setUp();
+        $connection->getConnection()->query("SET FOREIGN_KEY_CHECKS=1");
+    }
+
+    /**
      * Method to test if the method delete() works.
      * @since 0.0.1-dev
      * @test
