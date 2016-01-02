@@ -9,7 +9,7 @@ use \PHPUnit_Extensions_Database_DB_IDatabaseConnection as IDatabaseConnection;
 use \PHPUnit_Extensions_Database_DataSet_IDataSet as IDataSet;
 
 /**
- * Class PHPUnit_Extensions_Database_Operation_MySQL55Truncate
+ * Class MySQL55Truncate
  *
  * @author Sebastian Brosch <contact@sebastianbrosch.de>
  * @copyright 2015 Clanify
@@ -27,9 +27,9 @@ class MySQL55Truncate extends \PHPUnit_Extensions_Database_Operation_Truncate
      */
     public function execute(IDatabaseConnection $connection, IDataSet $dataSet)
     {
-        $connection->getConnection()->query("SET @PHAKE_PREV_foreign_key_checks = @@foreign_key_checks");
-        $connection->getConnection()->query("SET foreign_key_checks = 0");
+        $connection->getConnection()->query("SET @PHAKE_PREV_FOREIGN_KEY_CHECKS = @@FOREIGN_KEY_CHECKS");
+        $connection->getConnection()->query("SET FOREIGN_KEY_CHECKS = 0");
         parent::execute($connection, $dataSet);
-        $connection->getConnection()->query("SET foreign_key_checks = @PHAKE_PREV_foreign_key_checks");
+        $connection->getConnection()->query("SET FOREIGN_KEY_CHECKS = @PHAKE_PREV_FOREIGN_KEY_CHECKS");
     }
 }

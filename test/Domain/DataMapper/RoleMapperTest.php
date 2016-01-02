@@ -57,15 +57,17 @@ class RoleMapperTest extends \PHPUnit_Extensions_Database_TestCase
 
     /**
      * Returns the database operation executed in test setup.
-     * @return \PHPUnit_Extensions_Database_Operation_IDatabaseOperation
+     * @return \PHPUnit_Extensions_Database_Operation_IDatabaseOperation The database operation.
      * @since 0.0.1-dev
      */
     protected function getSetUpOperation()
     {
-        return new \PHPUnit_Extensions_Database_Operation_Composite(array(
-            new MySQL55Truncate(false),
-            \PHPUnit_Extensions_Database_Operation_Factory::INSERT()
-        ));
+        //create the parameters for composite.
+        $truncate = new MySQL55Truncate(false);
+        $factoryInsert = \PHPUnit_Extensions_Database_Operation_Factory::INSERT();
+
+        //create and return the database operation.
+        return new \PHPUnit_Extensions_Database_Operation_Composite(array($truncate, $factoryInsert));
     }
 
     /**

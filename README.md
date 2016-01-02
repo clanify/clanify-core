@@ -1,5 +1,7 @@
 # Clanify
 
+![Clanify Travis-CI](https://travis-ci.org/Clanify/Clanify.svg?branch=master)
+
 Clanify ist eine Plattform zur Organisation von Clans, eSport-Teams und
 Gaming-Communities. Das Projekt befindet sich momentan noch in der Entwicklung.
 Sie haben jedoch die Möglichkeit ihre Ideen und Erfahrungen mit der Organisation
