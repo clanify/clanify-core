@@ -55,7 +55,18 @@ class PermissionMapperTest extends \PHPUnit_Extensions_Database_TestCase
     }
 
     /**
+     * Returns the database operation executed in test setup.
+     * @return \PHPUnit_Extensions_Database_Operation_IDatabaseOperation
+     * @since 0.0.1-dev
+     */
+    protected function getSetUpOperation()
+    {
+        return \PHPUnit_Extensions_Database_Operation_Factory::CLEAN_INSERT(true);
+    }
+
+    /**
      * Performs operation returned by getSetUpOperation().
+     * @since 0.0.1-dev
      */
     public function setUp()
     {
