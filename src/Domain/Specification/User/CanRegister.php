@@ -34,7 +34,8 @@ class CanRegister implements ISpecification
             $isValidEmail = new IsValidEmail();
             $isValidPassword = new IsValidPassword();
             $isValidUsername = new IsValidUsername();
-            $isValidSpec = new CompositeSpecification($isValidEmail, $isValidPassword, $isValidUsername);
+            $notExist = new NotExists();
+            $isValidSpec = new CompositeSpecification($isValidEmail, $isValidPassword, $isValidUsername, $notExist);
 
             //check if the User is valid.
             return $isValidSpec->isSatisfiedBy($user);

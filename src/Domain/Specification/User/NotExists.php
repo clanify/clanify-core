@@ -5,14 +5,14 @@
  */
 namespace Clanify\Domain\Specification\User;
 
+use Clanify\Core\Database;
+use Clanify\Domain\DataMapper\UserMapper;
 use Clanify\Domain\Entity\IEntity;
 use Clanify\Domain\Entity\User;
-use Clanify\Domain\Specification\CompositeSpecification;
 use Clanify\Domain\Specification\ISpecification;
-use Clanify\Domain\Specification\NotSpecification;
 
 /**
- * Class CanLogin
+ * Class NotExist
  *
  * @author Sebastian Brosch <contact@sebastianbrosch.de>
  * @copyright 2015 Clanify
@@ -20,7 +20,7 @@ use Clanify\Domain\Specification\NotSpecification;
  * @package Clanify\Domain\Specification\User
  * @version 0.0.1-dev
  */
-class CanLogin implements ISpecification
+class NotExists implements ISpecification
 {
     /**
      * Method to check if the User satisfies the Specification.
@@ -32,13 +32,14 @@ class CanLogin implements ISpecification
     {
         //check if the Entity is a User.
         if ($user instanceof User) {
-            $isValidUsername = new IsValidUsername();
-            $isValidPassword = new IsValidPassword();
-            $notExist = new NotSpecification(new NotExists());
-            $validSpec = new CompositeSpecification($isValidUsername, $isValidPassword, $notExist);
+            $database = Database::getInstance();
+            $userMapper = new UserMapper($database->getConnection());
 
-            //check if the User is valid.
-            return $validSpec->isSatisfiedBy($user);
+            //search the user on database.
+            $users = $userMapper->findByUsername($user->username);
+
+            //check if a user was found and return the state.
+            return (count($users) > 0) ? false : true;
         } else {
             return false;
         }
