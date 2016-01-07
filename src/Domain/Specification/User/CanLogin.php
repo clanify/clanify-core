@@ -32,10 +32,13 @@ class CanLogin implements ISpecification
     {
         //check if the Entity is a User.
         if ($user instanceof User) {
-            $isValidUsername = new IsValidUsername();
-            $isValidPassword = new IsValidPassword();
-            $notExist = new NotSpecification(new NotExists());
-            $validSpec = new CompositeSpecification($isValidUsername, $isValidPassword, $notExist);
+
+            //create the composite specification.
+            $validSpec = new CompositeSpecification(
+                new IsValidUsername(),
+                new IsValidPassword(),
+                new NotSpecification(new NotExistsUsername())
+            );
 
             //check if the User is valid.
             return $validSpec->isSatisfiedBy($user);

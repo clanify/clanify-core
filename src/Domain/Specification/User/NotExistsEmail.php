@@ -6,13 +6,13 @@
 namespace Clanify\Domain\Specification\User;
 
 use Clanify\Core\Database;
-use Clanify\Domain\DataMapper\UserMapper;
 use Clanify\Domain\Entity\IEntity;
 use Clanify\Domain\Entity\User;
+use Clanify\Domain\Repository\UserRepository;
 use Clanify\Domain\Specification\ISpecification;
 
 /**
- * Class NotExist
+ * Class NotExistsEmail
  *
  * @author Sebastian Brosch <contact@sebastianbrosch.de>
  * @copyright 2015 Clanify
@@ -20,7 +20,7 @@ use Clanify\Domain\Specification\ISpecification;
  * @package Clanify\Domain\Specification\User
  * @version 0.0.1-dev
  */
-class NotExists implements ISpecification
+class NotExistsEmail implements ISpecification
 {
     /**
      * Method to check if the User satisfies the Specification.
@@ -33,10 +33,10 @@ class NotExists implements ISpecification
         //check if the Entity is a User.
         if ($user instanceof User) {
             $database = Database::getInstance();
-            $userMapper = new UserMapper($database->getConnection());
+            $userRepository = new UserRepository($database->getConnection());
 
-            //search the user on database.
-            $users = $userMapper->findByUsername($user->username);
+            //find the users by username.
+            $users = $userRepository->findByEmail($user->email);
 
             //check if a user was found and return the state.
             return (count($users) > 0) ? false : true;

@@ -5,13 +5,14 @@
  */
 namespace Clanify\Domain\Specification\User;
 
+use Clanify\Core\Database;
 use Clanify\Domain\Entity\IEntity;
 use Clanify\Domain\Entity\User;
-use Clanify\Domain\Specification\CompositeSpecification;
+use Clanify\Domain\Repository\UserRepository;
 use Clanify\Domain\Specification\ISpecification;
 
 /**
- * Class CanRegister
+ * Class NotExistsUsername
  *
  * @author Sebastian Brosch <contact@sebastianbrosch.de>
  * @copyright 2015 Clanify
@@ -19,7 +20,7 @@ use Clanify\Domain\Specification\ISpecification;
  * @package Clanify\Domain\Specification\User
  * @version 0.0.1-dev
  */
-class CanRegister implements ISpecification
+class NotExistsUsername implements ISpecification
 {
     /**
      * Method to check if the User satisfies the Specification.
@@ -31,18 +32,14 @@ class CanRegister implements ISpecification
     {
         //check if the Entity is a User.
         if ($user instanceof User) {
+            $database = Database::getInstance();
+            $userRepository = new UserRepository($database->getConnection());
 
-            //create the composite specification.
-            $isValidSpec = new CompositeSpecification(
-                new IsValidEmail(),
-                new IsValidPassword(),
-                new IsValidUsername(),
-                new NotExistsUsername(),
-                new NotExistsEmail()
-            );
+            //find the users by username.
+            $users = $userRepository->findByUsername($user->username);
 
-            //check if the User is valid.
-            return $isValidSpec->isSatisfiedBy($user);
+            //check if a user was found and return the state.
+            return (count($users) > 0) ? false : true;
         } else {
             return false;
         }

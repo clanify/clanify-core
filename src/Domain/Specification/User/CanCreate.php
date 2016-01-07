@@ -11,7 +11,7 @@ use Clanify\Domain\Specification\CompositeSpecification;
 use Clanify\Domain\Specification\ISpecification;
 
 /**
- * Class CanRegister
+ * Class CanCreate
  *
  * @author Sebastian Brosch <contact@sebastianbrosch.de>
  * @copyright 2015 Clanify
@@ -19,7 +19,7 @@ use Clanify\Domain\Specification\ISpecification;
  * @package Clanify\Domain\Specification\User
  * @version 0.0.1-dev
  */
-class CanRegister implements ISpecification
+class CanCreate implements ISpecification
 {
     /**
      * Method to check if the User satisfies the Specification.
@@ -33,16 +33,19 @@ class CanRegister implements ISpecification
         if ($user instanceof User) {
 
             //create the composite specification.
-            $isValidSpec = new CompositeSpecification(
+            $validSpec = new CompositeSpecification(
                 new IsValidEmail(),
+                new IsValidFirstname(),
+                new IsValidGender(),
+                new IsValidLastname(),
                 new IsValidPassword(),
                 new IsValidUsername(),
-                new NotExistsUsername(),
-                new NotExistsEmail()
+                new NotExistsEmail(),
+                new NotExistsUsername()
             );
 
             //check if the User is valid.
-            return $isValidSpec->isSatisfiedBy($user);
+            return ($validSpec->isSatisfiedBy($user));
         } else {
             return false;
         }

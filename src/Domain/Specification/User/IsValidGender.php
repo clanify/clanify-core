@@ -7,11 +7,10 @@ namespace Clanify\Domain\Specification\User;
 
 use Clanify\Domain\Entity\IEntity;
 use Clanify\Domain\Entity\User;
-use Clanify\Domain\Specification\CompositeSpecification;
 use Clanify\Domain\Specification\ISpecification;
 
 /**
- * Class CanRegister
+ * Class IsValidGender
  *
  * @author Sebastian Brosch <contact@sebastianbrosch.de>
  * @copyright 2015 Clanify
@@ -19,7 +18,7 @@ use Clanify\Domain\Specification\ISpecification;
  * @package Clanify\Domain\Specification\User
  * @version 0.0.1-dev
  */
-class CanRegister implements ISpecification
+class IsValidGender implements ISpecification
 {
     /**
      * Method to check if the User satisfies the Specification.
@@ -31,18 +30,7 @@ class CanRegister implements ISpecification
     {
         //check if the Entity is a User.
         if ($user instanceof User) {
-
-            //create the composite specification.
-            $isValidSpec = new CompositeSpecification(
-                new IsValidEmail(),
-                new IsValidPassword(),
-                new IsValidUsername(),
-                new NotExistsUsername(),
-                new NotExistsEmail()
-            );
-
-            //check if the User is valid.
-            return $isValidSpec->isSatisfiedBy($user);
+            return (preg_match('/^[MF]{,1}$/', $user->gender) === 1);
         } else {
             return false;
         }
