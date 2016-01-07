@@ -72,36 +72,6 @@ class UserMapper extends DataMapper
     }
 
     /**
-     * Method to find a User using the username property.
-     * @param string $username The username of the User.
-     * @return array The array with all User Entities.
-     * @since 0.0.1-dev
-     */
-    public function findByUsername($username)
-    {
-        //reset the result array.
-        $users = [];
-
-        //create and set the sql query.
-        $sql = 'SELECT * FROM '.$this->table.' WHERE username = :username;';
-        $sth = $this->pdo->prepare($sql);
-
-        //bind the values to the query and execute the query.
-        $sth->bindParam(':username', $username, \PDO::PARAM_STR);
-        $sth->execute();
-
-        //run through all results and load the User Entities.
-        foreach ($sth->fetchAll() as $result) {
-            $user = new User();
-            $user->loadFromArray($result);
-            $users[] = $user;
-        }
-
-        //return the User Entities.
-        return $users;
-    }
-
-    /**
      * Method to save a User on database.
      * @param User $user The Entity of the User.
      * @return bool The state if the User was successfully saved.
