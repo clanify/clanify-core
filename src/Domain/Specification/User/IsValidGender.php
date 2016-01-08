@@ -7,7 +7,7 @@ namespace Clanify\Domain\Specification\User;
 
 use Clanify\Domain\Entity\IEntity;
 use Clanify\Domain\Entity\User;
-use Clanify\Domain\Specification\ISpecification;
+use Clanify\Domain\Specification\Specification;
 
 /**
  * Class IsValidGender
@@ -18,7 +18,7 @@ use Clanify\Domain\Specification\ISpecification;
  * @package Clanify\Domain\Specification\User
  * @version 0.0.1-dev
  */
-class IsValidGender implements ISpecification
+class IsValidGender extends Specification
 {
     /**
      * Method to check if the User satisfies the Specification.

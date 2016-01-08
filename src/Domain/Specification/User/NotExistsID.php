@@ -12,7 +12,7 @@ use Clanify\Domain\Repository\UserRepository;
 use Clanify\Domain\Specification\Specification;
 
 /**
- * Class NotExistsUsername
+ * Class NotExistsID
  *
  * @author Sebastian Brosch <contact@sebastianbrosch.de>
  * @copyright 2015 Clanify
@@ -20,7 +20,7 @@ use Clanify\Domain\Specification\Specification;
  * @package Clanify\Domain\Specification\User
  * @version 0.0.1-dev
  */
-class NotExistsUsername extends Specification
+class NotExistsID extends Specification
 {
     /**
      * Method to check if the User satisfies the Specification.
@@ -35,15 +35,11 @@ class NotExistsUsername extends Specification
             $database = Database::getInstance();
             $userRepository = new UserRepository($database->getConnection());
 
-            //find the Users by username.
-            $users = $userRepository->findByUsername($user->username);
+            //find the Users by id.
+            $users = $userRepository->findByID($user->id);
 
-            //check if the id should be excluded.
-            if ($this->excludeID) {
-                return $this->excludeCurrentID($users, $user);
-            } else {
-                return (count($users) > 0) ? false : true;
-            }
+            //check if a User was found and return the state.
+            return (count($users) > 0) ? false : true;
         } else {
             return false;
         }

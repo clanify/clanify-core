@@ -8,7 +8,7 @@ namespace Clanify\Domain\Specification\User;
 use Clanify\Domain\Entity\IEntity;
 use Clanify\Domain\Entity\User;
 use Clanify\Domain\Specification\CompositeSpecification;
-use Clanify\Domain\Specification\ISpecification;
+use Clanify\Domain\Specification\Specification;
 
 /**
  * Class CanRegister
@@ -19,7 +19,7 @@ use Clanify\Domain\Specification\ISpecification;
  * @package Clanify\Domain\Specification\User
  * @version 0.0.1-dev
  */
-class CanRegister implements ISpecification
+class CanRegister extends Specification
 {
     /**
      * Method to check if the User satisfies the Specification.

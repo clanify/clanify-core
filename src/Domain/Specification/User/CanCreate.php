@@ -8,7 +8,7 @@ namespace Clanify\Domain\Specification\User;
 use Clanify\Domain\Entity\IEntity;
 use Clanify\Domain\Entity\User;
 use Clanify\Domain\Specification\CompositeSpecification;
-use Clanify\Domain\Specification\ISpecification;
+use Clanify\Domain\Specification\Specification;
 
 /**
  * Class CanCreate
@@ -19,7 +19,7 @@ use Clanify\Domain\Specification\ISpecification;
  * @package Clanify\Domain\Specification\User
  * @version 0.0.1-dev
  */
-class CanCreate implements ISpecification
+class CanCreate extends Specification
 {
     /**
      * Method to check if the User satisfies the Specification.
@@ -34,6 +34,7 @@ class CanCreate implements ISpecification
 
             //create the composite specification.
             $validSpec = new CompositeSpecification(
+                new IsValidBirthday(),
                 new IsValidEmail(),
                 new IsValidFirstname(),
                 new IsValidGender(),

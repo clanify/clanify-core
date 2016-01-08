@@ -5,14 +5,12 @@
  */
 namespace Clanify\Domain\Specification\User;
 
-use Clanify\Core\Database;
 use Clanify\Domain\Entity\IEntity;
 use Clanify\Domain\Entity\User;
-use Clanify\Domain\Repository\UserRepository;
 use Clanify\Domain\Specification\Specification;
 
 /**
- * Class NotExistsUsername
+ * Class IsValidBirthday
  *
  * @author Sebastian Brosch <contact@sebastianbrosch.de>
  * @copyright 2015 Clanify
@@ -20,7 +18,7 @@ use Clanify\Domain\Specification\Specification;
  * @package Clanify\Domain\Specification\User
  * @version 0.0.1-dev
  */
-class NotExistsUsername extends Specification
+class IsValidBirthday extends Specification
 {
     /**
      * Method to check if the User satisfies the Specification.
@@ -32,17 +30,13 @@ class NotExistsUsername extends Specification
     {
         //check if the Entity is a User.
         if ($user instanceof User) {
-            $database = Database::getInstance();
-            $userRepository = new UserRepository($database->getConnection());
 
-            //find the Users by username.
-            $users = $userRepository->findByUsername($user->username);
-
-            //check if the id should be excluded.
-            if ($this->excludeID) {
-                return $this->excludeCurrentID($users, $user);
+            //check if a default value is available.
+            if (($user->birthday === '0000-00-00') || ($user->birthday === '')) {
+                return true;
             } else {
-                return (count($users) > 0) ? false : true;
+                $date = explode('-', $user->birthday);
+                return checkdate($date[1], $date[2], $date[0]);
             }
         } else {
             return false;
