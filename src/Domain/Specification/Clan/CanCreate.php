@@ -8,7 +8,7 @@ namespace Clanify\Domain\Specification\Clan;
 use Clanify\Domain\Entity\Clan;
 use Clanify\Domain\Entity\IEntity;
 use Clanify\Domain\Specification\CompositeSpecification;
-use Clanify\Domain\Specification\ISpecification;
+use Clanify\Domain\Specification\Specification;
 
 /**
  * Class CanCreate
@@ -19,7 +19,7 @@ use Clanify\Domain\Specification\ISpecification;
  * @package Clanify\Domain\Specification\Clan
  * @version 0.0.1-dev
  */
-class CanCreate implements ISpecification
+class CanCreate extends Specification
 {
     /**
      * Method to check if the Clan satisfies the Specification.

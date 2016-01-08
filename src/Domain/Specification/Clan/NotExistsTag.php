@@ -9,7 +9,7 @@ use Clanify\Core\Database;
 use Clanify\Domain\Entity\Clan;
 use Clanify\Domain\Entity\IEntity;
 use Clanify\Domain\Repository\ClanRepository;
-use Clanify\Domain\Specification\ISpecification;
+use Clanify\Domain\Specification\Specification;
 
 /**
  * Class NotExistsTag
@@ -20,7 +20,7 @@ use Clanify\Domain\Specification\ISpecification;
  * @package Clanify\Domain\Specification\Clan
  * @version 0.0.1-dev
  */
-class NotExistsTag implements ISpecification
+class NotExistsTag extends Specification
 {
     /**
      * Method to check if the Clan satisfies the Specification.
@@ -35,11 +35,15 @@ class NotExistsTag implements ISpecification
             $database = Database::getInstance();
             $clanRepository = new ClanRepository($database->getConnection());
 
-            //find the clans by tag.
+            //find the Clans by tag.
             $clans = $clanRepository->findByTag($clan->tag);
 
-            //check if a Clan was found and return the state.
-            return (count($clans) > 0) ? false : true;
+            //check if the ID should be excluded.
+            if ($this->excludeID) {
+                return $this->excludeCurrentID($clans, $clan);
+            } else {
+                return (count($clans) > 0) ? false : true;
+            }
         } else {
             return false;
         }
