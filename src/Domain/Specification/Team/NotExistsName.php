@@ -9,7 +9,7 @@ use Clanify\Core\Database;
 use Clanify\Domain\Entity\IEntity;
 use Clanify\Domain\Entity\Team;
 use Clanify\Domain\Repository\TeamRepository;
-use Clanify\Domain\Specification\ISpecification;
+use Clanify\Domain\Specification\Specification;
 
 /**
  * Class NotExistsName
@@ -20,7 +20,7 @@ use Clanify\Domain\Specification\ISpecification;
  * @package Clanify\Domain\Specification\Team
  * @version 0.0.1-dev
  */
-class NotExistsName implements ISpecification
+class NotExistsName extends Specification
 {
     /**
      * Method to check if the Team satisfies the Specification.
@@ -35,11 +35,15 @@ class NotExistsName implements ISpecification
             $database = Database::getInstance();
             $teamRepository = new TeamRepository($database->getConnection());
 
-            //find the teams by name.
+            //find the Teams by name.
             $teams = $teamRepository->findByName($team->name);
 
-            //check if a user was found and return the state.
-            return (count($teams) > 0) ? false : true;
+            //check if the id should be excluded.
+            if ($this->excludeID) {
+                return $this->excludeCurrentID($teams, $team);
+            } else {
+                return (count($teams) > 0) ? false : true;
+            }
         } else {
             return false;
         }

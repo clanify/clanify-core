@@ -5,14 +5,14 @@
  */
 namespace Clanify\Domain\Specification\Team;
 
-use Clanify\Core\Database;
 use Clanify\Domain\Entity\IEntity;
 use Clanify\Domain\Entity\Team;
-use Clanify\Domain\Repository\TeamRepository;
+use Clanify\Domain\Specification\CompositeSpecification;
+use Clanify\Domain\Specification\NotSpecification;
 use Clanify\Domain\Specification\Specification;
 
 /**
- * Class NotExistsTag
+ * Class CanUpdate
  *
  * @author Sebastian Brosch <contact@sebastianbrosch.de>
  * @copyright 2015 Clanify
@@ -20,7 +20,7 @@ use Clanify\Domain\Specification\Specification;
  * @package Clanify\Domain\Specification\Team
  * @version 0.0.1-dev
  */
-class NotExistsTag extends Specification
+class CanUpdate extends Specification
 {
     /**
      * Method to check if the Team satisfies the Specification.
@@ -32,18 +32,19 @@ class NotExistsTag extends Specification
     {
         //check if the Entity is a Team.
         if ($team instanceof Team) {
-            $database = Database::getInstance();
-            $teamRepository = new TeamRepository($database->getConnection());
 
-            //find the Teams by tag.
-            $teams = $teamRepository->findByTag($team->tag);
+            //create the composite specification.
+            $validSpec = new CompositeSpecification(
+                new IsValidName(),
+                new IsValidTag(),
+                new IsValidWebsite(),
+                new NotExistsName(true),
+                new NotExistsTag(true),
+                new NotSpecification(new NotExistsID())
+            );
 
-            //check if the id should be excluded.
-            if ($this->excludeID) {
-                return $this->excludeCurrentID($teams, $team);
-            } else {
-                return (count($teams) > 0) ? false : true;
-            }
+            //check if the Team is valid.
+            return $validSpec->isSatisfiedBy($team);
         } else {
             return false;
         }

@@ -7,7 +7,7 @@ namespace Clanify\Domain\Specification\Team;
 
 use Clanify\Domain\Entity\IEntity;
 use Clanify\Domain\Entity\Team;
-use Clanify\Domain\Specification\ISpecification;
+use Clanify\Domain\Specification\Specification;
 
 /**
  * Class IsValidWebsite
@@ -18,7 +18,7 @@ use Clanify\Domain\Specification\ISpecification;
  * @package Clanify\Domain\Specification\Team
  * @version 0.0.1-dev
  */
-class IsValidWebsite implements ISpecification
+class IsValidWebsite extends Specification
 {
     /**
      * Method to check if the Team satisfies the Specification.
