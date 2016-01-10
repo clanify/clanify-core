@@ -46,8 +46,8 @@ class UserRepository extends Repository
     }
 
     /**
-     * Method to find a User by id.
-     * @param int $id The id of the User which will be searched.
+     * Method to find a User by ID.
+     * @param int $id The ID of the User which will be searched.
      * @return array An array with all found User objects.
      * @since 0.0.1-dev
      */

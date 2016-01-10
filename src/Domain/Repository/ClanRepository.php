@@ -5,10 +5,10 @@
  */
 namespace Clanify\Domain\Repository;
 
-use Clanify\Domain\Entity\Team;
+use Clanify\Domain\Entity\Clan;
 
 /**
- * Class TeamRepository
+ * Class ClanRepository
  *
  * @author Sebastian Brosch <contact@sebastianbrosch.de>
  * @copyright 2015 Clanify
@@ -16,19 +16,19 @@ use Clanify\Domain\Entity\Team;
  * @package Clanify\Domain\Repository
  * @version 0.0.1-dev
  */
-class TeamRepository extends Repository
+class ClanRepository extends Repository
 {
     /**
      * The name of the table which will be used.
      * @since 0.0.1-dev
      * @var string
      */
-    private $table = 'team';
+    private $table = 'clan';
 
     /**
-     * Method to find a Team by ID.
-     * @param int $id The ID of the Team which will be searched.
-     * @return array An array with all found Team objects.
+     * Method to find a Clan by ID.
+     * @param int $id The ID of the Clan which will be searched.
+     * @return array An array with all found Clan objects.
      * @since 0.0.1-dev
      */
     public function findByID($id)
@@ -42,13 +42,13 @@ class TeamRepository extends Repository
         $sth->execute();
 
         //execute the query and return the result as array.
-        return $sth->fetchAll(\PDO::FETCH_CLASS, get_class(new Team()));
+        return $sth->fetchAll(\PDO::FETCH_CLASS, get_class(new Clan()));
     }
 
     /**
-     * Method to find a Team by name.
-     * @param string $name The name of the Team which will be searched.
-     * @return array An array with all found Team objects.
+     * Method to find a Clan by name.
+     * @param string $name The name of the Clan which will be searched.
+     * @return array An array with all found Clan objects.
      * @since 0.0.1-dev
      */
     public function findByName($name)
@@ -62,13 +62,13 @@ class TeamRepository extends Repository
         $sth->execute();
 
         //execute the query and return the result as array.
-        return $sth->fetchAll(\PDO::FETCH_CLASS, get_class(new Team()));
+        return $sth->fetchAll(\PDO::FETCH_CLASS, get_class(new Clan()));
     }
 
     /**
-     * Method to find a Team by tag.
-     * @param string $tag The tag of the Team which will be searched.
-     * @return array An array with all found Team objects.
+     * Method to find a Clan by tag.
+     * @param string $tag The tag of the Clan which will be searched.
+     * @return array An array with all found Clan objects.
      * @since 0.0.1-dev
      */
     public function findByTag($tag)
@@ -82,6 +82,6 @@ class TeamRepository extends Repository
         $sth->execute();
 
         //execute the query and return the result as array.
-        return $sth->fetchAll(\PDO::FETCH_CLASS, get_class(new Team()));
+        return $sth->fetchAll(\PDO::FETCH_CLASS, get_class(new Clan()));
     }
 }
