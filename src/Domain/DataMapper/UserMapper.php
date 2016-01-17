@@ -5,6 +5,7 @@
  */
 namespace Clanify\Domain\DataMapper;
 
+use Clanify\Domain\Entity\IEntity;
 use Clanify\Domain\Entity\User;
 
 /**
@@ -19,20 +20,29 @@ use Clanify\Domain\Entity\User;
 class UserMapper extends DataMapper
 {
     /**
-     * The name of the table which will be used.
+     * UserMapper constructor.
+     * @param \PDO $pdo The PDO object.
      * @since 0.0.1-dev
-     * @var string
      */
-    private $table = 'user';
+    public function __construct(\PDO $pdo)
+    {
+        $this->table = 'user';
+        parent::__construct($pdo);
+    }
 
     /**
-     * Method to create a User on database.
-     * @param User $user The Entity of the User.
-     * @return bool The state if the User was successfully created.
+     * Method to create an User on database.
+     * @param IEntity $user The User Entity.
+     * @return bool The state if the User Entity was successfully created.
      * @since 0.0.1-dev
      */
-    private function create(User $user)
+    public function create(IEntity $user)
     {
+        //check if a User is available.
+        if (!($user instanceof User)) {
+            return false;
+        }
+
         //create and set the sql query.
         $sql = 'INSERT INTO '.$this->table.' (birthday, email, firstname, gender, lastname, password, salt, username) ';
         $sql .= 'VALUES (:birthday, :email, :firstname, :gender, :lastname, :password, :salt, :username);';
@@ -53,13 +63,18 @@ class UserMapper extends DataMapper
     }
 
     /**
-     * Method to delete a User on database.
-     * @param User $user The Entity of the User.
-     * @return bool The state if the User was successfully deleted.
+     * Method to delete an User on database.
+     * @param IEntity $user The User Entity.
+     * @return bool The state if the User Entity was successfully deleted.
      * @since 0.0.1-dev
      */
-    public function delete(User $user)
+    public function delete(IEntity $user)
     {
+        //check if a User is available.
+        if (!($user instanceof User)) {
+            return false;
+        }
+
         //create and set the sql query.
         $sql = 'DELETE FROM '.$this->table.' WHERE id = :id;';
         $sth = $this->pdo->prepare($sql);
@@ -72,24 +87,46 @@ class UserMapper extends DataMapper
     }
 
     /**
-     * Method to save a User on database.
-     * @param User $user The Entity of the User.
-     * @return bool The state if the User was successfully saved.
+     * Method to find User Entities by a SQL condition.
+     * @param string $condition The SQL condition to filter the User Entities.
+     * @return array An array with all found User Entities.
      * @since 0.0.1-dev
      */
-    public function save(User $user)
+    public function find($condition = '')
     {
+        return $this->findForEntity($condition, new User());
+    }
+
+    /**
+     * Method to save an User on database.
+     * @param IEntity $user The User Entity.
+     * @return bool The state if the User Entity was successfully saved.
+     * @since 0.0.1-dev
+     */
+    public function save(IEntity $user)
+    {
+        //check if a User is available.
+        if (!($user instanceof User)) {
+            return false;
+        }
+
+        //create or update the User.
         return ($user->id > 0) ? $this->update($user) : $this->create($user);
     }
 
     /**
-     * Method to update a User on database.
-     * @param User $user The Entity of the User.
-     * @return bool The state if the User was successfully updated.
+     * Method to update an User on database.
+     * @param IEntity $user The User Entity.
+     * @return bool The state if the User Entity was successfully updated.
      * @since 0.0.1-dev
      */
-    private function update(User $user)
+    public function update(IEntity $user)
     {
+        //check if a User is available.
+        if (!($user instanceof User)) {
+            return false;
+        }
+
         //create and set the sql query.
         $sql = 'UPDATE '.$this->table.' SET birthday = :birthday, email = :email, firstname = :firstname, ';
         $sql .= 'gender = :gender, lastname = :lastname, password = :password, salt = :salt, ';

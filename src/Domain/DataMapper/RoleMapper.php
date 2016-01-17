@@ -5,6 +5,7 @@
  */
 namespace Clanify\Domain\DataMapper;
 
+use Clanify\Domain\Entity\IEntity;
 use Clanify\Domain\Entity\Role;
 
 /**
@@ -19,20 +20,29 @@ use Clanify\Domain\Entity\Role;
 class RoleMapper extends DataMapper
 {
     /**
-     * The name of the table which will be used.
+     * RoleMapper constructor.
+     * @param \PDO $pdo The PDO object.
      * @since 0.0.1-dev
-     * @var string
      */
-    private $table = 'role';
+    public function __construct(\PDO $pdo)
+    {
+        $this->table = 'role';
+        parent::__construct($pdo);
+    }
 
     /**
      * Method to create a Role on database.
-     * @param Role $role The Entity of the Role.
-     * @return bool The state if the Role was successfully created.
+     * @param IEntity $role The Role Entity.
+     * @return bool The state if the Role Entity was successfully created.
      * @since 0.0.1-dev
      */
-    private function create(Role $role)
+    public function create(IEntity $role)
     {
+        //check if a Role is available.
+        if (!($role instanceof Role)) {
+            return false;
+        }
+
         //create and set the sql query.
         $sql = 'INSERT INTO '.$this->table.' (name) VALUES (:name);';
         $sth = $this->pdo->prepare($sql);
@@ -46,12 +56,17 @@ class RoleMapper extends DataMapper
 
     /**
      * Method to delete a Role on database.
-     * @param Role $role The Entity of the Role.
-     * @return bool The state if the Role was successfully deleted.
+     * @param IEntity $role The Role Entity.
+     * @return bool The state if the Role Entity was successfully deleted.
      * @since 0.0.1-dev
      */
-    public function delete(Role $role)
+    public function delete(IEntity $role)
     {
+        //check if a Role is available.
+        if (!($role instanceof Role)) {
+            return false;
+        }
+
         //create and set the sql query.
         $sql = 'DELETE FROM '.$this->table.' WHERE id = :id;';
         $sth = $this->pdo->prepare($sql);
@@ -64,24 +79,46 @@ class RoleMapper extends DataMapper
     }
 
     /**
-     * Method to save a Role on database.
-     * @param Role $role The Entity of the Role.
-     * @return bool The state if the Role was successfully saved.
+     * Method to find Role Entities by a SQL condition.
+     * @param string $condition The SQL condition to filter the Role Entities.
+     * @return array An array with all found Role Entities.
      * @since 0.0.1-dev
      */
-    public function save(Role $role)
+    public function find($condition = '')
     {
+        return $this->findForEntity($condition, new Role());
+    }
+
+    /**
+     * Method to save a Role on database.
+     * @param IEntity $role The Role Entity.
+     * @return bool The state if the Role Entity was successfully saved.
+     * @since 0.0.1-dev
+     */
+    public function save(IEntity $role)
+    {
+        //check if a Role is available.
+        if (!($role instanceof Role)) {
+            return false;
+        }
+
+        //create or update the Role.
         return ($role->id > 0) ? $this->update($role) : $this->create($role);
     }
 
     /**
      * Method to update a Role on database.
-     * @param Role $role The Entity of the Role.
-     * @return bool The state if the Role was successfully updated.
+     * @param IEntity $role The Role Entity.
+     * @return bool The state if the Role Entity was successfully updated.
      * @since 0.0.1-dev
      */
-    private function update(Role $role)
+    public function update(IEntity $role)
     {
+        //check if a Role is available.
+        if (!($role instanceof Role)) {
+            return false;
+        }
+
         //create and set the sql query.
         $sql = 'UPDATE '.$this->table.' SET name = :name WHERE id = :id;';
         $sth = $this->pdo->prepare($sql);

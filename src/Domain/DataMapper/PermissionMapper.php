@@ -5,6 +5,7 @@
  */
 namespace Clanify\Domain\DataMapper;
 
+use Clanify\Domain\Entity\IEntity;
 use Clanify\Domain\Entity\Permission;
 
 /**
@@ -19,20 +20,29 @@ use Clanify\Domain\Entity\Permission;
 class PermissionMapper extends DataMapper
 {
     /**
-     * The name of the table which will be used.
+     * PermissionMapper constructor.
+     * @param \PDO $pdo The PDO object.
      * @since 0.0.1-dev
-     * @var string
      */
-    private $table = 'permission';
+    public function __construct(\PDO $pdo)
+    {
+        $this->table = 'permission';
+        parent::__construct($pdo);
+    }
 
     /**
      * Method to create a Permission on database.
-     * @param Permission $permission The Entity of the Permission.
-     * @return bool The state if the Permission was successfully created.
+     * @param IEntity $permission The Permission Entity.
+     * @return bool The state if the Permission Entity was successfully created.
      * @since 0.0.1-dev
      */
-    private function create(Permission $permission)
+    public function create(IEntity $permission)
     {
+        //check if a Permission is available.
+        if (!($permission instanceof Permission)) {
+            return false;
+        }
+
         //create and set the sql query.
         $sql = 'INSERT INTO '.$this->table.' (name) VALUES (:name);';
         $sth = $this->pdo->prepare($sql);
@@ -46,12 +56,17 @@ class PermissionMapper extends DataMapper
 
     /**
      * Method to delete a Permission on database.
-     * @param Permission $permission The Entity of the Permission.
-     * @return bool The state if the Permission was successfully deleted.
+     * @param IEntity $permission The Permission Entity.
+     * @return bool The state if the Permission Entity was successfully deleted.
      * @since 0.0.1-dev
      */
-    public function delete(Permission $permission)
+    public function delete(IEntity $permission)
     {
+        //check if a Permission is available.
+        if (!($permission instanceof Permission)) {
+            return false;
+        }
+
         //create and set the sql query.
         $sql = 'DELETE FROM '.$this->table.' WHERE id = :id;';
         $sth = $this->pdo->prepare($sql);
@@ -64,24 +79,46 @@ class PermissionMapper extends DataMapper
     }
 
     /**
-     * Method to save a Permission on database.
-     * @param Permission $permission The Entity of the Permission.
-     * @return bool The state if the Permission was successfully saved.
+     * Method to find Permission Entities by a SQL condition.
+     * @param string $condition The SQL condition to filter the Permission Entities.
+     * @return array An array with all found Permission Entities.
      * @since 0.0.1-dev
      */
-    public function save(Permission $permission)
+    public function find($condition = '')
     {
+        return $this->findForEntity($condition, new Permission());
+    }
+
+    /**
+     * Method to save a Permission on database.
+     * @param IEntity $permission The Permission Entity.
+     * @return bool The state if the Permission Entity was successfully saved.
+     * @since 0.0.1-dev
+     */
+    public function save(IEntity $permission)
+    {
+        //check if a Permission is available.
+        if (!($permission instanceof Permission)) {
+            return false;
+        }
+
+        //create or update the Permission.
         return ($permission->id > 0) ? $this->update($permission) : $this->create($permission);
     }
 
     /**
      * Method to update a Permission on database.
-     * @param Permission $permission The Entity of the Permission.
-     * @return bool The state if the Permission was successfully updated.
+     * @param IEntity $permission The Permission Entity.
+     * @return bool The state if the Permission Entity was successfully updated.
      * @since 0.0.1-dev
      */
-    private function update(Permission $permission)
+    public function update(IEntity $permission)
     {
+        //check if a Permission is available.
+        if (!($permission instanceof Permission)) {
+            return false;
+        }
+
         //create and set the sql query.
         $sql = 'UPDATE '.$this->table.' SET name = :name WHERE id = :id;';
         $sth = $this->pdo->prepare($sql);

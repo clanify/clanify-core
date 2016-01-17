@@ -6,6 +6,7 @@
 namespace Clanify\Domain\DataMapper;
 
 use \Clanify\Domain\Entity\Clan;
+use Clanify\Domain\Entity\IEntity;
 
 /**
  * Class ClanMapper
@@ -19,20 +20,29 @@ use \Clanify\Domain\Entity\Clan;
 class ClanMapper extends DataMapper
 {
     /**
-     * The name of the table which will be used.
+     * DataMapper constructor.
+     * @param \PDO $pdo The PDO object.
      * @since 0.0.1-dev
-     * @var string
      */
-    private $table = 'clan';
+    public function __construct(\PDO $pdo)
+    {
+        $this->table = 'clan';
+        parent::__construct($pdo);
+    }
 
     /**
      * Method to create a Clan on database.
-     * @param Clan $clan The Entity of the Clan.
-     * @return bool The state if the Clan was successfully created.
+     * @param IEntity $clan The Clan Entity.
+     * @return bool The state if the Clan Entity was successfully created.
      * @since 0.0.1-dev
      */
-    private function create(Clan $clan)
+    public function create(IEntity $clan)
     {
+        //check if a Clan is available.
+        if (!($clan instanceof Clan)) {
+            return false;
+        }
+
         //create and set the sql query.
         $sql = 'INSERT INTO '.$this->table.' (name, tag, website) VALUES (:name, :tag, :website);';
         $sth = $this->pdo->prepare($sql);
@@ -48,12 +58,17 @@ class ClanMapper extends DataMapper
 
     /**
      * Method to delete a Clan on database.
-     * @param Clan $clan The Entity of the Clan.
-     * @return bool The state if the Clan was successfully deleted.
+     * @param IEntity $clan The Clan Entity.
+     * @return bool The state if the Clan Entity was successfully deleted.
      * @since 0.0.1-dev
      */
-    public function delete(Clan $clan)
+    public function delete(IEntity $clan)
     {
+        //check if a Clan is available.
+        if (!($clan instanceof Clan)) {
+            return false;
+        }
+
         //create and set the sql query.
         $sql = 'DELETE FROM '.$this->table.' WHERE id = :id;';
         $sth = $this->pdo->prepare($sql);
@@ -66,24 +81,46 @@ class ClanMapper extends DataMapper
     }
 
     /**
-     * Method to save a Clan on database.
-     * @param Clan $clan The Entity of the Clan.
-     * @return bool The state if the Clan was successfully saved.
+     * Method to find Clan Entities by a SQL condition.
+     * @param string $condition The SQL condition to filter the Clan Entities.
+     * @return array An array with all found Clan Entities.
      * @since 0.0.1-dev
      */
-    public function save(Clan $clan)
+    public function find($condition = '')
     {
+        return $this->findForEntity($condition, new Clan());
+    }
+
+    /**
+     * Method to save an Clan on database.
+     * @param IEntity $clan The Clan Entity.
+     * @return bool The state if the Clan Entity was successfully saved.
+     * @since 0.0.1-dev
+     */
+    public function save(IEntity $clan)
+    {
+        //check if a Clan is available.
+        if (!($clan instanceof Clan)) {
+            return false;
+        }
+
+        //create or update the Clan.
         return ($clan->id > 0) ? $this->update($clan) : $this->create($clan);
     }
 
     /**
      * Method to update a Clan on database.
-     * @param Clan $clan The Entity of the Clan.
-     * @return bool The state if the Clan was successfully updated.
+     * @param IEntity $clan The Clan Entity.
+     * @return bool The state if the Clan Entity was successfully updated.
      * @since 0.0.1-dev
      */
-    private function update(Clan $clan)
+    public function update(IEntity $clan)
     {
+        //check if a Clan is available.
+        if (!($clan instanceof Clan)) {
+            return false;
+        }
+
         //create and set the sql query.
         $sql = 'UPDATE '.$this->table.' SET name = :name, tag = :tag, website = :website WHERE id = :id;';
         $sth = $this->pdo->prepare($sql);
