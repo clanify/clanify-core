@@ -5,7 +5,7 @@
  */
 namespace Clanify\Domain\Repository;
 
-use Clanify\Domain\Entity\Clan;
+use Clanify\Domain\DataMapper\ClanMapper;
 
 /**
  * Class ClanRepository
@@ -19,69 +19,126 @@ use Clanify\Domain\Entity\Clan;
 class ClanRepository extends Repository
 {
     /**
-     * The name of the table which will be used.
+     * Method to find all Clan Entities.
+     * @return array An array with all found Clan Entities.
      * @since 0.0.1-dev
-     * @var string
      */
-    private $table = 'clan';
+    public function findAll()
+    {
+        //check if a ClanMapper is available.
+        if (!($this->dataMapper instanceof ClanMapper)) {
+            return [];
+        } else {
+            return $this->findAllEntities(get_class($this->dataMapper));
+        }
+    }
 
     /**
-     * Method to find a Clan by ID.
-     * @param int $id The ID of the Clan which will be searched.
-     * @return array An array with all found Clan objects.
+     * Method to find Clan Entities by ID.
+     * @param int $id The ID to find the Clan Entities.
+     * @return array An array with all found Clan Entities.
      * @since 0.0.1-dev
      */
     public function findByID($id)
     {
-        //create and set the sql query.
-        $sql = 'SELECT * FROM '.$this->table.' WHERE id = :id';
-        $sth = $this->pdo->prepare($sql);
-
-        //bind the values to the query and execute.
-        $sth->bindParam(':id', $id, \PDO::PARAM_INT);
-        $sth->execute();
-
-        //execute the query and return the result as array.
-        return $sth->fetchAll(\PDO::FETCH_CLASS, get_class(new Clan()));
+        //check if a ClanMapper is available.
+        if (!($this->dataMapper instanceof ClanMapper)) {
+            return [];
+        } else {
+            return $this->findEntityByID($id, get_class($this->dataMapper));
+        }
     }
 
     /**
-     * Method to find a Clan by name.
-     * @param string $name The name of the Clan which will be searched.
-     * @return array An array with all found Clan objects.
+     * Method to find Clan Entities by name.
+     * @param string $name The name to find the Clan Entities.
+     * @return array An array with all found Clan Entities.
      * @since 0.0.1-dev
      */
     public function findByName($name)
     {
-        //create and set the sql query.
-        $sql = 'SELECT * FROM '.$this->table.' WHERE name = :name';
-        $sth = $this->pdo->prepare($sql);
+        //check if a ClanMapper is available.
+        if (!($this->dataMapper instanceof ClanMapper)) {
+            return [];
+        }
 
-        //bind the values to the query and execute.
-        $sth->bindParam(':name', $name, \PDO::PARAM_STR);
-        $sth->execute();
+        //check if the parameter is an array.
+        if (is_array($name)) {
+            $condition = "name IN ('".implode("', '", $name)."')";
+        } else {
+            $condition = "name = '".$name."'";
+        }
 
-        //execute the query and return the result as array.
-        return $sth->fetchAll(\PDO::FETCH_CLASS, get_class(new Clan()));
+        //return the result of the ClanMapper.
+        return $this->dataMapper->find($condition);
     }
 
     /**
-     * Method to find a Clan by tag.
-     * @param string $tag The tag of the Clan which will be searched.
-     * @return array An array with all found Clan objects.
+     * Method to find Clan Entities by tag.
+     * @param string $tag The tag to find the Clan Entities.
+     * @return array An array with all found Clan Entities.
      * @since 0.0.1-dev
      */
     public function findByTag($tag)
     {
-        //create and set the sql query.
-        $sql = 'SELECT * FROM '.$this->table.' WHERE tag = :tag';
-        $sth = $this->pdo->prepare($sql);
+        //check if a ClanMapper is available.
+        if (!($this->dataMapper instanceof ClanMapper)) {
+            return [];
+        }
 
-        //bind the values to the query and execute.
-        $sth->bindParam(':tag', $tag, \PDO::PARAM_STR);
-        $sth->execute();
+        //check if the parameter is an array.
+        if (is_array($tag)) {
+            $condition = "tag IN ('".implode("', '", $tag)."')";
+        } else {
+            $condition = "tag = '".$tag."'";
+        }
 
-        //execute the query and return the result as array.
-        return $sth->fetchAll(\PDO::FETCH_CLASS, get_class(new Clan()));
+        //return the result of the ClanMapper.
+        return $this->dataMapper->find($condition);
+    }
+
+    /**
+     * Method to find Clan Entities by website.
+     * @param string $website The website to find the Clan Entities.
+     * @return array An array with all found Clan Entities.
+     * @since 0.0.1-dev
+     */
+    public function findByWebsite($website)
+    {
+        //check if a ClanMapper is available.
+        if (!($this->dataMapper instanceof ClanMapper)) {
+            return [];
+        }
+
+        //check if the parameter is an array.
+        if (is_array($website)) {
+            $condition = "website IN ('".implode("', '", $website)."')";
+        } else {
+            $condition = "website = '".$website."'";
+        }
+
+        //return the result of the ClanMapper.
+        return $this->dataMapper->find($condition);
+    }
+
+    /**
+     * Method to find a Clan by unique parameters.
+     * @param string $tag The tag to find the Clan Entity.
+     * @param string $name The name to find the Clan Entity.
+     * @return array An array with all found Clan Entities.
+     * @since 0.0.1-dev
+     */
+    public function findUnique($tag, $name)
+    {
+        //check if a ClanMapper is available.
+        if (!($this->dataMapper instanceof ClanMapper)) {
+            return [];
+        }
+
+        //set the condition.
+        $condition = "tag = '".$tag."' AND name = '".$name."'";
+
+        //return the result of the ClanMapper.
+        return $this->dataMapper->find($condition);
     }
 }
