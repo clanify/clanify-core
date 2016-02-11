@@ -9,7 +9,7 @@ namespace Clanify\Core;
  * Class Clanify
  *
  * @author Sebastian Brosch <contact@sebastianbrosch.de>
- * @copyright 2015 Clanify
+ * @copyright 2016 Clanify
  * @license GNU General Public License, version 3
  * @package Clanify\Core
  * @version 0.0.1-dev
@@ -38,7 +38,7 @@ class Clanify
     protected $params = [];
 
     /**
-     * Clanify constructor to initialize Clanify.
+     * Clanify constructor.
      * @since 0.0.1-dev
      */
     public function __construct()
@@ -47,7 +47,7 @@ class Clanify
         $url = $this->parseUrl();
 
         //check if a controller exists.
-        if (isset($url[0]) && file_exists(getcwd().'/src/Controller/'.$this->normalize($url[0]).'Controller.php')) {
+        if (isset($url[0]) && file_exists(SRCPATH.'Controller/'.$this->normalize($url[0]).'Controller.php')) {
             $this->controller = $this->normalize($url[0]);
             unset($url[0]);
         }
