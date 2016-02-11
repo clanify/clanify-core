@@ -69,4 +69,18 @@ class Controller
             include($viewFile);
         }
     }
+
+    /**
+     * Method to redirect to an URL.
+     * @param string $url The target URL.
+     * @since 0.0.1-dev
+     */
+    protected function redirect($url)
+    {
+        //redirect only if the URL is valid.
+        if (filter_var($url, FILTER_VALIDATE_URL)) {
+            header('Location: '.$url);
+            exit();
+        }
+    }
 }
