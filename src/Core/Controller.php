@@ -5,6 +5,8 @@
  */
 namespace Clanify\Core;
 
+use Clanify\Domain\Entity\Session;
+
 /**
  * Class Controller
  *
@@ -17,60 +19,6 @@ namespace Clanify\Core;
 class Controller
 {
     /**
-     * The path to the view directory.
-     * @since 0.0.1-dev
-     * @var string
-     */
-    private $viewDirectory = SRCPATH.'View'.DIRECTORY_SEPARATOR;
-
-    /**
-     * Method to include the footer file of the template.
-     * @since 0.0.1-dev
-     */
-    protected function includeFooter()
-    {
-        //get the path of the footer file.
-        $footerFile = $this->viewDirectory.'templates/footer.php';
-
-        //check if the footer file exists.
-        if (file_exists($footerFile)) {
-            include($footerFile);
-        }
-    }
-
-    /**
-     * Method to include the header file of the template.
-     * @since 0.0.1-dev
-     */
-    protected function includeHeader()
-    {
-        //get the path of the header file.
-        $headerFile = $this->viewDirectory.'templates/header.php';
-
-        //check if the header file exists.
-        if (file_exists($headerFile)) {
-            include($headerFile);
-        }
-    }
-
-    /**
-     * Method to include the view file for the specified controller and method.
-     * @param string $controller The controller which will be used.
-     * @param string $method The method of the controller which will be used.
-     * @since 0.0.1-dev
-     */
-    protected function includeView($controller, $method)
-    {
-        //get the path of the view file.
-        $viewFile = $this->viewDirectory.$controller.DIRECTORY_SEPARATOR.$method.'View.php';
-
-        //check if the view file exists.
-        if (file_exists($viewFile)) {
-            include($viewFile);
-        }
-    }
-
-    /**
      * Method to redirect to an URL.
      * @param string $url The target URL.
      * @since 0.0.1-dev
@@ -80,7 +28,23 @@ class Controller
         //redirect only if the URL is valid.
         if (filter_var($url, FILTER_VALIDATE_URL)) {
             header('Location: '.$url);
-            exit();
+        }
+    }
+
+    /**
+     * Method to load and check if a session is available.
+     * @param string $redirectURL The url which will be used for redirect.
+     * @since 0.0.1-dev
+     * @SuppressWarnings(PHPMD.Superglobals)
+     */
+    protected function needSession($redirectURL = URL)
+    {
+        //initialize the session.
+        Session::create();
+
+        //check if the session is available.
+        if (isset($_SESSION['user_username']) === false) {
+            $this->redirect($redirectURL);
         }
     }
 }
