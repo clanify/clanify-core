@@ -6,12 +6,14 @@
 namespace Clanify\Domain\Repository;
 
 use Clanify\Domain\DataMapper\UserMapper;
+use Clanify\Domain\Entity\Clan;
+use Clanify\Domain\Entity\Team;
 
 /**
  * Class UserRepository
  *
  * @author Sebastian Brosch <contact@sebastianbrosch.de>
- * @copyright 2015 Clanify
+ * @copyright 2016 Clanify
  * @license GNU General Public License, version 3
  * @package Clanify\Domain\Repository
  * @version 0.0.1-dev
@@ -31,6 +33,42 @@ class UserRepository extends Repository
         } else {
             return $this->findAllEntities(get_class($this->dataMapper));
         }
+    }
+
+    /**
+     * Method to find User Entities by Clan Entity.
+     * @param Clan $clan The Clan Entity to find the User Entities.
+     * @return array An array with all found User Entities.
+     * @since 0.0.1-dev
+     */
+    public function findByClan(Clan $clan)
+    {
+        //check if a UserMapper is available.
+        if (!($this->dataMapper instanceof UserMapper)) {
+            return [];
+        }
+
+        //create the condition and return the result.
+        $condition = 'id IN (SELECT user_id FROM clan_user WHERE clan_id = '.$clan->id.')';
+        return $this->dataMapper->find($condition);
+    }
+
+    /**
+     * Method to find User Entities by Team Entity.
+     * @param Team $team The Team Entity to find the User Entities.
+     * @return array An array with all found User Entities.
+     * @since 0.0.1-dev
+     */
+    public function findByTeam(Team $team)
+    {
+        //check if a UserMapper is available.
+        if (!($this->dataMapper instanceof UserMapper)) {
+            return [];
+        }
+
+        //create the condition and return the result.
+        $condition = 'id IN (SELECT user_id FROM team_user WHERE team_id = '.$team->id.')';
+        return $this->dataMapper->find($condition);
     }
 
     /**

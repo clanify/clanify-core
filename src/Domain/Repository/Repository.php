@@ -11,8 +11,9 @@ use Clanify\Domain\DataMapper\IDataMapper;
  * Class Repository
  *
  * @author Sebastian Brosch <contact@sebastianbrosch.de>
- * @copyright 2015 Clanify
+ * @copyright 2016 Clanify
  * @license GNU General Public License, version 3
+ * @package Clanify\Domain\Repository
  * @version 0.0.1-dev
  */
 abstract class Repository implements IRepository

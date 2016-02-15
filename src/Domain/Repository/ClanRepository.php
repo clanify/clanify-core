@@ -11,7 +11,7 @@ use Clanify\Domain\DataMapper\ClanMapper;
  * Class ClanRepository
  *
  * @author Sebastian Brosch <contact@sebastianbrosch.de>
- * @copyright 2015 Clanify
+ * @copyright 2016 Clanify
  * @license GNU General Public License, version 3
  * @package Clanify\Domain\Repository
  * @version 0.0.1-dev
@@ -135,10 +135,8 @@ class ClanRepository extends Repository
             return [];
         }
 
-        //set the condition.
+        //create the condition and return the result.
         $condition = "tag = '".$tag."' AND name = '".$name."'";
-
-        //return the result of the ClanMapper.
         return $this->dataMapper->find($condition);
     }
 }

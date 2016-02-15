@@ -6,12 +6,13 @@
 namespace Clanify\Domain\Repository;
 
 use Clanify\Domain\DataMapper\TeamMapper;
+use Clanify\Domain\Entity\Clan;
 
 /**
  * Class TeamRepository
  *
  * @author Sebastian Brosch <contact@sebastianbrosch.de>
- * @copyright 2015 Clanify
+ * @copyright 2016 Clanify
  * @license GNU General Public License, version 3
  * @package Clanify\Domain\Repository
  * @version 0.0.1-dev
@@ -31,6 +32,24 @@ class TeamRepository extends Repository
         } else {
             return $this->findAllEntities(get_class($this->dataMapper));
         }
+    }
+
+    /**
+     * Method to find Team Entities by Clan Entity.
+     * @param Clan $clan The Clan Entity to find the Team Entities.
+     * @return array An array with all found Team Entities.
+     * @since 0.0.1-dev
+     */
+    public function findByClan(Clan $clan)
+    {
+        //check if a TeamMapper is available.
+        if (!($this->dataMapper instanceof TeamMapper)) {
+            return [];
+        }
+
+        //create the condition and return the result.
+        $condition = 'id IN (SELECT team_id FROM clan_team WHERE clan_id = '.$clan->id.')';
+        return $this->dataMapper->find($condition);
     }
 
     /**
@@ -135,10 +154,8 @@ class TeamRepository extends Repository
             return [];
         }
 
-        //set the condition.
+        //create the condition and return the result.
         $condition = "tag = '".$tag."' AND name = '".$name."'";
-
-        //return the result of the TeamMapper.
         return $this->dataMapper->find($condition);
     }
 }
