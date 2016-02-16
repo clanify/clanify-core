@@ -3,7 +3,7 @@
  * Namespace for all Entities of Clanify.
  * @since 0.0.1-dev
  */
-namespace Clanify\Domain\Entity;
+namespace Clanify\Core;
 
 /**
  * Class Session
@@ -14,7 +14,7 @@ namespace Clanify\Domain\Entity;
  * @package Clanify\Domain\Entity
  * @version 0.0.1-dev
  */
-class Session extends Entity
+class Session
 {
     /**
      * Method to create a session.
