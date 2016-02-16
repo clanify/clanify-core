@@ -5,14 +5,14 @@
  */
 namespace Clanify\Domain\DataMapper;
 
-use \Clanify\Domain\Entity\Clan;
+use Clanify\Domain\Entity\Clan;
 use Clanify\Domain\Entity\IEntity;
 
 /**
  * Class ClanMapper
  *
  * @author Sebastian Brosch <contact@sebastianbrosch.de>
- * @copyright 2015 Clanify
+ * @copyright 2016 Clanify
  * @license GNU General Public License, version 3
  * @package Clanify\Domain\DataMapper
  * @version 0.0.1-dev
@@ -20,14 +20,14 @@ use Clanify\Domain\Entity\IEntity;
 class ClanMapper extends DataMapper
 {
     /**
-     * DataMapper constructor.
-     * @param \PDO $pdo The PDO object.
+     * ClanMapper constructor.
+     * @param \PDO $pdo The PDO object to connect with database.
      * @since 0.0.1-dev
      */
     public function __construct(\PDO $pdo)
     {
         $this->table = 'clan';
-        parent::__construct($pdo);
+        $this->pdo = $pdo;
     }
 
     /**
@@ -92,7 +92,7 @@ class ClanMapper extends DataMapper
     }
 
     /**
-     * Method to save an Clan on database.
+     * Method to save a Clan on database.
      * @param IEntity $clan The Clan Entity.
      * @return bool The state if the Clan Entity was successfully saved.
      * @since 0.0.1-dev

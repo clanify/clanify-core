@@ -11,7 +11,7 @@ use Clanify\Domain\Entity\IEntity;
  * Interface IDataMapper
  *
  * @author Sebastian Brosch <contact@sebastianbrosch.de>
- * @copyright 2015 Clanify
+ * @copyright 2016 Clanify
  * @license GNU General Public License, version 3
  * @package Clanify\Domain\DataMapper
  * @version 0.0.1-dev
@@ -19,8 +19,8 @@ use Clanify\Domain\Entity\IEntity;
 interface IDataMapper
 {
     /**
-     * DataMapper constructor.
-     * @param \PDO $pdo The PDO object.
+     * IDataMapper constructor.
+     * @param \PDO $pdo The PDO object to connect with database.
      * @since 0.0.1-dev
      */
     public function __construct(\PDO $pdo);

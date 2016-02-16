@@ -12,7 +12,7 @@ use Clanify\Domain\Entity\Team;
  * Class TeamMapper
  *
  * @author Sebastian Brosch <contact@sebastianbrosch.de>
- * @copyright 2015 Clanify
+ * @copyright 2016 Clanify
  * @license GNU General Public License, version 3
  * @package Clanify\Domain\DataMapper
  * @version 0.0.1-dev
@@ -21,13 +21,13 @@ class TeamMapper extends DataMapper
 {
     /**
      * TeamMapper constructor.
-     * @param \PDO $pdo The PDO object.
+     * @param \PDO $pdo The PDO object to connect with database.
      * @since 0.0.1-dev
      */
     public function __construct(\PDO $pdo)
     {
         $this->table = 'team';
-        parent::__construct($pdo);
+        $this->pdo = $pdo;
     }
 
     /**
