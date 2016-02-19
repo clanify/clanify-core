@@ -13,7 +13,7 @@ use Clanify\Domain\Specification\Specification;
  * Class IsValidWebsite
  *
  * @author Sebastian Brosch <contact@sebastianbrosch.de>
- * @copyright 2015 Clanify
+ * @copyright 2016 Clanify
  * @license GNU General Public License, version 3
  * @package Clanify\Domain\Specification\Clan
  * @version 0.0.1-dev
@@ -28,11 +28,16 @@ class IsValidWebsite extends Specification
      */
     public function isSatisfiedBy(IEntity $clan)
     {
-        //check if the Entity is a Clan.
+        //check if a Clan is available.
         if ($clan instanceof Clan) {
-            return filter_var($clan->website, FILTER_VALIDATE_URL);
-        } else {
-            return false;
+
+            //check if the website is valid.
+            if ((trim($clan->website) === '') || (filter_var($clan->website, FILTER_VALIDATE_URL) !== false)) {
+                return true;
+            }
         }
+
+        //return the state.
+        return false;
     }
 }

@@ -13,7 +13,7 @@ use Clanify\Domain\Specification\Specification;
  * Class IsValidName
  *
  * @author Sebastian Brosch <contact@sebastianbrosch.de>
- * @copyright 2015 Clanify
+ * @copyright 2016 Clanify
  * @license GNU General Public License, version 3
  * @package Clanify\Domain\Specification\Clan
  * @version 0.0.1-dev
@@ -28,11 +28,16 @@ class IsValidName extends Specification
      */
     public function isSatisfiedBy(IEntity $clan)
     {
-        //check if the Entity is a Clan.
+        //check if a Clan is available.
         if ($clan instanceof Clan) {
-            return (preg_match('/^[A-Za-z0-9\- ]{5,100}$/', $clan->name) === 1);
-        } else {
-            return false;
+
+            //check if the name is valid.
+            if (preg_match('/^[A-Za-z0-9\- ]{5,100}$/', $clan->name) > 0) {
+                return true;
+            }
         }
+
+        //return the state.
+        return false;
     }
 }

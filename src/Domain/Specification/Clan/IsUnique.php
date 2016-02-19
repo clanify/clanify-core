@@ -5,21 +5,23 @@
  */
 namespace Clanify\Domain\Specification\Clan;
 
+use Clanify\Core\Database;
+use Clanify\Domain\DataMapper\ClanMapper;
 use Clanify\Domain\Entity\Clan;
 use Clanify\Domain\Entity\IEntity;
-use Clanify\Domain\Specification\CompositeSpecification;
+use Clanify\Domain\Repository\ClanRepository;
 use Clanify\Domain\Specification\Specification;
 
 /**
- * Class CanCreate
+ * Class IsUnique
  *
  * @author Sebastian Brosch <contact@sebastianbrosch.de>
- * @copyright 2015 Clanify
+ * @copyright 2016 Clanify
  * @license GNU General Public License, version 3
  * @package Clanify\Domain\Specification\Clan
  * @version 0.0.1-dev
  */
-class CanCreate extends Specification
+class IsUnique extends Specification
 {
     /**
      * Method to check if the Clan satisfies the Specification.
@@ -29,20 +31,20 @@ class CanCreate extends Specification
      */
     public function isSatisfiedBy(IEntity $clan)
     {
-        //check if the Entity is a Clan.
+        //check if a Clan is available.
         if ($clan instanceof Clan) {
+            $clanMapper = new ClanMapper(Database::getInstance()->getConnection());
+            $clanRepository = new ClanRepository($clanMapper);
 
-            //create the composite specification.
-            $validSpec = new CompositeSpecification(
-                new IsValidName(),
-                new IsValidTag(),
-                new IsValidWebsite(),
-                new NotExistsName(),
-                new NotExistsTag()
-            );
+            //find the Clans by unique properties.
+            $clans = $clanRepository->findUnique($clan->tag, $clan->name);
 
-            //check if the Clan is valid.
-            return $validSpec->isSatisfiedBy($clan);
+            //check if the id should be excluded.
+            if ($this->excludeID) {
+                return $this->excludeCurrentID($clans, $clan);
+            } else {
+                return (count($clans) > 0) ? false : true;
+            }
         } else {
             return false;
         }
