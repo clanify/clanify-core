@@ -30,14 +30,9 @@ class IsValidWebsite extends Specification
     {
         //check if a Team is available.
         if ($team instanceof Team) {
-
-            //check if the website is valid.
-            if ((trim($team->website) === '') || (filter_var($team->website, FILTER_VALIDATE_URL) !== false)) {
-                return true;
-            }
+            return ((trim($team->website) === '') || (filter_var($team->website, FILTER_VALIDATE_URL) !== false));
+        } else {
+            return false;
         }
-
-        //return the state.
-        return false;
     }
 }

@@ -30,14 +30,9 @@ class IsValidName extends Specification
     {
         //check if a Clan is available.
         if ($clan instanceof Clan) {
-
-            //check if the name is valid.
-            if (preg_match('/^[A-Za-z0-9\- ]{5,100}$/', $clan->name) > 0) {
-                return true;
-            }
+            return (preg_match('/^[A-Za-z0-9\- ]{5,100}$/', $clan->name) > 0);
+        } else {
+            return false;
         }
-
-        //return the state.
-        return false;
     }
 }

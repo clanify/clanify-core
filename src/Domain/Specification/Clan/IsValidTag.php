@@ -30,14 +30,9 @@ class IsValidTag extends Specification
     {
         //check if a Clan is available.
         if ($clan instanceof Clan) {
-
-            //check if the tag is valid.
-            if (preg_match('/^[A-Za-z0-9]{2,5}$/', $clan->tag) > 0) {
-                return true;
-            }
+            return (preg_match('/^[A-Za-z0-9]{2,5}$/', $clan->tag) === 1);
+        } else {
+            return false;
         }
-
-        //return the state.
-        return false;
     }
 }

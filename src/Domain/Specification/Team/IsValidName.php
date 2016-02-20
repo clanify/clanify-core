@@ -30,14 +30,9 @@ class IsValidName extends Specification
     {
         //check if a Team is available.
         if ($team instanceof Team) {
-
-            //check if the name is valid.
-            if (preg_match('/^[A-Za-z0-9\- ]{5,100}$/', $team->name) > 0) {
-                return true;
-            }
+            return (preg_match('/^[A-Za-z0-9\- ]{5,100}$/', $team->name) === 1);
+        } else {
+            return false;
         }
-
-        //return the state.
-        return false;
     }
 }

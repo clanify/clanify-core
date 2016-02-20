@@ -30,14 +30,9 @@ class IsValidWebsite extends Specification
     {
         //check if a Clan is available.
         if ($clan instanceof Clan) {
-
-            //check if the website is valid.
-            if ((trim($clan->website) === '') || (filter_var($clan->website, FILTER_VALIDATE_URL) !== false)) {
-                return true;
-            }
+            return ((trim($clan->website) === '') || (filter_var($clan->website, FILTER_VALIDATE_URL) !== false));
+        } else {
+            return false;
         }
-
-        //return the state.
-        return false;
     }
 }

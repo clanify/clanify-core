@@ -30,14 +30,9 @@ class IsValidID extends Specification
     {
         //check if an Entity is available.
         if ($entity instanceof Entity) {
-
-            //check if the id is valid.
-            if (preg_match('/^[0-9]+$/', $entity->id) > 0) {
-                return true;
-            }
+            return (preg_match('/^[0-9]+$/', $entity->id) === 1);
+        } else {
+            return false;
         }
-
-        //return the state.
-        return false;
     }
 }
