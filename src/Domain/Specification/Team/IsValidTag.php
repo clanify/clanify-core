@@ -13,7 +13,7 @@ use Clanify\Domain\Specification\Specification;
  * Class IsValidTag
  *
  * @author Sebastian Brosch <contact@sebastianbrosch.de>
- * @copyright 2015 Clanify
+ * @copyright 2016 Clanify
  * @license GNU General Public License, version 3
  * @package Clanify\Domain\Specification\Team
  * @version 0.0.1-dev
@@ -28,11 +28,16 @@ class IsValidTag extends Specification
      */
     public function isSatisfiedBy(IEntity $team)
     {
-        //check if the Entity is a Team.
+        //check if a Team is available.
         if ($team instanceof Team) {
-            return (preg_match('/^[A-Za-z0-9]{2,5}$/', $team->tag) === 1);
-        } else {
-            return false;
+
+            //check if the tag is valid.
+            if (preg_match('/^[A-Za-z0-9]{2,5}$/', $team->tag) > 0) {
+                return true;
+            }
         }
+
+        //return the state.
+        return false;
     }
 }

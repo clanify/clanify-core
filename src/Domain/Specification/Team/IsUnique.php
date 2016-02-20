@@ -5,22 +5,23 @@
  */
 namespace Clanify\Domain\Specification\Team;
 
+use Clanify\Core\Database;
+use Clanify\Domain\DataMapper\TeamMapper;
 use Clanify\Domain\Entity\IEntity;
 use Clanify\Domain\Entity\Team;
-use Clanify\Domain\Specification\CompositeSpecification;
-use Clanify\Domain\Specification\NotSpecification;
+use Clanify\Domain\Repository\TeamRepository;
 use Clanify\Domain\Specification\Specification;
 
 /**
- * Class CanUpdate
+ * Class IsUnique
  *
  * @author Sebastian Brosch <contact@sebastianbrosch.de>
- * @copyright 2015 Clanify
+ * @copyright 2016 Clanify
  * @license GNU General Public License, version 3
  * @package Clanify\Domain\Specification\Team
  * @version 0.0.1-dev
  */
-class CanUpdate extends Specification
+class IsUnique extends Specification
 {
     /**
      * Method to check if the Team satisfies the Specification.
@@ -30,21 +31,20 @@ class CanUpdate extends Specification
      */
     public function isSatisfiedBy(IEntity $team)
     {
-        //check if the Entity is a Team.
+        //check if a Team is available.
         if ($team instanceof Team) {
+            $teamMapper = new TeamMapper(Database::getInstance()->getConnection());
+            $teamRepository = new TeamRepository($teamMapper);
 
-            //create the composite specification.
-            $validSpec = new CompositeSpecification(
-                new IsValidName(),
-                new IsValidTag(),
-                new IsValidWebsite(),
-                new NotExistsName(true),
-                new NotExistsTag(true),
-                new NotSpecification(new NotExistsID())
-            );
+            //find the Teams by unique properties.
+            $teams = $teamRepository->findUnique($team->tag, $team->name);
 
-            //check if the Team is valid.
-            return $validSpec->isSatisfiedBy($team);
+            //check if the id should be excluded.
+            if ($this->excludeID) {
+                return $this->excludeCurrentID($teams, $team);
+            } else {
+                return (count($teams) > 0) ? false : true;
+            }
         } else {
             return false;
         }
