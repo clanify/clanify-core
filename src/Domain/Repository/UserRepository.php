@@ -134,4 +134,23 @@ class UserRepository extends Repository
         //return the result of the UserMapper.
         return $this->dataMapper->find($condition);
     }
+
+    /**
+     * Method to find an User Entity by unique parameters.
+     * @param string $email The email to find the User Entity.
+     * @param string $username The name to find the User Entity.
+     * @return array An array with all found User Entities.
+     * @since 0.0.1-dev
+     */
+    public function findUnique($email, $username)
+    {
+        //check if a UserMapper is available.
+        if (!($this->dataMapper instanceof UserMapper)) {
+            return [];
+        }
+
+        //create the condition and return the result.
+        $condition = "email = '".$email."' OR username = '".$username."'";
+        return $this->dataMapper->find($condition);
+    }
 }
