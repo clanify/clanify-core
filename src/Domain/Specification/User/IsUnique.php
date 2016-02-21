@@ -6,21 +6,22 @@
 namespace Clanify\Domain\Specification\User;
 
 use Clanify\Core\Database;
+use Clanify\Domain\DataMapper\UserMapper;
 use Clanify\Domain\Entity\IEntity;
 use Clanify\Domain\Entity\User;
 use Clanify\Domain\Repository\UserRepository;
 use Clanify\Domain\Specification\Specification;
 
 /**
- * Class NotExistsUsername
+ * Class IsUnique
  *
  * @author Sebastian Brosch <contact@sebastianbrosch.de>
- * @copyright 2015 Clanify
+ * @copyright 2016 Clanify
  * @license GNU General Public License, version 3
  * @package Clanify\Domain\Specification\User
  * @version 0.0.1-dev
  */
-class NotExistsUsername extends Specification
+class IsUnique extends Specification
 {
     /**
      * Method to check if the User satisfies the Specification.
@@ -30,13 +31,13 @@ class NotExistsUsername extends Specification
      */
     public function isSatisfiedBy(IEntity $user)
     {
-        //check if the Entity is a User.
+        //check if a User is available.
         if ($user instanceof User) {
-            $database = Database::getInstance();
-            $userRepository = new UserRepository($database->getConnection());
+            $userMapper = new UserMapper(Database::getInstance()->getConnection());
+            $userRepository = new UserRepository($userMapper);
 
-            //find the Users by username.
-            $users = $userRepository->findByUsername($user->username);
+            //find the Users by unique properties.
+            $users = $userRepository->findUnique($user->email, $user->username);
 
             //check if the id should be excluded.
             if ($this->excludeID) {

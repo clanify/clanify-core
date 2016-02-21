@@ -13,7 +13,7 @@ use Clanify\Domain\Specification\Specification;
  * Class IsValidBirthday
  *
  * @author Sebastian Brosch <contact@sebastianbrosch.de>
- * @copyright 2015 Clanify
+ * @copyright 2016 Clanify
  * @license GNU General Public License, version 3
  * @package Clanify\Domain\Specification\User
  * @version 0.0.1-dev
@@ -28,7 +28,7 @@ class IsValidBirthday extends Specification
      */
     public function isSatisfiedBy(IEntity $user)
     {
-        //check if the Entity is a User.
+        //check if a User is available.
         if ($user instanceof User) {
 
             //check if a default value is available.

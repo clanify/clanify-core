@@ -13,7 +13,7 @@ use Clanify\Domain\Specification\Specification;
  * Class IsValidUsername
  *
  * @author Sebastian Brosch <contact@sebastianbrosch.de>
- * @copyright 2015 Clanify
+ * @copyright 2016 Clanify
  * @license GNU General Public License, version 3
  * @package Clanify\Domain\Specification\User
  * @version 0.0.1-dev
@@ -28,7 +28,7 @@ class IsValidUsername extends Specification
      */
     public function isSatisfiedBy(IEntity $user)
     {
-        //check if the Entity is a User.
+        //check if a User is available.
         if ($user instanceof User) {
             return (preg_match('/^[a-zA-Z0-9]{5,100}$/', $user->username) === 1);
         } else {
