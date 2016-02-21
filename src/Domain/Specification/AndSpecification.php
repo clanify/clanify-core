@@ -11,7 +11,7 @@ use Clanify\Domain\Entity\IEntity;
  * Class AndSpecification
  *
  * @author Sebastian Brosch <contact@sebastianbrosch.de>
- * @copyright 2015 Clanify
+ * @copyright 2016 Clanify
  * @license GNU General Public License, version 3
  * @package Clanify\Domain\Specification
  * @version 0.0.1-dev

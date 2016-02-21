@@ -9,7 +9,7 @@ namespace Clanify\Domain\Specification;
  * Class Specification
  *
  * @author Sebastian Brosch <contact@sebastianbrosch.de>
- * @copyright 2015 Clanify
+ * @copyright 2016 Clanify
  * @license GNU General Public License, version 3
  * @package Clanify\Domain\Specification
  * @version 0.0.1-dev
@@ -44,8 +44,6 @@ abstract class Specification implements ISpecification
     {
         //run through all Entities.
         foreach ($entities as $entity) {
-
-            //check if the class is the same and check the id.
             if ((get_class($entity) === get_class($object)) && ($entity->id <> $object->id)) {
                 return false;
             }
