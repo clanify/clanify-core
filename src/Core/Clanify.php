@@ -78,6 +78,7 @@ class Clanify
     {
         //reset the normalized value return the normalized value.
         $normalized = implode(array_map('ucfirst', explode('_', strtolower($value))));
+        $normalized = implode(array_map('ucfirst', explode('-', strtolower($normalized))));
         return ($isMethod) ? lcfirst($normalized) : $normalized;
     }
 
