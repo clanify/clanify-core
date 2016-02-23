@@ -124,7 +124,7 @@ class CitoEngine
 
     /**
      * Method to get the instance of the CitoEngine.
-     * @return Database|null The instance of the CitoEngine.
+     * @return CitoEngine|null The instance of the CitoEngine.
      * @since 0.0.1-dev
      */
     public static function getInstance()
@@ -207,22 +207,27 @@ class CitoEngine
         $tagContent = '';
 
         //get all tags on the site content.
-        preg_match_all("/#!##(.*)##!#/", $this->siteBuffer, $tags);
+        preg_match_all("/{{(.*)}}/", $this->siteBuffer, $tags);
 
         //run through all tags.
-        foreach ($tags[1] as $tag) {
+        for ($i = 0; $i < count($tags[1]); $i++) {
+            $tag = $tags[1][$i];
+
+            //check if a content is available.
             if (isset($this->tagValues[$tag])) {
+
+                //run through all tag contents and create the whole content.
                 foreach ($this->tagValues[$tag] as $content) {
                     $tagContent .= $content.(($content === '') ? '' : "\n");
                 }
 
-                //replace the tag on site content.
-                $this->siteBuffer = str_replace('#!##'.$tag.'##!#', $tagContent, $this->siteBuffer);
-            } else {
-                $this->siteBuffer = str_replace('#!##'.$tag.'##!#', '', $this->siteBuffer);
+                //get all tags of the tag content and add to the tag array.
+                preg_match_all("/{{(.*)}}/", $tagContent, $tagsContent);
+                $tags[1] = array_merge($tags[1], $tagsContent[1]);
             }
 
-            //reset the tag content for next replacement.
+            //replace the tag with tag content and clear the tag content.
+            $this->siteBuffer = str_replace('{{'.$tag.'}}', $tagContent, $this->siteBuffer);
             $tagContent = '';
         }
     }
