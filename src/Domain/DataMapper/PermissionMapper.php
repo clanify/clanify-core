@@ -5,6 +5,7 @@
  */
 namespace Clanify\Domain\DataMapper;
 
+use Clanify\Core\Database;
 use Clanify\Domain\Entity\IEntity;
 use Clanify\Domain\Entity\Permission;
 
@@ -28,6 +29,16 @@ class PermissionMapper extends DataMapper
     {
         $this->table = 'permission';
         $this->pdo = $pdo;
+    }
+
+    /**
+     * Method to build a new object of PermissionMapper.
+     * @return PermissionMapper The created object of PermissionMapper.
+     * @since 0.0.1-dev
+     */
+    public static function build()
+    {
+        return new self(Database::getInstance()->getConnection());
     }
 
     /**

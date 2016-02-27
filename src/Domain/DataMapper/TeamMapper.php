@@ -5,6 +5,7 @@
  */
 namespace Clanify\Domain\DataMapper;
 
+use Clanify\Core\Database;
 use Clanify\Domain\Entity\IEntity;
 use Clanify\Domain\Entity\Team;
 
@@ -28,6 +29,16 @@ class TeamMapper extends DataMapper
     {
         $this->table = 'team';
         $this->pdo = $pdo;
+    }
+
+    /**
+     * Method to build a new object of TeamMapper.
+     * @return TeamMapper The created object of TeamMapper.
+     * @since 0.0.1-dev
+     */
+    public static function build()
+    {
+        return new self(Database::getInstance()->getConnection());
     }
 
     /**

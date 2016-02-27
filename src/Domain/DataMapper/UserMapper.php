@@ -5,6 +5,7 @@
  */
 namespace Clanify\Domain\DataMapper;
 
+use Clanify\Core\Database;
 use Clanify\Domain\Entity\IEntity;
 use Clanify\Domain\Entity\User;
 
@@ -28,6 +29,16 @@ class UserMapper extends DataMapper
     {
         $this->table = 'user';
         $this->pdo = $pdo;
+    }
+
+    /**
+     * Method to build a new object of UserMapper.
+     * @return UserMapper The created object of UserMapper.
+     * @since 0.0.1-dev
+     */
+    public static function build()
+    {
+        return new self(Database::getInstance()->getConnection());
     }
 
     /**

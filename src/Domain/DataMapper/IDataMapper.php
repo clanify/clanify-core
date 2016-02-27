@@ -26,6 +26,13 @@ interface IDataMapper
     public function __construct(\PDO $pdo);
 
     /**
+     * Method to build a new object of IDataMapper.
+     * @return IDataMapper The created object of IDataMapper.
+     * @since 0.0.1-dev
+     */
+    public static function build();
+
+    /**
      * Method to create an Entity on database.
      * @param IEntity $entity The Entity.
      * @return bool The state if the Entity was successfully created.

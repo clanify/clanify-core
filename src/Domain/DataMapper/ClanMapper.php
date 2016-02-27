@@ -5,6 +5,7 @@
  */
 namespace Clanify\Domain\DataMapper;
 
+use Clanify\Core\Database;
 use Clanify\Domain\Entity\Clan;
 use Clanify\Domain\Entity\IEntity;
 
@@ -28,6 +29,16 @@ class ClanMapper extends DataMapper
     {
         $this->table = 'clan';
         $this->pdo = $pdo;
+    }
+
+    /**
+     * Method to build a new object of ClanMapper.
+     * @return ClanMapper The created object of ClanMapper.
+     * @since 0.0.1-dev
+     */
+    public static function build()
+    {
+        return new self(Database::getInstance()->getConnection());
     }
 
     /**
