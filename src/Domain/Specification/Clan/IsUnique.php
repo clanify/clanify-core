@@ -5,8 +5,6 @@
  */
 namespace Clanify\Domain\Specification\Clan;
 
-use Clanify\Core\Database;
-use Clanify\Domain\DataMapper\ClanMapper;
 use Clanify\Domain\Entity\Clan;
 use Clanify\Domain\Entity\IEntity;
 use Clanify\Domain\Repository\ClanRepository;
@@ -33,11 +31,7 @@ class IsUnique extends Specification
     {
         //check if a Clan is available.
         if ($clan instanceof Clan) {
-            $clanMapper = new ClanMapper(Database::getInstance()->getConnection());
-            $clanRepository = new ClanRepository($clanMapper);
-
-            //find the Clans by unique properties.
-            $clans = $clanRepository->findUnique($clan->tag, $clan->name);
+            $clans = ClanRepository::build()->findUnique($clan->tag, $clan->name);
 
             //check if the id should be excluded.
             if ($this->excludeID) {

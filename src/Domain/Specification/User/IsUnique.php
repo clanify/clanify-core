@@ -5,8 +5,6 @@
  */
 namespace Clanify\Domain\Specification\User;
 
-use Clanify\Core\Database;
-use Clanify\Domain\DataMapper\UserMapper;
 use Clanify\Domain\Entity\IEntity;
 use Clanify\Domain\Entity\User;
 use Clanify\Domain\Repository\UserRepository;
@@ -33,11 +31,7 @@ class IsUnique extends Specification
     {
         //check if a User is available.
         if ($user instanceof User) {
-            $userMapper = new UserMapper(Database::getInstance()->getConnection());
-            $userRepository = new UserRepository($userMapper);
-
-            //find the Users by unique properties.
-            $users = $userRepository->findUnique($user->email, $user->username);
+            $users = UserRepository::build()->findUnique($user->email, $user->username);
 
             //check if the id should be excluded.
             if ($this->excludeID) {
