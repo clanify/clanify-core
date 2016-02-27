@@ -5,7 +5,6 @@
  */
 namespace Clanify\Domain\Repository;
 
-use Clanify\Core\Database;
 use Clanify\Domain\DataMapper\TeamMapper;
 use Clanify\Domain\Entity\Clan;
 
@@ -27,8 +26,7 @@ class TeamRepository extends Repository
      */
     public static function build()
     {
-        $mapper = new TeamMapper(Database::getInstance()->getConnection());
-        return new self($mapper);
+        return new self(TeamMapper::build());
     }
 
     /**

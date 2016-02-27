@@ -5,7 +5,6 @@
  */
 namespace Clanify\Domain\Repository;
 
-use Clanify\Core\Database;
 use Clanify\Domain\DataMapper\PermissionMapper;
 
 /**
@@ -26,8 +25,7 @@ class PermissionRepository extends Repository
      */
     public static function build()
     {
-        $mapper = new PermissionMapper(Database::getInstance()->getConnection());
-        return new self($mapper);
+        return new self(PermissionMapper::build());
     }
 
     /**

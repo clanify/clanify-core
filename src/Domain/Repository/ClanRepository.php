@@ -5,7 +5,6 @@
  */
 namespace Clanify\Domain\Repository;
 
-use Clanify\Core\Database;
 use Clanify\Domain\DataMapper\ClanMapper;
 
 /**
@@ -26,8 +25,7 @@ class ClanRepository extends Repository
      */
     public static function build()
     {
-        $mapper = new ClanMapper(Database::getInstance()->getConnection());
-        return new self($mapper);
+        return new self(ClanMapper::build());
     }
 
     /**
