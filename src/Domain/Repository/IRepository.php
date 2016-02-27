@@ -26,6 +26,13 @@ interface IRepository
     public function __construct(IDataMapper $dataMapper);
 
     /**
+     * Method to build a new object of IRepository.
+     * @return IRepository The created object of IRepository.
+     * @since 0.0.1-dev
+     */
+    public static function build();
+
+    /**
      * Method to find all Entities.
      * @return array An array with all found Entities.
      * @since 0.0.1-dev

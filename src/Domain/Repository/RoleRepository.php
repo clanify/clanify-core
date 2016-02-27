@@ -5,6 +5,7 @@
  */
 namespace Clanify\Domain\Repository;
 
+use Clanify\Core\Database;
 use Clanify\Domain\DataMapper\RoleMapper;
 
 /**
@@ -18,6 +19,17 @@ use Clanify\Domain\DataMapper\RoleMapper;
  */
 class RoleRepository extends Repository
 {
+    /**
+     * Method to build a new object of RoleRepository.
+     * @return RoleRepository The created object of RoleRepository.
+     * @since 0.0.1-dev
+     */
+    public static function build()
+    {
+        $mapper = new RoleMapper(Database::getInstance()->getConnection());
+        return new self($mapper);
+    }
+
     /**
      * Method to find all Role Entities.
      * @return array An array with all found Role Entities.

@@ -5,6 +5,7 @@
  */
 namespace Clanify\Domain\Repository;
 
+use Clanify\Core\Database;
 use Clanify\Domain\DataMapper\TeamMapper;
 use Clanify\Domain\Entity\Clan;
 
@@ -19,6 +20,17 @@ use Clanify\Domain\Entity\Clan;
  */
 class TeamRepository extends Repository
 {
+    /**
+     * Method to build a new object of TeamRepository.
+     * @return TeamRepository The created object of TeamRepository.
+     * @since 0.0.1-dev
+     */
+    public static function build()
+    {
+        $mapper = new TeamMapper(Database::getInstance()->getConnection());
+        return new self($mapper);
+    }
+
     /**
      * Method to find all Team Entities.
      * @return array An array with all found Team Entities.

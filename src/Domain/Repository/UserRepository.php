@@ -5,6 +5,7 @@
  */
 namespace Clanify\Domain\Repository;
 
+use Clanify\Core\Database;
 use Clanify\Domain\DataMapper\UserMapper;
 use Clanify\Domain\Entity\Clan;
 use Clanify\Domain\Entity\Team;
@@ -20,6 +21,17 @@ use Clanify\Domain\Entity\Team;
  */
 class UserRepository extends Repository
 {
+    /**
+     * Method to build a new object of UserRepository.
+     * @return UserRepository The created object of UserRepository.
+     * @since 0.0.1-dev
+     */
+    public static function build()
+    {
+        $mapper = new UserMapper(Database::getInstance()->getConnection());
+        return new self($mapper);
+    }
+
     /**
      * Method to find all User Entities.
      * @return array An array with all found User Entities.

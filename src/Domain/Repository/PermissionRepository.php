@@ -5,6 +5,7 @@
  */
 namespace Clanify\Domain\Repository;
 
+use Clanify\Core\Database;
 use Clanify\Domain\DataMapper\PermissionMapper;
 
 /**
@@ -18,6 +19,17 @@ use Clanify\Domain\DataMapper\PermissionMapper;
  */
 class PermissionRepository extends Repository
 {
+    /**
+     * Method to build a new object of PermissionRepository.
+     * @return PermissionRepository The created object of PermissionRepository.
+     * @since 0.0.1-dev
+     */
+    public static function build()
+    {
+        $mapper = new PermissionMapper(Database::getInstance()->getConnection());
+        return new self($mapper);
+    }
+
     /**
      * Method to find all Permission Entities.
      * @return array An array with all found Permission Entities.
