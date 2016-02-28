@@ -3,7 +3,7 @@
  * Namespace for all Domain Services of Clanify.
  * @since 0.0.1-dev
  */
-namespace Clanify\Domain\Service;
+namespace Clanify\Domain\Service\Clan;
 
 use Clanify\Core\Database;
 use Clanify\Domain\Entity\Clan;
