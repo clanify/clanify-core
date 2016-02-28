@@ -64,40 +64,6 @@ class UserRepository extends Repository
     }
 
     /**
-     * Method to find User Entities by Team Entity.
-     * @param Team $team The Team Entity to find the User Entities.
-     * @return array An array with all found User Entities.
-     * @since 0.0.1-dev
-     */
-    public function findByTeam(Team $team)
-    {
-        //check if a UserMapper is available.
-        if (!($this->dataMapper instanceof UserMapper)) {
-            return [];
-        }
-
-        //create the condition and return the result.
-        $condition = 'id IN (SELECT user_id FROM team_user WHERE team_id = '.$team->id.')';
-        return $this->dataMapper->find($condition);
-    }
-
-    /**
-     * Method to find User Entities by ID.
-     * @param int $id The ID to find the User Entities.
-     * @return array An array with all found User Entities.
-     * @since 0.0.1-dev
-     */
-    public function findByID($id)
-    {
-        //check if a UserMapper is available.
-        if (!($this->dataMapper instanceof UserMapper)) {
-            return [];
-        } else {
-            return $this->findEntityByID($id, get_class($this->dataMapper));
-        }
-    }
-
-    /**
      * Method to find User Entities by email.
      * @param string $email The email to find the User Entities.
      * @return array An array with all found User Entities.
@@ -118,6 +84,40 @@ class UserRepository extends Repository
         }
 
         //return the result of the UserMapper.
+        return $this->dataMapper->find($condition);
+    }
+
+    /**
+     * Method to find User Entities by ID.
+     * @param int $id The ID to find the User Entities.
+     * @return array An array with all found User Entities.
+     * @since 0.0.1-dev
+     */
+    public function findByID($id)
+    {
+        //check if a UserMapper is available.
+        if (!($this->dataMapper instanceof UserMapper)) {
+            return [];
+        } else {
+            return $this->findEntityByID($id, get_class($this->dataMapper));
+        }
+    }
+
+    /**
+     * Method to find User Entities by Team Entity.
+     * @param Team $team The Team Entity to find the User Entities.
+     * @return array An array with all found User Entities.
+     * @since 0.0.1-dev
+     */
+    public function findByTeam(Team $team)
+    {
+        //check if a UserMapper is available.
+        if (!($this->dataMapper instanceof UserMapper)) {
+            return [];
+        }
+
+        //create the condition and return the result.
+        $condition = 'id IN (SELECT user_id FROM team_user WHERE team_id = '.$team->id.')';
         return $this->dataMapper->find($condition);
     }
 
