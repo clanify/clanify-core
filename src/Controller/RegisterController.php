@@ -6,14 +6,20 @@
 namespace Clanify\Controller;
 
 use Clanify\Core\Controller;
+use Clanify\Core\Log\LogLevel;
+use Clanify\Core\View;
 use Clanify\Domain\Entity\User;
-use Clanify\Domain\Service\UserService;
+use Clanify\Application\Service\AuthenticationService;
+use Clanify\Domain\Specification\User\IsUnique;
+use Clanify\Domain\Specification\User\IsValidEmail;
+use Clanify\Domain\Specification\User\IsValidPassword;
+use Clanify\Domain\Specification\User\IsValidUsername;
 
 /**
  * Class RegisterController
  *
  * @author Sebastian Brosch <contact@sebastianbrosch.de>
- * @copyright 2015 Clanify
+ * @copyright 2016 Clanify
  * @license GNU General Public License, version 3
  * @package Clanify\Controller
  * @version 0.0.1-dev
@@ -26,10 +32,9 @@ class RegisterController extends Controller
      */
     public function index()
     {
-        //get the view.
-        $this->includeHeader();
-        $this->includeView('Register', 'Index');
-        $this->includeFooter();
+        //get and load the View.
+        $view = new View('Register');
+        $view->load();
     }
 
     /**
@@ -42,14 +47,37 @@ class RegisterController extends Controller
         $user = new User();
         $user->loadFromPOST('register_');
 
-        //create a user service.
-        $userService = new UserService();
+        //check if the username is valid.
+        if ((new IsValidUsername())->isSatisfiedBy($user) === false) {
+            $this->jsonOutput('The username is not valid!', 'register_username', LogLevel::ERROR);
+            return false;
+        }
 
-        //try to register the user.
-        if ($userService->register($user)) {
-            header('Location: '.URL.'login');
+        //check if the email is valid.
+        if ((new IsValidEmail())->isSatisfiedBy($user) === false) {
+            $this->jsonOutput('The email is not valid!', 'register_email', LogLevel::ERROR);
+            return false;
+        }
+
+        //check if the password is valid.
+        if ((new IsValidPassword())->isSatisfiedBy($user) === false) {
+            $this->jsonOutput('The password is not valid!', 'register_password', LogLevel::ERROR);
+            return false;
+        }
+
+        //check if the user is unique.
+        if ((new IsUnique())->isSatisfiedBy($user) === false) {
+            $this->jsonOutput('The User already exists!', '', LogLevel::ERROR);
+            return false;
+        }
+
+        //register the User with the AuthenticationService.
+        if ((new AuthenticationService())->register($user)) {
+            $this->jsonOutput('The User was successfully registered!', '', LogLevel::INFO);
+            return true;
         } else {
-            header('Location: '.URL.'register');
+            $this->jsonOutput('The User could not be registered!', '', LogLevel::ERROR);
+            return false;
         }
     }
 }
