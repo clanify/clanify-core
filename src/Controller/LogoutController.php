@@ -5,18 +5,19 @@
  */
 namespace Clanify\Controller;
 
-use Clanify\Domain\Entity\Session;
+use Clanify\Application\Service\AuthenticationService;
+use Clanify\Core\Controller;
 
 /**
  * Class LogoutController
  *
  * @author Sebastian Brosch <contact@sebastianbrosch.de>
- * @copyright 2015 Clanify
+ * @copyright 2016 Clanify
  * @license GNU General Public License, version 3
  * @package Clanify\Controller
  * @version 0.0.1-dev
  */
-class LogoutController
+class LogoutController extends Controller
 {
     /**
      * The index (default) action of the Logout.
@@ -24,9 +25,12 @@ class LogoutController
      */
     public function index()
     {
-        //destroy the session.
-        Session::create();
-        Session::destroy();
-        header('Location: '.URL);
+        //load the needed session.
+        $this->needSession();
+
+        //logout the user and redirect.
+        if ((new AuthenticationService())->logout()) {
+            $this->redirect(URL);
+        }
     }
 }
