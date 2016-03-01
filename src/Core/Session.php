@@ -24,13 +24,6 @@ class Session
     private $pdo = null;
 
     /**
-     * The ID of the session.
-     * @since 0.0.1-dev
-     * @var string
-     */
-    public $id = '';
-
-    /**
      * The content of the session (content of global session array).
      * @since 0.0.1-dev
      * @var string
@@ -45,11 +38,11 @@ class Session
     public $created = 0;
 
     /**
-     * The ID of the User Entity which created the session.
+     * The ID of the session.
      * @since 0.0.1-dev
-     * @var int
+     * @var string
      */
-    public $user_id = 0;
+    public $id = '';
 
     /**
      * Method to close the session.
@@ -65,14 +58,12 @@ class Session
     /**
      * Method to create the session and set the information.
      * @param \PDO $pdo The PDO object to connect with database.
-     * @param int $user_id The ID of the User Entity.
      * @since 0.0.1-dev
      */
-    public function create(\PDO $pdo, $user_id = 0)
+    public function create(\PDO $pdo)
     {
         //set the information of the session.
         $this->pdo = $pdo;
-        $this->user_id = $user_id;
 
         //override the session handler with the own.
         session_set_save_handler(
@@ -101,7 +92,7 @@ class Session
         $sth = $this->pdo->prepare($sql);
 
         //bind the values to the query.
-        $sth->bindParam(':id', $id, \PDO::PARAM_INT);
+        $sth->bindParam(':id', $id, \PDO::PARAM_STR);
 
         //execute the query and return the state.
         return $sth->execute();
@@ -177,14 +168,13 @@ class Session
     public function write($id, $content)
     {
         //create and set the sql query.
-        $sql = 'REPLACE INTO session (id, content, created, user_id) VALUES (:id, :content, :created, :user_id)';
+        $sql = 'REPLACE INTO session (id, content, created) VALUES (:id, :content, :created)';
         $sth = $this->pdo->prepare($sql);
 
         //bind the values to the query.
         $sth->bindParam(':id', $id, \PDO::PARAM_STR);
+        $sth->bindParam(':content', $content, \PDO::PARAM_STR);
         $sth->bindParam(':created', time(), \PDO::PARAM_INT);
-        $sth->bindParam(':data', $content, \PDO::PARAM_STR);
-        $sth->bindParam(':user_id', $this->user_id, \PDO::PARAM_INT);
 
         //execute the query and return the state.
         return $sth->execute();
