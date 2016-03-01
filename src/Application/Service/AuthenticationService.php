@@ -8,7 +8,6 @@ namespace Clanify\Application\Service;
 use Clanify\Domain\DataMapper\UserMapper;
 use Clanify\Domain\Entity\User;
 use Clanify\Domain\Repository\UserRepository;
-use Clanify\Domain\Service\SessionService;
 use Clanify\Domain\Service\User\HashingService;
 
 /**
@@ -46,8 +45,7 @@ class AuthenticationService
 
                 //check if the password match.
                 if ($userDB->password === $user->password) {
-                    $sessionService = new SessionService();
-                    return $sessionService->create($user);
+                    return (new SessionService())->create($userDB);
                 }
             }
         }
@@ -58,15 +56,12 @@ class AuthenticationService
 
     /**
      * Method to logout an User Entity.
-     * @param User $user The User Entity which will be logged out.
      * @return bool The state if the User Entity could be logged out successfully.
      * @since 0.0.1-dev
      */
-    public function logout(User $user)
+    public function logout()
     {
-        //delete the session and return the state.
-        $sessionService = new SessionService();
-        return $sessionService->delete($user);
+        return (new SessionService())->delete();
     }
 
     /**
