@@ -5,8 +5,6 @@
  */
 namespace Clanify\Core;
 
-use Clanify\Domain\Entity\Session;
-
 /**
  * Class Controller
  *
@@ -35,16 +33,32 @@ class Controller
      * Method to load and check if a session is available.
      * @param string $redirectURL The url which will be used for redirect.
      * @since 0.0.1-dev
-     * @SuppressWarnings(PHPMD.Superglobals)
      */
     protected function needSession($redirectURL = URL)
     {
-        //initialize the session.
-        Session::create();
+        //create the session.
+        $session = new Session();
+        $session->create(Database::getInstance()->getConnection());
 
         //check if the session is available.
         if (isset($_SESSION['user_username']) === false) {
             $this->redirect($redirectURL);
         }
+    }
+
+    /**
+     * Method to create a JSON output for AJAX calls.
+     * @param string $message The message which will be showed.
+     * @param string $field The name of the field which is affected.
+     * @param string $level The message level of the output.
+     * @since 0.0.1-dev
+     */
+    protected function jsonOutput($message, $field, $level)
+    {
+        $output = array();
+        $output['message'] = $message;
+        $output['field'] = $field;
+        $output['state'] = $level;
+        echo json_encode($output);
     }
 }
