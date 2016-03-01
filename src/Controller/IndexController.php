@@ -6,12 +6,13 @@
 namespace Clanify\Controller;
 
 use Clanify\Core\Controller;
+use Clanify\Core\View;
 
 /**
  * Class IndexController
  *
  * @author Sebastian Brosch <contact@sebastianbrosch.de>
- * @copyright 2015 Clanify
+ * @copyright 2016 Clanify
  * @license GNU General Public License, version 3
  * @package Clanify\Controller
  * @version 0.0.1-dev
@@ -24,9 +25,8 @@ class IndexController extends Controller
      */
     public function index()
     {
-        //get the view.
-        $this->includeHeader();
-        $this->includeView('Index', 'Index');
-        $this->includeFooter();
+        //get and load the View.
+        $view = new View('Index');
+        $view->load();
     }
 }
