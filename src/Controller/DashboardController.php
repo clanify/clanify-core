@@ -6,13 +6,13 @@
 namespace Clanify\Controller;
 
 use Clanify\Core\Controller;
-use Clanify\Domain\Entity\Session;
+use Clanify\Core\View;
 
 /**
  * Class DashboardController
  *
  * @author Sebastian Brosch <contact@sebastianbrosch.de>
- * @copyright 2015 Clanify
+ * @copyright 2016 Clanify
  * @license GNU General Public License, version 3
  * @package Clanify\Controller
  * @version 0.0.1-dev
@@ -25,12 +25,12 @@ class DashboardController extends Controller
      */
     public function index()
     {
-        //initialize the session.
-        Session::create();
+        //load the needed session.
+        $this->needSession();
 
-        //get the view.
-        $this->includeHeader();
-        $this->includeView('Dashboard', 'Index');
-        $this->includeFooter();
+        //get and load the View.
+        $view = new View('Dashboard');
+        $view->setVar('backend', true);
+        $view->load();
     }
 }
