@@ -7,8 +7,10 @@ DROP TABLE IF EXISTS `team_role`;
 DROP TABLE IF EXISTS `team_user`;
 DROP TABLE IF EXISTS `user_role`;
 DROP TABLE IF EXISTS `clan`;
+DROP TABLE IF EXISTS `menu`;
 DROP TABLE IF EXISTS `permission`;
 DROP TABLE IF EXISTS `role`;
+DROP TABLE IF EXISTS `session`;
 DROP TABLE IF EXISTS `team`;
 DROP TABLE IF EXISTS `user`;
 
@@ -20,6 +22,14 @@ CREATE TABLE clan (
   website VARCHAR(255) NOT NULL DEFAULT '',
   PRIMARY KEY (id)
 );
+CREATE TABLE menu (
+  action VARCHAR(50) NOT NULL DEFAULT '',
+  category VARCHAR(50) NOT NULL DEFAULT '',
+  controller VARCHAR(50) NOT NULL DEFAULT '',
+  lft INT NOT NULL DEFAULT 0,
+  rgt INT NOT NULL DEFAULT 0,
+  title VARCHAR(30) NOT NULL DEFAULT ''
+);
 CREATE TABLE permission (
   id INT UNSIGNED NOT NULL AUTO_INCREMENT,
   name VARCHAR(100) NOT NULL DEFAULT '',
@@ -28,6 +38,12 @@ CREATE TABLE permission (
 CREATE TABLE role (
   id INT UNSIGNED NOT NULL AUTO_INCREMENT,
   name VARCHAR(100) NOT NULL DEFAULT '',
+  PRIMARY KEY (id)
+);
+CREATE TABLE session (
+  id VARCHAR(32) NOT NULL DEFAULT '',
+  content TEXT NOT NULL DEFAULT '',
+  created INT UNSIGNED NOT NULL DEFAULT 0,
   PRIMARY KEY (id)
 );
 CREATE TABLE team (
@@ -100,3 +116,11 @@ CREATE TABLE user_role (
   FOREIGN KEY (user_id) REFERENCES user(id),
   PRIMARY KEY (role_id, user_id)
 );
+
+# init the menu
+INSERT INTO menu (`category`, `title`, `controller`, `action`, `lft`, `rgt`) VALUES
+('backend', 'Clan', 'clan', 'index', 1, 2),
+('backend', 'Team', 'team', 'index', 3, 4),
+('backend', 'User', 'user', 'index', 5, 6),
+('backend_user', '{{username}}', '', '', 1, 4),
+('backend_user', 'Logout', 'logout', 'index', 2, 3);
