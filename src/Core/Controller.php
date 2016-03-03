@@ -51,14 +51,16 @@ class Controller
      * @param string $message The message which will be showed.
      * @param string $field The name of the field which is affected.
      * @param string $level The message level of the output.
+     * @param string $redirect The URL to redirect on success.
      * @since 0.0.1-dev
      */
-    protected function jsonOutput($message, $field, $level)
+    protected function jsonOutput($message, $field, $level, $redirect = URL)
     {
         $output = array();
         $output['message'] = $message;
         $output['field'] = $field;
         $output['state'] = $level;
+        $output['redirect'] = $redirect;
         echo json_encode($output);
     }
 }
