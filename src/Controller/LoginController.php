@@ -59,7 +59,7 @@ class LoginController extends Controller
 
         //try to login the User.
         if ((new AuthenticationService())->login($user)) {
-            $this->jsonOutput('The User could be logged in!', '', LogLevel::INFO);
+            $this->jsonOutput('The User could be logged in!', '', LogLevel::INFO, URL.'dashboard');
             return true;
         } else {
             $this->jsonOutput('The User could not be logged in!', '', LogLevel::ERROR);

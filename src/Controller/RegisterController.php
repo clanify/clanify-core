@@ -73,7 +73,7 @@ class RegisterController extends Controller
 
         //register the User with the AuthenticationService.
         if ((new AuthenticationService())->register($user)) {
-            $this->jsonOutput('The User was successfully registered!', '', LogLevel::INFO);
+            $this->jsonOutput('The User was successfully registered!', '', LogLevel::INFO, URL.'login');
             return true;
         } else {
             $this->jsonOutput('The User could not be registered!', '', LogLevel::ERROR);
