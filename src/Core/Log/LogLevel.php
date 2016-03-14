@@ -1,6 +1,7 @@
 <?php
 /**
- * Namespace for all Logging functions of Clanify.
+ * Namespace for all logging functions of Clanify.
+ * @package Clanify\Core\Log
  * @since 0.0.1-dev
  */
 namespace Clanify\Core\Log;
@@ -18,56 +19,56 @@ namespace Clanify\Core\Log;
 class LogLevel
 {
     /**
-     * The alert log level (action must be taken immediately).
+     * The alert log level.
      * @const ALERT - action must be taken immediately.
      * @since 0.0.1-dev
      */
     const ALERT = 'alert';
 
     /**
-     * The critical log level (critical conditions).
+     * The critical log level.
      * @const CRITICAL - critical conditions.
      * @since 0.0.1-dev
      */
     const CRITICAL = 'critical';
 
     /**
-     * The debug log level (debug-level messages).
+     * The debug log level.
      * @const DEBUG - debug-level messages.
      * @since 0.0.1-dev
      */
     const DEBUG = 'debug';
 
     /**
-     * The emergency log level (system is unusable).
+     * The emergency log level.
      * @const EMERGENCY - system is unusable.
      * @since 0.0.1-dev
      */
     const EMERGENCY = 'emergency';
 
     /**
-     * The error log level (error conditions).
+     * The error log level.
      * @const ERROR - error conditions.
      * @since 0.0.1-dev
      */
     const ERROR = 'error';
 
     /**
-     * The info log level (informational messages).
+     * The info log level.
      * @const INFO - informational messages.
      * @since 0.0.1-dev
      */
     const INFO = 'info';
 
     /**
-     * The notice log level (normal but significant condition).
+     * The notice log level.
      * @const NOTICE - normal but significant condition.
      * @since 0.0.1-dev
      */
     const NOTICE = 'notice';
 
     /**
-     * The warning log level (warning conditions).
+     * The warning log level.
      * @const WARNING - warning conditions.
      * @since 0.0.1-dev
      */
