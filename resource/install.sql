@@ -7,6 +7,7 @@ DROP TABLE IF EXISTS `team_role`;
 DROP TABLE IF EXISTS `team_user`;
 DROP TABLE IF EXISTS `user_role`;
 DROP TABLE IF EXISTS `clan`;
+DROP TABLE IF EXISTS `log`;
 DROP TABLE IF EXISTS `menu`;
 DROP TABLE IF EXISTS `permission`;
 DROP TABLE IF EXISTS `role`;
@@ -21,6 +22,9 @@ CREATE TABLE clan (
   tag VARCHAR(5) NOT NULL DEFAULT '',
   website VARCHAR(255) NOT NULL DEFAULT '',
   PRIMARY KEY (id)
+);
+CREATE TABLE log (
+  message TEXT NOT NULL
 );
 CREATE TABLE menu (
   action VARCHAR(50) NOT NULL DEFAULT '',
@@ -42,7 +46,7 @@ CREATE TABLE role (
 );
 CREATE TABLE session (
   id VARCHAR(32) NOT NULL DEFAULT '',
-  content TEXT NOT NULL DEFAULT '',
+  content TEXT NOT NULL,
   created INT UNSIGNED NOT NULL DEFAULT 0,
   PRIMARY KEY (id)
 );
