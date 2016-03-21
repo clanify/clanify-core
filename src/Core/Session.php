@@ -1,6 +1,7 @@
 <?php
 /**
  * Namespace for all core functions of Clanify.
+ * @package Clanify\Core
  * @since 0.0.1-dev
  */
 namespace Clanify\Core;
@@ -9,7 +10,7 @@ namespace Clanify\Core;
  * Class Session
  *
  * @author Sebastian Brosch <contact@sebastianbrosch.de>
- * @copyright 2016 Clanify
+ * @copyright 2016 Clanify <http://clanify.rocks>
  * @license GNU General Public License, version 3
  * @package Clanify\Core
  * @version 0.0.1-dev
@@ -31,11 +32,11 @@ class Session
     public $content = '';
 
     /**
-     * The seconds since the UNIX epoch (1970-01-01) of the session.
+     * The date & time at which the session was created as timestamp.
      * @since 0.0.1-dev
      * @var int
      */
-    public $created = 0;
+    public $create_time = 0;
 
     /**
      * The ID of the session.
@@ -62,7 +63,7 @@ class Session
      */
     public function create(\PDO $pdo)
     {
-        //set the information of the session.
+        //set the database connection.
         $this->pdo = $pdo;
 
         //override the session handler with the own.
@@ -101,20 +102,17 @@ class Session
     /**
      * Method which represent the garbage collector to destroy expired sessions.
      * @param int $lifetime The lifetime of the session in seconds.
-     * @return bool The state if the garbage collector was successfull.
+     * @return bool The state if the garbage collector was successful.
      * @since 0.0.1-dev
      */
     public function gc($lifetime)
     {
         //create and set the sql query.
-        $sql = 'DELETE FROM session WHERE created < :expired';
+        $sql = 'DELETE FROM session WHERE create_time < :expired';
         $sth = $this->pdo->prepare($sql);
 
-        //get the expired time.
-        $expired = time() - $lifetime;
-
         //bind the values to the query.
-        $sth->bindParam(':expired', $expired, \PDO::PARAM_INT);
+        $sth->bindValue(':expired', (time() - $lifetime), \PDO::PARAM_INT);
 
         //execute the query and return the state.
         return $sth->execute();
@@ -168,13 +166,13 @@ class Session
     public function write($id, $content)
     {
         //create and set the sql query.
-        $sql = 'REPLACE INTO session (id, content, created) VALUES (:id, :content, :created)';
+        $sql = 'REPLACE INTO session (id, content, create_time) VALUES (:id, :content, :create_time)';
         $sth = $this->pdo->prepare($sql);
 
         //bind the values to the query.
         $sth->bindParam(':id', $id, \PDO::PARAM_STR);
         $sth->bindParam(':content', $content, \PDO::PARAM_STR);
-        $sth->bindParam(':created', time(), \PDO::PARAM_INT);
+        $sth->bindValue(':create_time', time(), \PDO::PARAM_INT);
 
         //execute the query and return the state.
         return $sth->execute();
