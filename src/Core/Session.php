@@ -25,27 +25,6 @@ class Session
     private $pdo = null;
 
     /**
-     * The content of the session (content of global session array).
-     * @since 0.0.1-dev
-     * @var string
-     */
-    public $content = '';
-
-    /**
-     * The date & time at which the session was created as timestamp.
-     * @since 0.0.1-dev
-     * @var int
-     */
-    public $create_time = 0;
-
-    /**
-     * The ID of the session.
-     * @since 0.0.1-dev
-     * @var string
-     */
-    public $id = '';
-
-    /**
      * Method to close the session.
      * @return bool The state if the session could be closed.
      * @since 0.0.1-dev
@@ -137,23 +116,23 @@ class Session
     public function read($id)
     {
         //create and set the sql query.
-        $sql = 'SELECT content FROM session WHERE id = :id';
+        $sql = 'SELECT content, user_agent FROM session WHERE id = :id';
         $sth = $this->pdo->prepare($sql);
 
         //bind the values to the query.
         $sth->bindParam(':id', $id, \PDO::PARAM_STR);
 
-        //execute the query.
-        if ($sth->execute()) {
-
-            //get the row from database.
-            if ($row = $sth->fetch(\PDO::FETCH_ASSOC)) {
+        //execute the query and get the row from database.
+        if ($sth->execute() && ($row = $sth->fetch(\PDO::FETCH_ASSOC))) {
+            if ($row['user_agent'] !== getenv('HTTP_USER_AGENT')) {
+                session_destroy();
+                return '';
+            } else {
                 return $row['content'];
             }
+        } else {
+            return '';
         }
-
-        //return the default.
-        return '';
     }
 
     /**
@@ -166,13 +145,15 @@ class Session
     public function write($id, $content)
     {
         //create and set the sql query.
-        $sql = 'REPLACE INTO session (id, content, create_time) VALUES (:id, :content, :create_time)';
+        $sql = 'REPLACE INTO session (id, content, create_time, user_agent) VALUES ';
+        $sql .= '(:id, :content, :create_time, :user_agent)';
         $sth = $this->pdo->prepare($sql);
 
         //bind the values to the query.
         $sth->bindParam(':id', $id, \PDO::PARAM_STR);
         $sth->bindParam(':content', $content, \PDO::PARAM_STR);
         $sth->bindValue(':create_time', time(), \PDO::PARAM_INT);
+        $sth->bindValue(':user_agent', getenv('HTTP_USER_AGENT'), \PDO::PARAM_STR);
 
         //execute the query and return the state.
         return $sth->execute();

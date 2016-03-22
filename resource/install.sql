@@ -48,6 +48,7 @@ CREATE TABLE `session` (
   `id` VARCHAR(32) NOT NULL DEFAULT '',
   `content` TEXT NOT NULL,
   `create_time` INT UNSIGNED NOT NULL DEFAULT 0,
+  `user_agent` VARCHAR(255) NOT NULL DEFAULT '',
   PRIMARY KEY (`id`)
 );
 CREATE TABLE `team` (
