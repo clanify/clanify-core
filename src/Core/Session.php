@@ -47,12 +47,12 @@ class Session
 
         //override the session handler with the own.
         session_set_save_handler(
-            array($this, "open"),
-            array($this, "close"),
-            array($this, "read"),
-            array($this, "write"),
-            array($this, "destroy"),
-            array($this, "gc")
+            array($this, 'open'),
+            array($this, 'close'),
+            array($this, 'read'),
+            array($this, 'write'),
+            array($this, 'destroy'),
+            array($this, 'gc')
         );
 
         //start the session.
@@ -124,7 +124,7 @@ class Session
 
         //execute the query and get the row from database.
         if ($sth->execute() && ($row = $sth->fetch(\PDO::FETCH_ASSOC))) {
-            if ($row['user_agent'] !== getenv('HTTP_USER_AGENT')) {
+            if ($row['user_agent'] !== md5(getenv('HTTP_USER_AGENT'))) {
                 session_destroy();
                 return '';
             } else {
@@ -153,7 +153,7 @@ class Session
         $sth->bindParam(':id', $id, \PDO::PARAM_STR);
         $sth->bindParam(':content', $content, \PDO::PARAM_STR);
         $sth->bindValue(':create_time', time(), \PDO::PARAM_INT);
-        $sth->bindValue(':user_agent', getenv('HTTP_USER_AGENT'), \PDO::PARAM_STR);
+        $sth->bindValue(':user_agent', md5(getenv('HTTP_USER_AGENT')), \PDO::PARAM_STR);
 
         //execute the query and return the state.
         return $sth->execute();
