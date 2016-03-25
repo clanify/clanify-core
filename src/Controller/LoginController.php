@@ -1,10 +1,12 @@
 <?php
 /**
  * Namespace for all Controller of Clanify.
+ * @package Clanify\Controller
  * @since 0.0.1-dev
  */
 namespace Clanify\Controller;
 
+use Clanify\Core\API\ProjectHoneypot;
 use Clanify\Core\Controller;
 use Clanify\Core\View;
 use Clanify\Domain\Entity\User;
@@ -17,7 +19,7 @@ use Clanify\Core\Log\LogLevel;
  * Class LoginController
  *
  * @author Sebastian Brosch <contact@sebastianbrosch.de>
- * @copyright 2016 Clanify
+ * @copyright 2016 Clanify <http://clanify.rocks>
  * @license GNU General Public License, version 3
  * @package Clanify\Controller
  * @version 0.0.1-dev
@@ -30,7 +32,6 @@ class LoginController extends Controller
      */
     public function index()
     {
-        //get and load the View.
         $view = new View('Login');
         $view->load();
     }
@@ -54,6 +55,12 @@ class LoginController extends Controller
         //check if the password is valid.
         if ((new IsValidPassword())->isSatisfiedBy($user) === false) {
             $this->jsonOutput('The password is not valid!', 'login_password', LogLevel::ERROR);
+            return false;
+        }
+        
+        //check if the ID is trusted.
+        if ((new ProjectHoneypot(PROJECT_HONEYPOT_KEY))->check($_SERVER['REMOTE_ADDR'])) {
+            $this->jsonOutput('The IP you are using is not trusted!', '', LogLevel::ERROR);
             return false;
         }
 
