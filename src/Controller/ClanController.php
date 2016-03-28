@@ -55,14 +55,7 @@ class ClanController extends Controller
      */
     public function create()
     {
-        //load the needed session.
-        $this->needSession();
-
-        //get and load the View.
-        $view = new View('Clan', 'Edit');
-        $view->setVar('clan', new Clan());
-        $view->setVar('backend', true);
-        $view->load();
+        $this->edit();
     }
 
     /**
@@ -126,8 +119,6 @@ class ClanController extends Controller
             } else {
                 $this->redirect(URL.'clan/create');
             }
-        } else {
-            $this->redirect(URL.'clan/create');
         }
 
         //load the view.
