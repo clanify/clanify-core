@@ -57,11 +57,15 @@ class LoginController extends Controller
             $this->jsonOutput('The password is not valid!', 'login_password', LogLevel::ERROR);
             return false;
         }
-        
+
         //check if the ID is trusted.
-        if ((new ProjectHoneypot(PROJECT_HONEYPOT_KEY))->check($_SERVER['REMOTE_ADDR'])) {
-            $this->jsonOutput('The IP you are using is not trusted!', '', LogLevel::ERROR);
-            return false;
+        if (PROJECT_HONEYPOT_KEY !== '') {
+            if (filter_var($_SERVER['REMOTE_ADDR'], FILTER_VALIDATE_IP, FILTER_FLAG_IPV4)) {
+                if ((new ProjectHoneypot(PROJECT_HONEYPOT_KEY))->check($_SERVER['REMOTE_ADDR'])) {
+                    $this->jsonOutput('The IP you are using is not trusted!', '', LogLevel::ERROR);
+                    return false;
+                }
+            }
         }
 
         //try to login the User.
