@@ -1,0 +1,157 @@
+body {
+    background:#000 url('../img/background.jpg') no-repeat center top;
+    background-size:cover;
+    bottom:0;
+    color:#fff;
+    font-family:"Nunito", sans-serif;
+    font-weight:100;
+    left:0;
+    padding:60px 0;
+    right:0;
+    top:0;
+    -webkit-user-select: none;  /* Chrome all / Safari all */
+    -moz-user-select: none;     /* Firefox all */
+    -ms-user-select: none;      /* IE 10+ */
+    user-select: none;
+}
+div.overlay {
+    background:url('../img/grid.png');
+    bottom:0;
+    left:0;
+    position:fixed;
+    right:0;
+    top:0;
+}
+body.no-bg,
+body.no-bg div.overlay {
+    background:none;
+    color:#000;
+}
+div.header img {
+    height:40px;
+}
+div.content {
+    padding:140px 0 45px;
+}
+div.content h1 {
+    font-size:2.6em;
+    font-weight:300;
+    line-height:1.4em;
+    margin-top:0;
+    text-align:center;
+}
+div.content h1.large {
+    font-size:3.2em;
+}
+div.content p {
+    font-size: 1.3em;
+    margin:0 0 1.5em;
+    text-align: center;
+}
+div.content form {
+    background:url('../img/grid.png') rgba(10, 10, 10, 0.2);
+    border:1px solid #222;
+    margin-top:5px;
+    padding:25px;
+
+    -webkit-border-radius:0;
+    -moz-border-radius:0;
+    border-radius:0;
+}
+div.content form input.form-control {
+    border:1px solid #000;
+    color:#555;
+    font-size:16px;
+    height:40px;
+    line-height:40px;
+    padding:0 10px;
+
+    -webkit-border-radius:0;
+    -moz-border-radius:0;
+    border-radius:0;
+}
+.btn,
+.form-control,
+.alert,
+.nav-pills li a, .nav-pills li a:link,
+.input-group-addon,
+.label,
+.container .jumbotron,
+.alert-danger {
+    -webkit-border-radius:0;
+    -moz-border-radius:0;
+    border-radius:0;
+}
+
+
+
+#info-index h2 {
+    text-align: center;
+}
+#info-index p {
+    text-align: left;
+}
+#user-index h2 i,
+#team-index h2 i,
+#team-edit h2 i {
+    font-size: 0.8em;
+    margin:0 15px 0 5px;
+}
+#user-index table tr {
+    cursor:pointer;
+}
+
+
+.btn .fa {
+    margin-right: 7px;
+}
+
+#clan-index h2,
+#clan-edit h2,
+#team-index h2,
+#team-edit h2,
+#user-index h2,
+#user-edit h2 {
+    margin-bottom:20px;
+}
+
+#clan-index table tr,
+#team-index table tr,
+#user-index table tr,
+.nav-pills li a, .nav-pills li a:link {
+    cursor: pointer;
+}
+.alert.pill-bar {
+    padding:8px;
+}
+.alert.pill-bar .nav-pills li:not(.active) a:hover {
+    background: #eeedf7;
+}
+.hide-text-overflow {
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}
+.nav .label {
+    margin-left:4px;
+    padding: .2em .8em .2em;
+}
+
+.input-group-addon.primary {
+    color:#fff;
+    background:#286090;
+    border-color:#204d74;
+}
+.demo-label {
+    position:absolute;
+    top:60px;
+    left:5px;
+    padding:10px;
+}
+.container .jumbotron {
+    padding-top:20px;
+    padding-bottom:20px;
+}
+.container .jumbotron p {
+    font-size:1.1em;
+}
