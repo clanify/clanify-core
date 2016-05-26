@@ -38,7 +38,7 @@ the installation of the database tables a installation routine is available. Fir
 of all the configuration must be set up. You have to set up the database information
 on the file `config.sample.php`. After this edit you have to rename this file to
 `config.php`. Now you have the possibility to install the database tables with the
-following url: `http: // clanifyurl.rocks / install / install`. If the installation
+following url: `http://clanifyurl.rocks/install/install`. If the installation
 of the database tables was not successful you could import the file `resource/install.sql`
 directly into phpMyAdmin.
 
@@ -47,5 +47,11 @@ file (`URL`) and the .htaccess file (`RewriteBase`).
 
 After a successful installation you can register yourself on Clanify to use the actual
 features.
+
+## Demo
+
+http://demo.clanify.rocks
+**Username:** TheUsername
+**Password:** ThePassword
 
 **THIS IS NOT A STABLE VERSION! THIS IS A DEVELOPMENT VERSION!**
