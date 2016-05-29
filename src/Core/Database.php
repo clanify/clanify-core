@@ -57,12 +57,32 @@ class Database
     {
         //check if a PDO database connection is available.
         if (self::$pdo === null) {
-            $dsn = 'mysql:host='.DB_HOST.';port='.DB_PORT.';dbname='.DB_NAME;
-            self::$pdo = new \PDO($dsn, DB_USER, DB_PASS);
+            $this->setConnection(DB_NAME, DB_HOST, DB_USER, DB_PASS, DB_PORT);
         }
 
         //return the PDO database connection.
         return self::$pdo;
+    }
+
+    /**
+     * Method to set the PDO database connection.
+     * @param string $name The name of the database.
+     * @param string $hostname The hostname of the database server.
+     * @param string $username The username of the database.
+     * @param string $password The password of the database.
+     * @param int $port The port of the database on the database server.
+     * @return boolean The state if the connection is successfully.
+     * @since 0.0.1-dev
+     */
+    public function setConnection($name, $hostname, $username, $password, $port = 3306)
+    {
+        try {
+            $dsn = 'mysql:host='.$hostname.';port='.$port.';dbname='.$name;
+            self::$pdo = new \PDO($dsn, $username, $password);
+            return true;
+        } catch (\PDOException $e) {
+            return false;
+        }
     }
 
     /**
