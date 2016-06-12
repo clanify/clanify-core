@@ -16,7 +16,7 @@ Sollten Sie Ideen oder Fragen zu Clanify haben, schreiben Sie einfach an:
 ## Demo
 
 - **URL:** http://demo.clanify.rocks
-- **Username:** TheUsername
+- **Username:** TheUser
 - **Password:** ThePassword
 
 **THIS IS NOT A STABLE VERSION! THIS IS A DEVELOPMENT VERSION!**
