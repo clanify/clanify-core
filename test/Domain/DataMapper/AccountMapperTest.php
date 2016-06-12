@@ -5,12 +5,12 @@
  */
 namespace Clanify\Test\Domain\DataMapper;
 
-use Clanify\Domain\Entity\Permission;
-use Clanify\Domain\DataMapper\PermissionMapper;
+use Clanify\Domain\Entity\Account;
 use Clanify\Test\MySQL55Truncate;
+use Clanify\Domain\DataMapper\AccountMapper;
 
 /**
- * Class PermissionMapperTest
+ * Class ClanMapperTest
  *
  * @author Sebastian Brosch <contact@sebastianbrosch.de>
  * @copyright 2016 Clanify <http://clanify.rocks>
@@ -18,7 +18,7 @@ use Clanify\Test\MySQL55Truncate;
  * @package Clanify\Test\Domain\DataMapper
  * @version 0.0.1-dev
  */
-class PermissionMapperTest extends \PHPUnit_Extensions_Database_TestCase
+class AccountMapperTest extends \PHPUnit_Extensions_Database_TestCase
 {
     /**
      * The database connection with PDO.
@@ -52,7 +52,7 @@ class PermissionMapperTest extends \PHPUnit_Extensions_Database_TestCase
      */
     public function getDataset()
     {
-        return $this->createXMLDataSet(__DIR__.'/DataSets/Permission/permission.xml');
+        return $this->createXMLDataSet(__DIR__.'/DataSets/Account/account.xml');
     }
 
     /**
@@ -77,18 +77,18 @@ class PermissionMapperTest extends \PHPUnit_Extensions_Database_TestCase
      */
     public function testDelete()
     {
-        //The Permission which will be deleted on database.
-        $permission = new Permission();
-        $permission->id = 2;
+        //The Account which will be deleted on database.
+        $account = new Account();
+        $account->id = 2;
 
-        //The PermissionMapper to delete the Permission on database.
-        $permissionMapper = new PermissionMapper($this->pdo);
-        $permissionMapper->delete($permission);
+        //The AccountMapper to delete the Account on database.
+        $accountMapper = new AccountMapper($this->pdo);
+        $accountMapper->delete($account);
 
         //Get the actual and expected table.
-        $queryTable = $this->getConnection()->createQueryTable('permission', 'SELECT * FROM permission');
-        $expectedDataSet = __DIR__.'/DataSets/Permission/permission-delete.xml';
-        $expectedTable = $this->createXMLDataSet($expectedDataSet)->getTable('permission');
+        $queryTable = $this->getConnection()->createQueryTable('account', 'SELECT * FROM account');
+        $expectedDataSet = __DIR__.'/DataSets/Account/account-delete.xml';
+        $expectedTable = $this->createXMLDataSet($expectedDataSet)->getTable('account');
 
         //Check if the tables are equal.
         $this->assertTablesEqual($expectedTable, $queryTable);
@@ -101,18 +101,19 @@ class PermissionMapperTest extends \PHPUnit_Extensions_Database_TestCase
      */
     public function testSaveCreate()
     {
-        //The Permission which will be created on database.
-        $permission = new Permission();
-        $permission->name = 'user_invite';
+        //The Account which will be created on database.
+        $account = new Account();
+        $account->game = 'BATTLELOG_USERNAME';
+        $account->value = 'ExampleUser';
 
-        //The PermissionMapper to create the Permission on database.
-        $permissionMapper = new PermissionMapper($this->pdo);
-        $permissionMapper->save($permission);
+        //The AccountMapper to create the Account on database.
+        $accountMapper = new AccountMapper($this->pdo);
+        $accountMapper->save($account);
 
         //Get the actual and expected table.
-        $queryTable = $this->getConnection()->createQueryTable('permission', 'SELECT * FROM permission');
-        $expectedDataSet = __DIR__.'/DataSets/Permission/permission-save-create.xml';
-        $expectedTable = $this->createXMLDataSet($expectedDataSet)->getTable('permission');
+        $queryTable = $this->getConnection()->createQueryTable('account', 'SELECT * FROM account');
+        $expectedDataSet = __DIR__.'/DataSets/Account/account-save-create.xml';
+        $expectedTable = $this->createXMLDataSet($expectedDataSet)->getTable('account');
 
         //Check if the tables are equal.
         $this->assertTablesEqual($expectedTable, $queryTable);
@@ -125,19 +126,20 @@ class PermissionMapperTest extends \PHPUnit_Extensions_Database_TestCase
      */
     public function testSaveUpdate()
     {
-        //The Permission which will be updated on database.
-        $permission = new Permission();
-        $permission->id = 2;
-        $permission->name = 'user_export';
+        //The Account which will be updated on database.
+        $account = new Account();
+        $account->id = 2;
+        $account->game = 'STEAM_USERNAME';
+        $account->value = 'ExampleUser';
 
-        //The PermissionMapper to update the Permission on database.
-        $permissionMapper = new PermissionMapper($this->pdo);
-        $permissionMapper->save($permission);
+        //The AccountMapper to update the Account on database.
+        $accountMapper = new AccountMapper($this->pdo);
+        $accountMapper->save($account);
 
         //Get the actual and expected table.
-        $queryTable = $this->getConnection()->createQueryTable('permission', 'SELECT * FROM permission');
-        $expectedDataSet = __DIR__.'/DataSets/Permission/permission-save-update.xml';
-        $expectedTable = $this->createXMLDataSet($expectedDataSet)->getTable('permission');
+        $queryTable = $this->getConnection()->createQueryTable('account', 'SELECT * FROM account');
+        $expectedDataSet = __DIR__.'/DataSets/Account/account-save-update.xml';
+        $expectedTable = $this->createXMLDataSet($expectedDataSet)->getTable('account');
 
         //Check if the tables are equal.
         $this->assertTablesEqual($expectedTable, $queryTable);
