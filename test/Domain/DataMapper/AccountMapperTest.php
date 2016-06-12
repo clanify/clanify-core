@@ -103,7 +103,7 @@ class AccountMapperTest extends \PHPUnit_Extensions_Database_TestCase
     {
         //The Account which will be created on database.
         $account = new Account();
-        $account->game = 'BATTLELOG_USERNAME';
+        $account->name = 'BATTLELOG_USERNAME';
         $account->value = 'ExampleUser';
 
         //The AccountMapper to create the Account on database.
@@ -129,7 +129,7 @@ class AccountMapperTest extends \PHPUnit_Extensions_Database_TestCase
         //The Account which will be updated on database.
         $account = new Account();
         $account->id = 2;
-        $account->game = 'STEAM_USERNAME';
+        $account->name = 'STEAM_USERNAME';
         $account->value = 'ExampleUser';
 
         //The AccountMapper to update the Account on database.

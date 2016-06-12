@@ -2,7 +2,7 @@
 <dataset>
     <table name="account">
         <column>id</column>
-        <column>game</column>
+        <column>name</column>
         <column>value</column>
         <row>
             <value>1</value>
