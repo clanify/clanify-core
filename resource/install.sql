@@ -1,4 +1,5 @@
 # remove tables
+DROP TABLE IF EXISTS `account`;
 DROP TABLE IF EXISTS `clan_role`;
 DROP TABLE IF EXISTS `clan_team`;
 DROP TABLE IF EXISTS `clan_user`;
@@ -16,6 +17,12 @@ DROP TABLE IF EXISTS `team`;
 DROP TABLE IF EXISTS `user`;
 
 # entities
+CREATE TABLE `account` (
+  `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
+  `name` VARCHAR(100) NOT NULL DEFAULT '',
+  `value` VARCHAR(255) NOT NULL DEFAULT '',
+  PRIMARY KEY (`id`)
+);
 CREATE TABLE `clan` (
   `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(100) NOT NULL DEFAULT '',
