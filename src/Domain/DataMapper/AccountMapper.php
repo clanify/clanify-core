@@ -59,7 +59,7 @@ class AccountMapper extends DataMapper
         $sth = $this->pdo->prepare($sql);
 
         //bind the values to the query.
-        $sth->bindParam(':game', $account->name, \PDO::PARAM_STR);
+        $sth->bindParam(':name', $account->name, \PDO::PARAM_STR);
         $sth->bindParam(':value', $account->value, \PDO::PARAM_STR);
 
         //execute the query and return state.
@@ -137,7 +137,7 @@ class AccountMapper extends DataMapper
 
         //bind the values to the query.
         $sth->bindParam(':id', $account->id, \PDO::PARAM_INT);
-        $sth->bindParam(':game', $account->name, \PDO::PARAM_STR);
+        $sth->bindParam(':name', $account->name, \PDO::PARAM_STR);
         $sth->bindParam(':value', $account->value, \PDO::PARAM_STR);
 
         //execute the query and return the state.
