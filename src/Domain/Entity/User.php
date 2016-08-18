@@ -1,73 +1,73 @@
 <?php
 /**
  * Namespace for all Entities of Clanify.
- * @since 0.0.1-dev
+ * @since 1.0.0
  */
 namespace Clanify\Domain\Entity;
 
 /**
  * Class User
  *
- * @author Sebastian Brosch <contact@sebastianbrosch.de>
- * @copyright 2016 Clanify
+ * @author Sebastian Brosch <support@clanify.rocks>
+ * @copyright 2016 Clanify <http://clanify.rocks>
  * @license GNU General Public License, version 3
  * @package Clanify\Domain\Entity
- * @version 0.0.1-dev
+ * @version 1.0.0
  */
 class User extends Entity
 {
     /**
      * The birthday of the User.
-     * @since 0.0.1-dev
+     * @since 1.0.0
      * @var string
      */
     public $birthday = '0000-00-00';
 
     /**
      * The email address of the User.
-     * @since 0.0.1-dev
+     * @since 1.0.0
      * @var string
      */
     public $email = '';
 
     /**
      * The firstname of the User.
-     * @since 0.0.1-dev
+     * @since 1.0.0
      * @var string
      */
     public $firstname = '';
 
     /**
      * The gender of the User.
-     * @since 0.0.1-dev
+     * @since 1.0.0
      * @var string
      */
     public $gender = '';
 
     /**
      * The lastname of the User.
-     * @since 0.0.1-dev
+     * @since 1.0.0
      * @var string
      */
     public $lastname = '';
 
     /**
      * The password of the User.
-     * @since 0.0.1-dev
+     * @since 1.0.0
      * @var string
      */
     public $password = '';
 
     /**
      * The salt of the password (for hashing).
-     * @since 0.0.1-dev
+     * @since 1.0.0
      * @var string
      */
     public $salt = '';
 
     /**
      * The username of the User.
-     * @since 0.0.1-dev
+     * @since 1.0.0
      * @var string
      */
     public $username = '';
@@ -75,7 +75,7 @@ class User extends Entity
     /**
      * Method to get the age of the User.
      * @return int The age of the User (>= 0) or -1 on failure.
-     * @since 0.0.1-dev
+     * @since 1.0.0
      */
     public function getAge()
     {
@@ -94,7 +94,7 @@ class User extends Entity
     /**
      * Method to get the full name of the User.
      * @return string The full name of the User.
-     * @since 0.0.1-dev
+     * @since 1.0.0
      */
     public function getFullname()
     {

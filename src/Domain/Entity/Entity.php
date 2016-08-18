@@ -1,24 +1,24 @@
 <?php
 /**
  * Namespace for all Entities of Clanify.
- * @since 0.0.1-dev
+ * @since 1.0.0
  */
 namespace Clanify\Domain\Entity;
 
 /**
  * Class Entity
  *
- * @author Sebastian Brosch <contact@sebastianbrosch.de>
- * @copyright 2016 Clanify
+ * @author Sebastian Brosch <support@clanify.rocks>
+ * @copyright 2016 Clanify <http://clanify.rocks>
  * @license GNU General Public License, version 3
  * @package Clanify\Domain\Entity
- * @version 0.0.1-dev
+ * @version 1.0.0
  */
 abstract class Entity implements IEntity
 {
     /**
      * The id of the Entity.
-     * @since 0.0.1-dev
+     * @since 1.0.0
      * @var int
      */
     public $id = 0;
@@ -27,7 +27,7 @@ abstract class Entity implements IEntity
      * Method to load an array to the Entity.
      * @param array $array The array which will be loaded to the Entity.
      * @param string $prefix The prefix of the keys of the array.
-     * @since 0.0.1-dev
+     * @since 1.0.0
      */
     public function loadFromArray($array, $prefix = '')
     {
@@ -45,7 +45,7 @@ abstract class Entity implements IEntity
     /**
      * Method to load the GET array to the Entity.
      * @param string $prefix The prefix of the properties of the GET array.
-     * @since 0.0.1-dev
+     * @since 1.0.0
      */
     public function loadFromGET($prefix = '')
     {
@@ -56,7 +56,7 @@ abstract class Entity implements IEntity
      * Method to load an object to the Entity.
      * @param object $object The object which will be loaded to the Entity.
      * @param string $prefix The prefix of the properties of the object.
-     * @since 0.0.1-dev
+     * @since 1.0.0
      */
     public function loadFromObject($object, $prefix = '')
     {
@@ -74,7 +74,7 @@ abstract class Entity implements IEntity
     /**
      * Method to load the POST array to the Entity.
      * @param string $prefix The prefix of the properties of the POST array.
-     * @since 0.0.1-dev
+     * @since 1.0.0
      */
     public function loadFromPOST($prefix = '')
     {
@@ -85,7 +85,7 @@ abstract class Entity implements IEntity
      * Method to load a value from a global array.
      * @param int $global The constant of the global array which will be loaded to the Entity.
      * @param string $prefix The prefix of the properties of the global array.
-     * @since 0.0.1-dev
+     * @since 1.0.0
      */
     private function loadFromGlobalArray($global, $prefix = '')
     {

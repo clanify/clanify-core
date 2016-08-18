@@ -1,31 +1,31 @@
 <?php
 /**
  * Namespace for all Entities of Clanify.
- * @since 0.0.1-dev
+ * @since 1.0.0
  */
 namespace Clanify\Domain\Entity;
 
 /**
  * Class Account
  *
- * @author Sebastian Brosch <contact@sebastianbrosch.de>
+ * @author Sebastian Brosch <support@clanify.rocks>
  * @copyright 2016 Clanify <http://clanify.rocks>
  * @license GNU General Public License, version 3
  * @package Clanify\Domain\Entity
- * @version 0.0.1-dev
+ * @version 1.0.0
  */
 class Account extends Entity
 {
     /**
      * The name of the Account.
-     * @since 0.0.1-dev
+     * @since 1.0.0
      * @var string
      */
     public $name = '';
 
     /**
      * The value of the Account.
-     * @since 0.0.1-dev
+     * @since 1.0.0
      * @var string
      */
     public $value = '';
