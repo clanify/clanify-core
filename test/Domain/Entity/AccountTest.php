@@ -56,7 +56,7 @@ class AccountTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Method to test the loadFromArray method.
+     * Method to test the loadFromObject method.
      * @since 1.0.0
      * @test
      */

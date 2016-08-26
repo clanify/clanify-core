@@ -25,7 +25,8 @@
   },
 
   "require-dev": {
-    "phpunit/phpunit": "5.1.*",
+    "phpunit/phpunit": "5.5.3",
+    "satooshi/php-coveralls": "1.0.1",
     "phpunit/dbunit": "2.*",
     "halleck45/phpmetrics": "1.8.*",
     "squizlabs/php_codesniffer": "2.*",
@@ -33,7 +34,10 @@
     "phpmd/phpmd": "2.3.*",
     "apigen/apigen": "4.1.*",
     "theseer/phpdox": "0.8.1.1",
-    "satooshi/php-coveralls": "dev-master",
     "sebastian/phpcpd": "*"
+  },
+  "require": {
+    "phpunit/phpunit": "5.5.3",
+    "satooshi/php-coveralls": "1.0.1"
   }
 }
