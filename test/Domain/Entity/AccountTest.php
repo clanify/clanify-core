@@ -66,7 +66,7 @@ class AccountTest extends \PHPUnit_Framework_TestCase
      */
     public function testLoadFromObject()
     {
-        //create and Account Entity.
+        //create an Account Entity.
         $account = new Account();
 
         //the object without prefix to load the Account Entity.
