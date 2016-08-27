@@ -28,29 +28,29 @@ class AccountTest extends \PHPUnit_Framework_TestCase
         //create an Account Entity.
         $account = new Account();
 
-        //the array without prefix to load the Account.
+        //the array without prefix to load the Account Entity.
         $array = [
             'name' => 'Name',
             'value' => 'Value'
         ];
 
-        //load the array without prefix to the Account.
+        //load the array without prefix to the Account Entity.
         $account->loadFromArray($array);
 
-        //test if the values are valid.
+        //check whether the values are valid.
         $this->assertEquals('Name', $account->name);
         $this->assertEquals('Value', $account->value);
 
-        //the array with prefix to load the Account.
+        //the array with prefix to load the Account Entity.
         $array_prefix = [
             'test_name' => 'TestName',
             'test_value' => 'TestValue'
         ];
 
-        //load the array with prefix to the Account.
+        //load the array with prefix to the Account Entity.
         $account->loadFromArray($array_prefix, 'test_');
 
-        //test if the values are valid.
+        //check whether the values are valid.
         $this->assertEquals('TestName', $account->name);
         $this->assertEquals('TestValue', $account->value);
     }
@@ -65,27 +65,27 @@ class AccountTest extends \PHPUnit_Framework_TestCase
         //create and Account Entity.
         $account = new Account();
 
-        //the object without prefix to load the Account.
+        //the object without prefix to load the Account Entity.
         $object = new \stdClass();
         $object->name = 'Name';
         $object->value = 'Value';
 
-        //load the object without prefix to the Account.
+        //load the object without prefix to the Account Entity.
         $account->loadFromObject($object);
 
-        //test if the values are valid.
+        //check whether the values are valid.
         $this->assertEquals('Name', $account->name);
         $this->assertEquals('Value', $account->value);
 
-        //the object with prefix to load the Account.
+        //the object with prefix to load the Account Entity.
         $object = new \stdClass();
         $object->test_name = 'TestName';
         $object->test_value = 'TestValue';
 
-        //load the object with prefix to the Account.
+        //load the object with prefix to the Account Entity.
         $account->loadFromObject($object, 'test_');
 
-        //test if the values are valid.
+        //check whether the values are valid.
         $this->assertEquals('TestName', $account->name);
         $this->assertEquals('TestValue', $account->value);
     }
