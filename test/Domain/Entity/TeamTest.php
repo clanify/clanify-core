@@ -30,6 +30,7 @@ class TeamTest extends \PHPUnit_Framework_TestCase
 
         //the array without prefix to load the Team Entity.
         $array = [
+            'id' => 1,
             'name' => 'Name',
             'tag' => 'Tag',
             'website' => 'Website'
@@ -39,12 +40,14 @@ class TeamTest extends \PHPUnit_Framework_TestCase
         $team->loadFromArray($array);
 
         //check whether the values are valid.
+        $this->assertEquals(1, $team->id);
         $this->assertEquals('Name', $team->name);
         $this->assertEquals('Tag', $team->tag);
         $this->assertEquals('Website', $team->website);
 
         //the array with prefix to load the Team Entity.
         $array_prefix = [
+            'test_id' => 2,
             'test_name' => 'TestName',
             'test_tag' => 'TestTag',
             'test_website' => 'TestWebsite'
@@ -54,6 +57,7 @@ class TeamTest extends \PHPUnit_Framework_TestCase
         $team->loadFromArray($array_prefix, 'test_');
 
         //check whether the values are valid.
+        $this->assertEquals(2, $team->id);
         $this->assertEquals('TestName', $team->name);
         $this->assertEquals('TestTag', $team->tag);
         $this->assertEquals('TestWebsite', $team->website);
@@ -71,6 +75,7 @@ class TeamTest extends \PHPUnit_Framework_TestCase
 
         //the object without prefix to load the Team Entity.
         $object = new \stdClass();
+        $object->id = 1;
         $object->name = 'Name';
         $object->tag = 'Tag';
         $object->website = 'Website';
@@ -79,20 +84,23 @@ class TeamTest extends \PHPUnit_Framework_TestCase
         $team->loadFromObject($object);
 
         //check whether the values are valid.
+        $this->assertEquals(1, $team->id);
         $this->assertEquals('Name', $team->name);
         $this->assertEquals('Tag', $team->tag);
         $this->assertEquals('Website', $team->website);
 
         //the object with prefix to load the Team Entity.
-        $object = new \stdClass();
-        $object->test_name = 'TestName';
-        $object->test_tag = 'TestTag';
-        $object->test_website = 'TestWebsite';
+        $object_prefix = new \stdClass();
+        $object_prefix->test_id = 2;
+        $object_prefix->test_name = 'TestName';
+        $object_prefix->test_tag = 'TestTag';
+        $object_prefix->test_website = 'TestWebsite';
 
         //load the object with prefix to the Team Entity.
-        $team->loadFromObject($object, 'test_');
+        $team->loadFromObject($object_prefix, 'test_');
 
         //check whether the values are valid.
+        $this->assertEquals(2, $team->id);
         $this->assertEquals('TestName', $team->name);
         $this->assertEquals('TestTag', $team->tag);
         $this->assertEquals('TestWebsite', $team->website);

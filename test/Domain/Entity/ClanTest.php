@@ -30,6 +30,7 @@ class ClanTest extends \PHPUnit_Framework_TestCase
 
         //the array without prefix to load the Clan Entity.
         $array = [
+            'id' => 1,
             'name' => 'Name',
             'tag' => 'Tag',
             'website' => 'Website'
@@ -39,12 +40,14 @@ class ClanTest extends \PHPUnit_Framework_TestCase
         $clan->loadFromArray($array);
 
         //check whether the values are valid.
+        $this->assertEquals(1, $clan->id);
         $this->assertEquals('Name', $clan->name);
         $this->assertEquals('Tag', $clan->tag);
         $this->assertEquals('Website', $clan->website);
 
         //the array with prefix to load the Clan Entity.
         $array_prefix = [
+            'test_id' => 2,
             'test_name' => 'TestName',
             'test_tag' => 'TestTag',
             'test_website' => 'TestWebsite'
@@ -54,6 +57,7 @@ class ClanTest extends \PHPUnit_Framework_TestCase
         $clan->loadFromArray($array_prefix, 'test_');
 
         //check whether the values are valid.
+        $this->assertEquals(2, $clan->id);
         $this->assertEquals('TestName', $clan->name);
         $this->assertEquals('TestTag', $clan->tag);
         $this->assertEquals('TestWebsite', $clan->website);
@@ -71,6 +75,7 @@ class ClanTest extends \PHPUnit_Framework_TestCase
 
         //the object without prefix to load the Clan Entity.
         $object = new \stdClass();
+        $object->id = 1;
         $object->name = 'Name';
         $object->tag = 'Tag';
         $object->website = 'Website';
@@ -79,20 +84,23 @@ class ClanTest extends \PHPUnit_Framework_TestCase
         $clan->loadFromObject($object);
 
         //check whether the values are valid.
+        $this->assertEquals(1, $clan->id);
         $this->assertEquals('Name', $clan->name);
         $this->assertEquals('Tag', $clan->tag);
         $this->assertEquals('Website', $clan->website);
 
         //the object with prefix to load the Clan Entity.
-        $object = new \stdClass();
-        $object->test_name = 'TestName';
-        $object->test_tag = 'TestTag';
-        $object->test_website = 'TestWebsite';
+        $object_prefix = new \stdClass();
+        $object_prefix->test_id = 2;
+        $object_prefix->test_name = 'TestName';
+        $object_prefix->test_tag = 'TestTag';
+        $object_prefix->test_website = 'TestWebsite';
 
         //load the object with prefix to the Clan Entity.
-        $clan->loadFromObject($object, 'test_');
+        $clan->loadFromObject($object_prefix, 'test_');
 
         //check whether the values are valid.
+        $this->assertEquals(2, $clan->id);
         $this->assertEquals('TestName', $clan->name);
         $this->assertEquals('TestTag', $clan->tag);
         $this->assertEquals('TestWebsite', $clan->website);
