@@ -11,5 +11,11 @@
             <value>EG</value>
             <value>http://example.com</value>
         </row>
+        <row>
+            <value>2</value>
+            <value>Clanify Gaming</value>
+            <value>CG</value>
+            <value>http://clanify.rocks/gaming</value>
+        </row>
     </table>
 </dataset>

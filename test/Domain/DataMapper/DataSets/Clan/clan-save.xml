@@ -7,15 +7,15 @@
         <column>website</column>
         <row>
             <value>1</value>
-            <value>Nightmare Gaming</value>
-            <value>NM</value>
-            <value>http://nm-gaming.de</value>
+            <value>Example Gaming</value>
+            <value>EG</value>
+            <value>http://example.com</value>
         </row>
         <row>
             <value>2</value>
-            <value>Clanify eSport</value>
-            <value>CeS</value>
-            <value>http://clanify.rocks</value>
+            <value>Clanify Gaming</value>
+            <value>CG</value>
+            <value>http://clanify.rocks/gaming</value>
         </row>
         <row>
             <value>3</value>
