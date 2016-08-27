@@ -1,54 +1,29 @@
 <?php
 /**
  * Namespace for testing the DataMapper of Clanify.
- * @since 0.0.1-dev
+ * @since 1.0.0
  */
 namespace Clanify\Test\Domain\DataMapper;
 
 use Clanify\Domain\Entity\Account;
-use Clanify\Test\MySQL55Truncate;
 use Clanify\Domain\DataMapper\AccountMapper;
+use Clanify\Test\Clanify_DatabaseTestCase;
 
 /**
- * Class ClanMapperTest
+ * Class AccountMapperTest
  *
- * @author Sebastian Brosch <contact@sebastianbrosch.de>
+ * @author Sebastian Brosch <support@clanify.rocks>
  * @copyright 2016 Clanify <http://clanify.rocks>
  * @license GNU General Public License, version 3
  * @package Clanify\Test\Domain\DataMapper
- * @version 0.0.1-dev
+ * @version 1.0.0
  */
-class AccountMapperTest extends \PHPUnit_Extensions_Database_TestCase
+class AccountMapperTest extends Clanify_DatabaseTestCase
 {
-    /**
-     * The database connection with PDO.
-     * @since 0.0.1-dev
-     * @var null|\PDO
-     */
-    private $pdo = null;
-
-    /**
-     * Method to get the database connection for test.
-     * @return \PHPUnit_Extensions_Database_DB_DefaultDatabaseConnection
-     * @since 0.0.1-dev
-     */
-    public function getConnection()
-    {
-        //get the database information.
-        $dsn = getenv('DB_DSN');
-        $user = getenv('DB_USER');
-        $password = getenv('DB_PASSWD');
-        $database = getenv('DB_DBNAME');
-
-        //create the database connection.
-        $this->pdo = new \PDO($dsn, $user, $password);
-        return $this->createDefaultDBConnection($this->pdo, $database);
-    }
-
     /**
      * Method to get the initial state of the database for test.
      * @return \PHPUnit_Extensions_Database_DataSet_XmlDataSet
-     * @since 0.0.1-dev
+     * @since 1.0.0
      */
     public function getDataset()
     {
@@ -56,92 +31,112 @@ class AccountMapperTest extends \PHPUnit_Extensions_Database_TestCase
     }
 
     /**
-     * Returns the database operation executed in test setup.
-     * @return \PHPUnit_Extensions_Database_Operation_IDatabaseOperation The database operation.
-     * @since 0.0.1-dev
+     * Method to test the create method.
+     * @since 1.0.0
+     * @test
      */
-    protected function getSetUpOperation()
+    public function testCreate()
     {
-        //create the parameters for composite.
-        $truncate = new MySQL55Truncate(false);
-        $factoryInsert = \PHPUnit_Extensions_Database_Operation_Factory::INSERT();
+        //the Account Entity which will be created on database.
+        $account = new Account();
+        $account->name = 'STEAM_USERNAME';
+        $account->value = 'ExampleUser';
 
-        //create and return the database operation.
-        return new \PHPUnit_Extensions_Database_Operation_Composite(array($truncate, $factoryInsert));
+        //the AccountMapper to create the Account Entity on database.
+        $accountMapper = new AccountMapper($this->getConnection()->getConnection());
+        $accountMapper->create($account);
+
+        //get the actual and expected table.
+        $actualTable = $this->getConnection()->createQueryTable('account', 'SELECT * FROM account');
+        $expectedDataset = __DIR__.'/DataSets/Account/account-create.xml';
+        $expectedTable = $this->createXMLDataSet($expectedDataset)->getTable('account');
+
+        //check whether the tables are equal.
+        $this->assertTablesEqual($expectedTable, $actualTable);
     }
 
     /**
-     * Method to test if the method delete() works.
-     * @since 0.0.1-dev
+     * Method to test the delete method.
+     * @since 1.0.0
      * @test
      */
     public function testDelete()
     {
-        //The Account which will be deleted on database.
+        //the Account Entity which will be deleted on database.
         $account = new Account();
         $account->id = 2;
 
-        //The AccountMapper to delete the Account on database.
-        $accountMapper = new AccountMapper($this->pdo);
+        //the AccountMapper to delete the Account Entity on database.
+        $accountMapper = new AccountMapper($this->getConnection()->getConnection());
         $accountMapper->delete($account);
 
-        //Get the actual and expected table.
-        $queryTable = $this->getConnection()->createQueryTable('account', 'SELECT * FROM account');
-        $expectedDataSet = __DIR__.'/DataSets/Account/account-delete.xml';
-        $expectedTable = $this->createXMLDataSet($expectedDataSet)->getTable('account');
+        //get the actual and expected table.
+        $actualTable = $this->getConnection()->createQueryTable('account', 'SELECT * FROM account');
+        $expectedDataset = __DIR__.'/DataSets/Account/account-delete.xml';
+        $expectedTable = $this->createXMLDataSet($expectedDataset)->getTable('account');
 
-        //Check if the tables are equal.
-        $this->assertTablesEqual($expectedTable, $queryTable);
+        //check whether the tables are equal.
+        $this->assertTablesEqual($expectedTable, $actualTable);
     }
 
     /**
-     * Method to test if the method create() works.
-     * @since 0.0.1-dev
+     * Method to test the save method.
+     * @since 1.0.0
      * @test
      */
-    public function testSaveCreate()
+    public function testSave()
     {
-        //The Account which will be created on database.
+        //the Account Entity which will be created on database.
+        $account_create = new Account();
+        $account_create->name = 'STEAM_USERNAME';
+        $account_create->value = 'ExampleUser';
+
+        //the Account Entity which will be updated on database.
+        $account_update = new Account();
+        $account_update->id = 2;
+        $account_update->name = 'BATTLELOG_USERNAME';
+        $account_update->value = 'ExampleUser';
+
+        //the AccountMapper to save the Account Entity (create) on database.
+        $accountMapper = new AccountMapper($this->getConnection()->getConnection());
+        $accountMapper->save($account_create);
+
+        //the AccountMapper to save the Account Entity (update) on database.
+        $accountMapper = new AccountMapper($this->getConnection()->getConnection());
+        $accountMapper->save($account_update);
+
+        //get the actual and expected table.
+        $actualTable = $this->getConnection()->createQueryTable('account', 'SELECT * FROM account');
+        $expectedDataset = __DIR__.'/DataSets/Account/account-save.xml';
+        $expectedTable = $this->createXMLDataSet($expectedDataset)->getTable('account');
+
+        //check whether the tables are equal.
+        $this->assertTablesEqual($expectedTable, $actualTable);
+    }
+
+    /**
+     * Method to test the update method.
+     * @since 1.0.0
+     * @test
+     */
+    public function testUpdate()
+    {
+        //the Account Entity which will be updated on database.
         $account = new Account();
+        $account->id = 2;
         $account->name = 'BATTLELOG_USERNAME';
         $account->value = 'ExampleUser';
 
-        //The AccountMapper to create the Account on database.
-        $accountMapper = new AccountMapper($this->pdo);
-        $accountMapper->save($account);
+        //the AccountMapper to update the Account Entity on database.
+        $accountMapper = new AccountMapper($this->getConnection()->getConnection());
+        $accountMapper->update($account);
 
-        //Get the actual and expected table.
-        $queryTable = $this->getConnection()->createQueryTable('account', 'SELECT * FROM account');
-        $expectedDataSet = __DIR__.'/DataSets/Account/account-save-create.xml';
-        $expectedTable = $this->createXMLDataSet($expectedDataSet)->getTable('account');
+        //get the actual and expected table.
+        $actualTable = $this->getConnection()->createQueryTable('account', 'SELECT * FROM account');
+        $expectedDataset = __DIR__.'/DataSets/Account/account-update.xml';
+        $expectedTable = $this->createXMLDataSet($expectedDataset)->getTable('account');
 
-        //Check if the tables are equal.
-        $this->assertTablesEqual($expectedTable, $queryTable);
-    }
-
-    /**
-     * Method to test if the method update() works.
-     * @since 0.0.1-dev
-     * @test
-     */
-    public function testSaveUpdate()
-    {
-        //The Account which will be updated on database.
-        $account = new Account();
-        $account->id = 2;
-        $account->name = 'STEAM_USERNAME';
-        $account->value = 'ExampleUser';
-
-        //The AccountMapper to update the Account on database.
-        $accountMapper = new AccountMapper($this->pdo);
-        $accountMapper->save($account);
-
-        //Get the actual and expected table.
-        $queryTable = $this->getConnection()->createQueryTable('account', 'SELECT * FROM account');
-        $expectedDataSet = __DIR__.'/DataSets/Account/account-save-update.xml';
-        $expectedTable = $this->createXMLDataSet($expectedDataSet)->getTable('account');
-
-        //Check if the tables are equal.
-        $this->assertTablesEqual($expectedTable, $queryTable);
+        //check whether the tables are equal.
+        $this->assertTablesEqual($expectedTable, $actualTable);
     }
 }

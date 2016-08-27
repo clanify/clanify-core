@@ -11,6 +11,11 @@
         </row>
         <row>
             <value>2</value>
+            <value>BATTLELOG_USERNAME</value>
+            <value>ExampleUser</value>
+        </row>
+        <row>
+            <value>3</value>
             <value>STEAM_USERNAME</value>
             <value>ExampleUser</value>
         </row>

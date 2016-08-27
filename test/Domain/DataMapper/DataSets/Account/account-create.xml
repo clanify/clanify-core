@@ -1,0 +1,23 @@
+<?xml version="1.0" ?>
+<dataset>
+    <table name="account">
+        <column>id</column>
+        <column>name</column>
+        <column>value</column>
+        <row>
+            <value>1</value>
+            <value>PUNKBUSTER_GUID</value>
+            <value>319x995fx5835e1x535dxd6ex742084x</value>
+        </row>
+        <row>
+            <value>2</value>
+            <value>STEAM_ID</value>
+            <value>STEAM_0:1:11148111</value>
+        </row>
+        <row>
+            <value>3</value>
+            <value>STEAM_USERNAME</value>
+            <value>ExampleUser</value>
+        </row>
+    </table>
+</dataset>
