@@ -11,3 +11,8 @@ unterstützen. Weitere Informationen sowie eine Demo der aktuellen Version finde
 
 Sollten Sie Ideen oder Fragen zu Clanify haben, schreiben Sie einfach an:
 [hello@clanify.rocks](mailto:hello@clanify.rocks?subject=Hello)
+
+**Hinweis:** Es handelt sich im Moment nur um eine Entwicklungsversion und sollte
+daher nicht produktiv eingesetzt werden! Sollte trotzdem das Interesse einer 
+Installation vorhanden sein, kann man sich gerne hier melden: 
+[support@clanify.rocks](mailto:support@clanify.rocks?subject=Support)
