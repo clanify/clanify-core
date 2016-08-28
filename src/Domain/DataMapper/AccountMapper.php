@@ -1,7 +1,7 @@
 <?php
 /**
  * Namespace for all DataMapper of Clanify.
- * @since 0.0.1-dev
+ * @since 1.0.0
  */
 namespace Clanify\Domain\DataMapper;
 
@@ -12,18 +12,18 @@ use Clanify\Domain\Entity\IEntity;
 /**
  * Class AccountMapper
  *
- * @author Sebastian Brosch <contact@sebastianbrosch.de>
+ * @author Sebastian Brosch <support@clanify.rocks>
  * @copyright 2016 Clanify <http://clanify.rocks>
  * @license GNU General Public License, version 3
  * @package Clanify\Domain\DataMapper
- * @version 0.0.1-dev
+ * @version 1.0.0
  */
 class AccountMapper extends DataMapper
 {
     /**
      * AccountMapper constructor.
      * @param \PDO $pdo The PDO object to connect with database.
-     * @since 0.0.1-dev
+     * @since 1.0.0
      */
     public function __construct(\PDO $pdo)
     {
@@ -34,7 +34,7 @@ class AccountMapper extends DataMapper
     /**
      * Method to build a new object of AccountMapper.
      * @return AccountMapper The created object of AccountMapper.
-     * @since 0.0.1-dev
+     * @since 1.0.0
      */
     public static function build()
     {
@@ -45,7 +45,7 @@ class AccountMapper extends DataMapper
      * Method to create an Account on database.
      * @param IEntity $account The Account Entity.
      * @return bool The state if the Account Entity was successfully created.
-     * @since 0.0.1-dev
+     * @since 1.0.0
      */
     public function create(IEntity $account)
     {
@@ -70,7 +70,7 @@ class AccountMapper extends DataMapper
      * Method to delete an Account on database.
      * @param IEntity $account The Account Entity.
      * @return bool The state if the Account Entity was successfully deleted.
-     * @since 0.0.1-dev
+     * @since 1.0.0
      */
     public function delete(IEntity $account)
     {
@@ -94,7 +94,7 @@ class AccountMapper extends DataMapper
      * Method to find Account Entities by a SQL condition.
      * @param string $condition The SQL condition to filter the Account Entities.
      * @return array An array with all found Account Entities.
-     * @since 0.0.1-dev
+     * @since 1.0.0
      */
     public function find($condition = '')
     {
@@ -105,7 +105,7 @@ class AccountMapper extends DataMapper
      * Method to save an Account on database.
      * @param IEntity $account The Account Entity.
      * @return bool The state if the Account Entity was successfully saved.
-     * @since 0.0.1-dev
+     * @since 1.0.0
      */
     public function save(IEntity $account)
     {
@@ -122,7 +122,7 @@ class AccountMapper extends DataMapper
      * Method to update an Account on database.
      * @param IEntity $account The Account Entity.
      * @return bool The state if the Account Entity was successfully updated.
-     * @since 0.0.1-dev
+     * @since 1.0.0
      */
     public function update(IEntity $account)
     {

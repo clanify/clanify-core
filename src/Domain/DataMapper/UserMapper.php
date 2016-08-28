@@ -1,7 +1,7 @@
 <?php
 /**
  * Namespace for all DataMapper of Clanify.
- * @since 0.0.1-dev
+ * @since 1.0.0
  */
 namespace Clanify\Domain\DataMapper;
 
@@ -12,18 +12,18 @@ use Clanify\Domain\Entity\User;
 /**
  * Class UserMapper
  *
- * @author Sebastian Brosch <contact@sebastianbrosch.de>
- * @copyright 2016 Clanify
+ * @author Sebastian Brosch <support@clanify.rocks>
+ * @copyright 2016 Clanify <http://clanify.rocks>
  * @license GNU General Public License, version 3
  * @package Clanify\Domain\DataMapper
- * @version 0.0.1-dev
+ * @version 1.0.0
  */
 class UserMapper extends DataMapper
 {
     /**
      * UserMapper constructor.
      * @param \PDO $pdo The PDO object to connect with database.
-     * @since 0.0.1-dev
+     * @since 1.0.0
      */
     public function __construct(\PDO $pdo)
     {
@@ -34,7 +34,7 @@ class UserMapper extends DataMapper
     /**
      * Method to build a new object of UserMapper.
      * @return UserMapper The created object of UserMapper.
-     * @since 0.0.1-dev
+     * @since 1.0.0
      */
     public static function build()
     {
@@ -45,7 +45,7 @@ class UserMapper extends DataMapper
      * Method to create an User on database.
      * @param IEntity $user The User Entity.
      * @return bool The state if the User Entity was successfully created.
-     * @since 0.0.1-dev
+     * @since 1.0.0
      */
     public function create(IEntity $user)
     {
@@ -77,7 +77,7 @@ class UserMapper extends DataMapper
      * Method to delete an User on database.
      * @param IEntity $user The User Entity.
      * @return bool The state if the User Entity was successfully deleted.
-     * @since 0.0.1-dev
+     * @since 1.0.0
      */
     public function delete(IEntity $user)
     {
@@ -101,7 +101,7 @@ class UserMapper extends DataMapper
      * Method to find User Entities by a SQL condition.
      * @param string $condition The SQL condition to filter the User Entities.
      * @return array An array with all found User Entities.
-     * @since 0.0.1-dev
+     * @since 1.0.0
      */
     public function find($condition = '')
     {
@@ -112,7 +112,7 @@ class UserMapper extends DataMapper
      * Method to save an User on database.
      * @param IEntity $user The User Entity.
      * @return bool The state if the User Entity was successfully saved.
-     * @since 0.0.1-dev
+     * @since 1.0.0
      */
     public function save(IEntity $user)
     {
@@ -129,7 +129,7 @@ class UserMapper extends DataMapper
      * Method to update an User on database.
      * @param IEntity $user The User Entity.
      * @return bool The state if the User Entity was successfully updated.
-     * @since 0.0.1-dev
+     * @since 1.0.0
      */
     public function update(IEntity $user)
     {

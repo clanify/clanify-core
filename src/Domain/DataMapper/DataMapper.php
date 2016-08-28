@@ -1,7 +1,7 @@
 <?php
 /**
  * Namespace for all DataMapper of Clanify.
- * @since 0.0.1-dev
+ * @since 1.0.0
  */
 namespace Clanify\Domain\DataMapper;
 
@@ -10,24 +10,24 @@ use Clanify\Domain\Entity\IEntity;
 /**
  * Class DataMapper
  *
- * @author Sebastian Brosch <contact@sebastianbrosch.de>
- * @copyright 2016 Clanify
+ * @author Sebastian Brosch <support@clanify.rocks>
+ * @copyright 2016 Clanify <http://clanify.rocks>
  * @license GNU General Public License, version 3
  * @package Clanify\Domain\DataMapper
- * @version 0.0.1-dev
+ * @version 1.0.0
  */
 abstract class DataMapper implements IDataMapper
 {
     /**
      * The PDO object to use the database.
-     * @since 0.0.1-dev
-     * @var null|\PDO
+     * @since 1.0.0
+     * @var \PDO|null
      */
     protected $pdo = null;
 
     /**
      * The name of the table which will be used.
-     * @since 0.0.1-dev
+     * @since 1.0.0
      * @var string
      */
     protected $table = '';
@@ -37,7 +37,7 @@ abstract class DataMapper implements IDataMapper
      * @param string $condition The SQL condition to filter the Entities.
      * @param IEntity $entity The object of the Entity which will be loaded.
      * @return array An array with all found Entities.
-     * @since 0.0.1-dev
+     * @since 1.0.0
      */
     protected function findForEntity($condition, IEntity $entity)
     {

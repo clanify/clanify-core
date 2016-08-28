@@ -1,7 +1,7 @@
 <?php
 /**
  * Namespace for all DataMapper of Clanify.
- * @since 0.0.1-dev
+ * @since 1.0.0
  */
 namespace Clanify\Domain\DataMapper;
 
@@ -12,18 +12,18 @@ use Clanify\Domain\Entity\Team;
 /**
  * Class TeamMapper
  *
- * @author Sebastian Brosch <contact@sebastianbrosch.de>
- * @copyright 2016 Clanify
+ * @author Sebastian Brosch <support@clanify.rocks>
+ * @copyright 2016 Clanify <http://clanify.rocks>
  * @license GNU General Public License, version 3
  * @package Clanify\Domain\DataMapper
- * @version 0.0.1-dev
+ * @version 1.0.0
  */
 class TeamMapper extends DataMapper
 {
     /**
      * TeamMapper constructor.
      * @param \PDO $pdo The PDO object to connect with database.
-     * @since 0.0.1-dev
+     * @since 1.0.0
      */
     public function __construct(\PDO $pdo)
     {
@@ -34,7 +34,7 @@ class TeamMapper extends DataMapper
     /**
      * Method to build a new object of TeamMapper.
      * @return TeamMapper The created object of TeamMapper.
-     * @since 0.0.1-dev
+     * @since 1.0.0
      */
     public static function build()
     {
@@ -45,7 +45,7 @@ class TeamMapper extends DataMapper
      * Method to create a Team on database.
      * @param IEntity $team The Team Entity.
      * @return bool The state if the Team Entity was successfully created.
-     * @since 0.0.1-dev
+     * @since 1.0.0
      */
     public function create(IEntity $team)
     {
@@ -71,7 +71,7 @@ class TeamMapper extends DataMapper
      * Method to delete a Team on database.
      * @param IEntity $team The Team Entity.
      * @return bool The state if the Team Entity was successfully deleted.
-     * @since 0.0.1-dev
+     * @since 1.0.0
      */
     public function delete(IEntity $team)
     {
@@ -95,7 +95,7 @@ class TeamMapper extends DataMapper
      * Method to find Team Entities by a SQL condition.
      * @param string $condition The SQL condition to filter the Team Entities.
      * @return array An array with all found Team Entities.
-     * @since 0.0.1-dev
+     * @since 1.0.0
      */
     public function find($condition = '')
     {
@@ -106,7 +106,7 @@ class TeamMapper extends DataMapper
      * Method to save a Team on database.
      * @param IEntity $team The Team Entity.
      * @return bool The state if the Team Entity was successfully saved.
-     * @since 0.0.1-dev
+     * @since 1.0.0
      */
     public function save(IEntity $team)
     {
@@ -123,7 +123,7 @@ class TeamMapper extends DataMapper
      * Method to update a Team on database.
      * @param IEntity $team The Team Entity.
      * @return bool The state if the Team Entity was successfully updated.
-     * @since 0.0.1-dev
+     * @since 1.0.0
      */
     public function update(IEntity $team)
     {
