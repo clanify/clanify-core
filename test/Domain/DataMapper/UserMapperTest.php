@@ -1,54 +1,29 @@
 <?php
 /**
  * Namespace for testing the DataMapper of Clanify.
- * @since 0.0.1-dev
+ * @since 1.0.0
  */
 namespace Clanify\Test\Domain\DataMapper;
 
 use Clanify\Domain\Entity\User;
 use Clanify\Domain\DataMapper\UserMapper;
-use Clanify\Test\MySQL55Truncate;
+use Clanify\Test\Clanify_DatabaseTestCase;
 
 /**
  * Class UserMapperTest
  *
- * @author Sebastian Brosch <contact@sebastianbrosch.de>
+ * @author Sebastian Brosch <support@clanify.rocks>
  * @copyright 2016 Clanify <http://clanify.rocks>
  * @license GNU General Public License, version 3
  * @package Clanify\Test\Domain\DataMapper
- * @version 0.0.1-dev
+ * @version 1.0.0
  */
-class UserMapperTest extends \PHPUnit_Extensions_Database_TestCase
+class UserMapperTest extends Clanify_DatabaseTestCase
 {
-    /**
-     * The database connection with PDO.
-     * @since 0.0.1-dev
-     * @var null|\PDO
-     */
-    private $pdo = null;
-
-    /**
-     * Method to get the database connection for test.
-     * @return \PHPUnit_Extensions_Database_DB_DefaultDatabaseConnection
-     * @since 0.0.1-dev
-     */
-    public function getConnection()
-    {
-        //get the database information.
-        $dsn = getenv('DB_DSN');
-        $user = getenv('DB_USER');
-        $password = getenv('DB_PASSWD');
-        $database = getenv('DB_DBNAME');
-
-        //create the database connection.
-        $this->pdo = new \PDO($dsn, $user, $password);
-        return $this->createDefaultDBConnection($this->pdo, $database);
-    }
-
     /**
      * Method to get the initial state of the database for test.
      * @return \PHPUnit_Extensions_Database_DataSet_XmlDataSet
-     * @since 0.0.1-dev
+     * @since 1.0.0
      */
     public function getDataset()
     {
@@ -56,52 +31,13 @@ class UserMapperTest extends \PHPUnit_Extensions_Database_TestCase
     }
 
     /**
-     * Returns the database operation executed in test setup.
-     * @return \PHPUnit_Extensions_Database_Operation_IDatabaseOperation The database operation.
-     * @since 0.0.1-dev
-     */
-    protected function getSetUpOperation()
-    {
-        //create the parameters for composite.
-        $truncate = new MySQL55Truncate(false);
-        $factoryInsert = \PHPUnit_Extensions_Database_Operation_Factory::INSERT();
-
-        //create and return the database operation.
-        return new \PHPUnit_Extensions_Database_Operation_Composite(array($truncate, $factoryInsert));
-    }
-
-    /**
-     * Method to test if the method delete() works.
-     * @since 0.0.1-dev
+     * Method to test the create method.
+     * @since 1.0.0
      * @test
      */
-    public function testDelete()
+    public function testCreate()
     {
-        //The User which will be deleted on database.
-        $user = new User();
-        $user->id = 2;
-
-        //The UserMapper to delete the User on database.
-        $userMapper = new UserMapper($this->pdo);
-        $userMapper->delete($user);
-
-        //Get the actual and expected table.
-        $queryTable = $this->getConnection()->createQueryTable('user', 'SELECT * FROM user');
-        $expectedDataSet = __DIR__.'/DataSets/User/user-delete.xml';
-        $expectedTable = $this->createXMLDataSet($expectedDataSet)->getTable('user');
-
-        //Check if the tables are equal.
-        $this->assertTablesEqual($expectedTable, $queryTable);
-    }
-
-    /**
-     * Method to test if the method create() works.
-     * @since 0.0.1-dev
-     * @test
-     */
-    public function testSaveCreate()
-    {
-        //The User which will be created on database.
+        //the User Entity which will be created on database.
         $user = new User();
         $user->birthday = '1974-08-19';
         $user->email = 'CaseyVWade@dayrep.com';
@@ -112,27 +48,98 @@ class UserMapperTest extends \PHPUnit_Extensions_Database_TestCase
         $user->salt = 'd02991c2a8e062a6d419883b6e3a1e58c4090029d1078b58c89c0f096177c379f0552bce705aaf47d7263a70cbf3e527c3662965d62d7cdf34df0053702c50ad';
         $user->username = 'Proothe';
 
-        //The UserMapper to create the User on database.
-        $userMapper = new UserMapper($this->pdo);
-        $userMapper->save($user);
+        //the UserMapper to create the User Entity on database.
+        $userMapper = new UserMapper($this->getConnection()->getConnection());
+        $userMapper->create($user);
 
-        //Get the actual and expected table.
-        $queryTable = $this->getConnection()->createQueryTable('user', 'SELECT * FROM user');
-        $expectedDataSet = __DIR__.'/DataSets/User/user-save-create.xml';
+        //get the actual and expected table.
+        $actualTable = $this->getConnection()->createQueryTable('user', 'SELECT * FROM user');
+        $expectedDataSet = __DIR__.'/DataSets/User/user-create.xml';
         $expectedTable = $this->createXMLDataSet($expectedDataSet)->getTable('user');
 
-        //Check if the tables are equal.
+        //check whether the tables are equal.
+        $this->assertTablesEqual($expectedTable, $actualTable);
+    }
+
+    /**
+     * Method to test the delete method.
+     * @since 1.0.0
+     * @test
+     */
+    public function testDelete()
+    {
+        //the User Entity which will be deleted on database.
+        $user = new User();
+        $user->id = 2;
+
+        //the UserMapper to delete the User Entity on database.
+        $userMapper = new UserMapper($this->getConnection()->getConnection());
+        $userMapper->delete($user);
+
+        //get the actual and expected table.
+        $queryTable = $this->getConnection()->createQueryTable('user', 'SELECT * FROM user');
+        $expectedDataSet = __DIR__.'/DataSets/User/user-delete.xml';
+        $expectedTable = $this->createXMLDataSet($expectedDataSet)->getTable('user');
+
+        //check whether the tables are equal.
         $this->assertTablesEqual($expectedTable, $queryTable);
     }
 
     /**
-     * Method to test if the method update() works.
-     * @since 0.0.1-dev
+     * Method to test the save method.
+     * @since 1.0.0
      * @test
      */
-    public function testSaveUpdate()
+    public function testSave()
     {
-        //The User which will be updated on database.
+        //the User Entity which will be created on database.
+        $user_create = new User();
+        $user_create->birthday = '1974-08-19';
+        $user_create->email = 'CaseyVWade@dayrep.com';
+        $user_create->firstname = 'Casey V.';
+        $user_create->gender = 'F';
+        $user_create->lastname = 'Wade';
+        $user_create->password = 'athee6aiNg';
+        $user_create->salt = 'd02991c2a8e062a6d419883b6e3a1e58c4090029d1078b58c89c0f096177c379f0552bce705aaf47d7263a70cbf3e527c3662965d62d7cdf34df0053702c50ad';
+        $user_create->username = 'Proothe';
+
+        //the User Entity which will be updated on database.
+        $user_update = new User();
+        $user_update->id = 2;
+        $user_update->birthday = '1996-08-17';
+        $user_update->email = 'IdaQGarnes@rhyta.com';
+        $user_update->firstname = 'Ida Q.';
+        $user_update->gender = 'F';
+        $user_update->lastname = 'Garnes';
+        $user_update->password = 'Wooch1gei';
+        $user_update->salt = 'd02991c2a8e062a6d419883b6e3a1e58c4090029d1078b58c89c0f096177c379f0552bce705aaf47d7263a70cbf3e527c3662965d62d7cdf34df0053702c50ad';
+        $user_update->username = 'Stions';
+
+        //the UserMapper to save the User Entity (create) on database.
+        $userMapper = new UserMapper($this->getConnection()->getConnection());
+        $userMapper->save($user_create);
+
+        //the UserMapper to save the User Entity (update) on database.
+        $userMapper = new UserMapper($this->getConnection()->getConnection());
+        $userMapper->save($user_update);
+
+        //get the actual and expected table.
+        $queryTable = $this->getConnection()->createQueryTable('user', 'SELECT * FROM user');
+        $expectedDataSet = __DIR__.'/DataSets/User/user-save.xml';
+        $expectedTable = $this->createXMLDataSet($expectedDataSet)->getTable('user');
+
+        //check whether the tables are equal.
+        $this->assertTablesEqual($expectedTable, $queryTable);
+    }
+
+    /**
+     * Method to test the update method.
+     * @since 1.0.0
+     * @test
+     */
+    public function testUpdate()
+    {
+        //the User Entity which will be updated on database.
         $user = new User();
         $user->id = 2;
         $user->birthday = '1996-08-17';
@@ -144,16 +151,16 @@ class UserMapperTest extends \PHPUnit_Extensions_Database_TestCase
         $user->salt = 'd02991c2a8e062a6d419883b6e3a1e58c4090029d1078b58c89c0f096177c379f0552bce705aaf47d7263a70cbf3e527c3662965d62d7cdf34df0053702c50ad';
         $user->username = 'Stions';
 
-        //The UserMapper to update the User on database.
-        $userMapper = new UserMapper($this->pdo);
-        $userMapper->save($user);
+        //the UserMapper to update the User Entity on database.
+        $userMapper = new UserMapper($this->getConnection()->getConnection());
+        $userMapper->update($user);
 
-        //Get the actual and expected table.
+        //get the actual and expected table.
         $queryTable = $this->getConnection()->createQueryTable('user', 'SELECT * FROM user');
-        $expectedDataSet = __DIR__.'/DataSets/User/user-save-update.xml';
+        $expectedDataSet = __DIR__.'/DataSets/User/user-update.xml';
         $expectedTable = $this->createXMLDataSet($expectedDataSet)->getTable('user');
 
-        //Check if the tables are equal.
+        //check whether the tables are equal.
         $this->assertTablesEqual($expectedTable, $queryTable);
     }
 }
