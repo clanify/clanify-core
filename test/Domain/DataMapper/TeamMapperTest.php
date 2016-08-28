@@ -1,54 +1,29 @@
 <?php
 /**
  * Namespace for testing the DataMapper of Clanify.
- * @since 0.0.1-dev
+ * @since 1.0.0
  */
 namespace Clanify\Test\Domain\DataMapper;
 
 use Clanify\Domain\Entity\Team;
 use Clanify\Domain\DataMapper\TeamMapper;
-use Clanify\Test\MySQL55Truncate;
+use Clanify\Test\Clanify_DatabaseTestCase;
 
 /**
  * Class TeamMapperTest
  *
- * @author Sebastian Brosch <contact@sebastianbrosch.de>
+ * @author Sebastian Brosch <support@clanify.rocks>
  * @copyright 2016 Clanify <http://clanify.rocks>
  * @license GNU General Public License, version 3
  * @package Clanify\Test\Domain\DataMapper
- * @version 0.0.1-dev
+ * @version 1.0.0
  */
-class TeamMapperTest extends \PHPUnit_Extensions_Database_TestCase
+class TeamMapperTest extends Clanify_DatabaseTestCase
 {
-    /**
-     * The database connection with PDO.
-     * @since 0.0.1-dev
-     * @var null|\PDO
-     */
-    private $pdo = null;
-
-    /**
-     * Method to get the database connection for test.
-     * @return \PHPUnit_Extensions_Database_DB_DefaultDatabaseConnection
-     * @since 0.0.1-dev
-     */
-    public function getConnection()
-    {
-        //get the database information.
-        $dsn = getenv('DB_DSN');
-        $user = getenv('DB_USER');
-        $password = getenv('DB_PASSWD');
-        $database = getenv('DB_DBNAME');
-
-        //create the database connection.
-        $this->pdo = new \PDO($dsn, $user, $password);
-        return $this->createDefaultDBConnection($this->pdo, $database);
-    }
-
     /**
      * Method to get the initial state of the database for test.
      * @return \PHPUnit_Extensions_Database_DataSet_XmlDataSet
-     * @since 0.0.1-dev
+     * @since 1.0.0
      */
     public function getDataset()
     {
@@ -56,94 +31,116 @@ class TeamMapperTest extends \PHPUnit_Extensions_Database_TestCase
     }
 
     /**
-     * Returns the database operation executed in test setup.
-     * @return \PHPUnit_Extensions_Database_Operation_IDatabaseOperation The database operation.
-     * @since 0.0.1-dev
-     */
-    protected function getSetUpOperation()
-    {
-        //create the parameters for composite.
-        $truncate = new MySQL55Truncate(false);
-        $factoryInsert = \PHPUnit_Extensions_Database_Operation_Factory::INSERT();
-
-        //create and return the database operation.
-        return new \PHPUnit_Extensions_Database_Operation_Composite(array($truncate, $factoryInsert));
-    }
-
-    /**
-     * Method to test if the method delete() works.
-     * @since 0.0.1-dev
+     * Method to test the create method.
+     * @since 1.0.0
      * @test
      */
-    public function testDelete()
+    public function create()
     {
-        //The Team which will be deleted on database.
-        $team = new Team();
-        $team->id = 2;
-
-        //The TeamMapper to delete the Team on database.
-        $teamMapper = new TeamMapper($this->pdo);
-        $teamMapper->delete($team);
-
-        //Get the actual and expected table.
-        $queryTable = $this->getConnection()->createQueryTable('team', 'SELECT * FROM team');
-        $expectedDataSet = __DIR__.'/DataSets/Team/team-delete.xml';
-        $expectedTable = $this->createXMLDataSet($expectedDataSet)->getTable('team');
-
-        //Check if the tables are equal.
-        $this->assertTablesEqual($expectedTable, $queryTable);
-    }
-
-    /**
-     * Method to test if the method create() works.
-     * @since 0.0.1-dev
-     * @test
-     */
-    public function testSaveCreate()
-    {
-        //The Team which will be created on database.
+        //the Team Entity which will be created on database.
         $team = new Team();
         $team->name = 'Example eSport';
         $team->tag = 'EeS';
         $team->website = 'http://example.com';
 
-        //The TeamMapper to create the Team on database.
-        $teamMapper = new TeamMapper($this->pdo);
-        $teamMapper->save($team);
+        //the TeamMapper to create the Team Entity on database.
+        $teamMapper = new TeamMapper($this->getConnection()->getConnection());
+        $teamMapper->create($team);
 
-        //Get the actual and expected table.
-        $queryTable = $this->getConnection()->createQueryTable('team', 'SELECT * FROM team');
-        $expectedDataSet = __DIR__.'/DataSets/Team/team-save-create.xml';
-        $expectedTable = $this->createXMLDataSet($expectedDataSet)->getTable('team');
+        //get the actual and expected table.
+        $actualTable = $this->getConnection()->createQueryTable('team', 'SELECT * FROM team');
+        $expectedDataset = __DIR__.'/DataSets/Team/team-create.xml';
+        $expectedTable = $this->createXMLDataSet($expectedDataset)->getTable('team');
 
-        //Check if the tables are equal.
-        $this->assertTablesEqual($expectedTable, $queryTable);
+        //check whether the tables are equal.
+        $this->assertTablesEqual($expectedTable, $actualTable);
     }
 
     /**
-     * Method to test if the method update() works.
-     * @since 0.0.1-dev
+     * Method to test the delete method.
+     * @since 1.0.0
      * @test
      */
-    public function testSaveUpdate()
+    public function testDelete()
     {
-        //The Team which will be deleted on database.
+        //the Team Entity which will be deleted on database.
+        $team = new Team();
+        $team->id = 2;
+
+        //the TeamMapper to delete the Team Entity on database.
+        $teamMapper = new TeamMapper($this->getConnection()->getConnection());
+        $teamMapper->delete($team);
+
+        //get the actual and expected table.
+        $actualTable = $this->getConnection()->createQueryTable('team', 'SELECT * FROM team');
+        $expectedDataset = __DIR__.'/DataSets/Team/team-delete.xml';
+        $expectedTable = $this->createXMLDataSet($expectedDataset)->getTable('team');
+
+        //check whether the tables are equal.
+        $this->assertTablesEqual($expectedTable, $actualTable);
+    }
+
+    /**
+     * Method to test the save method.
+     * @since 1.0.0
+     * @test
+     */
+    public function testSave()
+    {
+        //the Team Entity which will be created on database.
+        $team_create = new Team();
+        $team_create->name = 'Example eSport';
+        $team_create->tag = 'EeS';
+        $team_create->website = 'http://example.com';
+
+        //the Team Entity which will be updated on database.
+        $team_update = new Team();
+        $team_update->id = 2;
+        $team_update->name = 'Example Team';
+        $team_update->tag = 'ET';
+        $team_update->website = 'http://example.com/esport';
+
+        //the TeamMapper to save the Team Entity (create) on database.
+        $teamMapper = new TeamMapper($this->getConnection()->getConnection());
+        $teamMapper->save($team_create);
+
+        //the TeamMapper to save the Team Entity (update) on database.
+        $teamMapper = new TeamMapper($this->getConnection()->getConnection());
+        $teamMapper->save($team_update);
+
+        //get the actual and expected table.
+        $actualTable = $this->getConnection()->createQueryTable('team', 'SELECT * FROM team');
+        $expectedDataset = __DIR__.'/DataSets/Team/team-save.xml';
+        $expectedTable = $this->createXMLDataSet($expectedDataset)->getTable('team');
+
+        //check whether the tables are equal.
+        $this->assertTablesEqual($expectedTable, $actualTable);
+    }
+
+    /**
+     * Method to test the update method.
+     * @since 1.0.0
+     * @test
+     */
+    public function testUpdate()
+    {
+        //the Team Entity which will be updated on database.
         $team = new Team();
         $team->id = 2;
         $team->name = 'Example Team';
         $team->tag = 'ET';
         $team->website = 'http://example.com/esport';
 
-        //The TeamMapper to delete the Team on database.
-        $teamMapper = new TeamMapper($this->pdo);
-        $teamMapper->save($team);
+        //the TeamMapper to update the Team Entity on database.
+        $teamMapper = new TeamMapper($this->getConnection()->getConnection());
+        $teamMapper->update($team);
 
-        //Get the actual and expected table.
-        $queryTable = $this->getConnection()->createQueryTable('team', 'SELECT * FROM team');
-        $expectedDataSet = __DIR__.'/DataSets/Team/team-save-update.xml';
-        $expectedTable = $this->createXMLDataSet($expectedDataSet)->getTable('team');
+        //get the actual and expected table.
+        $actualTable = $this->getConnection()->createQueryTable('team', 'SELECT * FROM team');
+        $expectedDataset = __DIR__.'/DataSets/Team/team-update.xml';
+        $expectedTable = $this->createXMLDataSet($expectedDataset)->getTable('team');
 
-        //Check if the tables are equal.
-        $this->assertTablesEqual($expectedTable, $queryTable);
+        //check whether the tables are equal.
+        $this->assertTablesEqual($expectedTable, $actualTable);
     }
 }
