@@ -99,7 +99,7 @@ abstract class Entity implements IEntity
             $globalProperty = $prefix.$property;
 
             //check if the property name exists on the global.
-            if (filter_input(INPUT_POST, $globalProperty, FILTER_NULL_ON_FAILURE) !== false) {
+            if (filter_has_var($global, $globalProperty) === true) {
                 $reflection = new \ReflectionProperty(get_class($this), $property);
 
                 //Get type from doc comments.
