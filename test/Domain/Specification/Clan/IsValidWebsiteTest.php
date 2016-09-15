@@ -7,10 +7,10 @@ namespace Clanify\Test\Domain\Specification\Clan;
 
 use Clanify\Domain\Entity\Clan;
 use Clanify\Domain\Entity\User;
-use Clanify\Domain\Specification\Clan\IsValidName;
+use Clanify\Domain\Specification\Clan\IsValidWebsite;
 
 /**
- * Class IsValidNameTest
+ * Class IsValidWebsiteTest
  *
  * @author Sebastian Brosch <support@clanify.rocks>
  * @copyright 2016 Clanify <http://clanify.rocks>
@@ -18,7 +18,7 @@ use Clanify\Domain\Specification\Clan\IsValidName;
  * @package Clanify\Test\Domain\Specification\Clan
  * @version 1.0.0
  */
-class IsValidNameTest extends \PHPUnit_Framework_TestCase
+class IsValidWebsiteTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * Method to get a valid Clan Entity.
@@ -42,33 +42,33 @@ class IsValidNameTest extends \PHPUnit_Framework_TestCase
     public function testIsSatisfiedBy()
     {
         //create the Specification.
-        $specification = new IsValidName();
+        $specification = new IsValidWebsite();
 
         //test another Entity.
         $this->assertFalse($specification->isSatisfiedBy(new User()));
 
-        //test the name of the Clan Entity.
+        //test the website of the Clan Entity.
         $clan = $this->getValidClan();
         $this->assertTrue($specification->isSatisfiedBy($clan));
 
-        //a Clan Entity without name is not valid.
+        //the website on Clan Entity is optional.
         $clan = $this->getValidClan();
-        $clan->name = '';
-        $this->assertFalse($specification->isSatisfiedBy($clan));
-
-        //a Clan Entity have to be a name with a minimum length of 5 chars.
-        $clan = $this->getValidClan();
-        $clan->name = str_repeat('A', 4);
-        $this->assertFalse($specification->isSatisfiedBy($clan));
-
-        //a Clan Entity with a name length between 5 and 100 chars is valid.
-        $clan = $this->getValidClan();
-        $clan->name = str_repeat('A', 55);
+        $clan->website = '';
         $this->assertTrue($specification->isSatisfiedBy($clan));
 
-        //a Clan Entity have to be a name with a maximum length of 100 chars.
+        //the website can start with the protocol "http".
         $clan = $this->getValidClan();
-        $clan->name = str_repeat('A', 101);
+        $clan->website = 'http://example.com';
+        $this->assertTrue($specification->isSatisfiedBy($clan));
+
+        //the website can start with the protocol "https".
+        $clan = $this->getValidClan();
+        $clan->website = 'https://example.com';
+        $this->assertTrue($specification->isSatisfiedBy($clan));
+
+        //the website should not start with the protocol "ftp".
+        $clan = $this->getValidClan();
+        $clan->website = 'ftp://example.com';
         $this->assertFalse($specification->isSatisfiedBy($clan));
     }
 }
