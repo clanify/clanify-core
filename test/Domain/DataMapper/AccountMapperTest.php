@@ -7,6 +7,7 @@ namespace Clanify\Test\Domain\DataMapper;
 
 use Clanify\Domain\Entity\Account;
 use Clanify\Domain\DataMapper\AccountMapper;
+use Clanify\Domain\Entity\Team;
 use Clanify\Test\Clanify_DatabaseTestCase;
 
 /**
@@ -53,6 +54,9 @@ class AccountMapperTest extends Clanify_DatabaseTestCase
 
         //check whether the tables are equal.
         $this->assertTablesEqual($expectedTable, $actualTable);
+
+        //another Entity than Account Entity is not valid on the AccountMapper.
+        $this->assertFalse($accountMapper->create(new Team()));
     }
 
     /**
@@ -77,6 +81,9 @@ class AccountMapperTest extends Clanify_DatabaseTestCase
 
         //check whether the tables are equal.
         $this->assertTablesEqual($expectedTable, $actualTable);
+
+        //another Entity than Account Entity is not valid on the AccountMapper.
+        $this->assertFalse($accountMapper->delete(new Team()));
     }
 
     /**
@@ -112,6 +119,19 @@ class AccountMapperTest extends Clanify_DatabaseTestCase
 
         //check whether the tables are equal.
         $this->assertTablesEqual($expectedTable, $actualTable);
+
+        //the Team Entity which should be fail.
+        $team = new Team();
+        $team->id = 0;
+        $team->name = 'Example eSport';
+        $team->tag = 'EE';
+
+        //another Entity than Account Entity is not valid on the AccountMapper (create).
+        $this->assertFalse($accountMapper->save($team));
+
+        //another Entity than Account Entity is not valid on the AccountMapper (update).
+        $team->id = 1;
+        $this->assertFalse($accountMapper->save($team));
     }
 
     /**
@@ -138,5 +158,8 @@ class AccountMapperTest extends Clanify_DatabaseTestCase
 
         //check whether the tables are equal.
         $this->assertTablesEqual($expectedTable, $actualTable);
+
+        //another Entity than Account Entity is not valid on the AccountMapper.
+        $this->assertFalse($accountMapper->update(new Team()));
     }
 }

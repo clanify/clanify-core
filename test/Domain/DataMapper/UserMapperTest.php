@@ -5,6 +5,7 @@
  */
 namespace Clanify\Test\Domain\DataMapper;
 
+use Clanify\Domain\Entity\Clan;
 use Clanify\Domain\Entity\User;
 use Clanify\Domain\DataMapper\UserMapper;
 use Clanify\Test\Clanify_DatabaseTestCase;
@@ -59,6 +60,9 @@ class UserMapperTest extends Clanify_DatabaseTestCase
 
         //check whether the tables are equal.
         $this->assertTablesEqual($expectedTable, $actualTable);
+
+        //another Entity than User Entity is not valid on the UserMapper.
+        $this->assertFalse($userMapper->create(new Clan()));
     }
 
     /**
@@ -83,6 +87,9 @@ class UserMapperTest extends Clanify_DatabaseTestCase
 
         //check whether the tables are equal.
         $this->assertTablesEqual($expectedTable, $queryTable);
+
+        //another Entity than User Entity is not valid on the UserMapper.
+        $this->assertFalse($userMapper->delete(new Clan()));
     }
 
     /**
@@ -130,6 +137,19 @@ class UserMapperTest extends Clanify_DatabaseTestCase
 
         //check whether the tables are equal.
         $this->assertTablesEqual($expectedTable, $queryTable);
+
+        //the Clan Entity which should be fail.
+        $clan = new Clan();
+        $clan->id = 0;
+        $clan->name = 'Example Team';
+        $clan->tag = 'ET';
+
+        //another Entity than User Entity is not valid on the UserMapper (create).
+        $this->assertFalse($userMapper->save($clan));
+
+        //another Entity than User Entity is not valid on the UserMapper (update).
+        $clan->id = 1;
+        $this->assertFalse($userMapper->save($clan));
     }
 
     /**
@@ -162,5 +182,8 @@ class UserMapperTest extends Clanify_DatabaseTestCase
 
         //check whether the tables are equal.
         $this->assertTablesEqual($expectedTable, $queryTable);
+
+        //another Entity than User Entity is not valid on the UserMapper.
+        $this->assertFalse($userMapper->update(new Clan()));
     }
 }
