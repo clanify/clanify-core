@@ -44,6 +44,7 @@ class IsUniqueTest extends Clanify_DatabaseTestCase
         $clan->id = 1;
         $clan->name = 'Example Gaming';
         $clan->tag = 'EG';
+        $clan->website = 'http://example.com';
         return $clan;
     }
 

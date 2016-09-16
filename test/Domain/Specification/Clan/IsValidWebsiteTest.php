@@ -31,6 +31,7 @@ class IsValidWebsiteTest extends \PHPUnit_Framework_TestCase
         $clan->id = 1;
         $clan->name = 'Example Gaming';
         $clan->tag = 'EG';
+        $clan->website = 'http://example.com';
         return $clan;
     }
 
