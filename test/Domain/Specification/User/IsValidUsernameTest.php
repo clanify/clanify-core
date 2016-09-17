@@ -1,0 +1,95 @@
+<?php
+/**
+ * Namespace for testing the Specifications of User.
+ * @since 1.0.0
+ */
+namespace Clanify\Test\Domain\Specification\User;
+
+use Clanify\Domain\Entity\Clan;
+use Clanify\Domain\Entity\User;
+use Clanify\Domain\Specification\User\IsValidUsername;
+
+/**
+ * Class IsValidUsernameTest
+ *
+ * @author Sebastian Brosch <support@clanify.rocks>
+ * @copyright 2016 Clanify <http://clanify.rocks>
+ * @license GNU General Public License, version 3
+ * @package Clanify\Test\Domain\Specification\User
+ * @version 1.0.0
+ */
+class IsValidUsernameTest extends \PHPUnit_Framework_TestCase
+{
+    /**
+     * Method to get a valid User Entity.
+     * @return User A valid User Entity which can be used to test the Specification.
+     * @since 1.0.0
+     */
+    private function getValidUser()
+    {
+        //the salt of the User Entity.
+        $salt = '00807432eae173f652f2064bdca1b61b290b52d40e429a7d295d76a71084aa96c';
+        $salt .= '0233b82f1feac45529e0726559645acaed6f3ae58a286b9f075916ebf66cacc';
+
+        //create the User Entity.
+        $user = new User();
+        $user->id = 1;
+        $user->birthday = '1969-06-27';
+        $user->email = 'AlexMHarlow@teleworm.us';
+        $user->firstname = 'Alex M.';
+        $user->gender = 'M';
+        $user->lastname = 'Harlow';
+        $user->password = 'Shoghef3pi';
+        $user->salt = $salt;
+        $user->username = 'Opery1969';
+        return $user;
+    }
+
+    /**
+     * Method to test the isSatisfiedBy method.
+     * @since 1.0.0
+     * @test
+     */
+    public function testIsSatisfiedBy()
+    {
+        //create the Specification.
+        $specification = new IsValidUsername();
+
+        //test another Entity.
+        $this->assertFalse($specification->isSatisfiedBy(new Clan()));
+
+        //test the valid User Entity.
+        $user = $this->getValidUser();
+        $this->assertTrue($specification->isSatisfiedBy($user));
+
+        //the username property have to be at least 5 chars.
+        $user = $this->getValidUser();
+        $user->username = str_repeat('A', 4);
+        $this->assertFalse($specification->isSatisfiedBy($user));
+
+        //the username property have to be at least 5 chars.
+        $user = $this->getValidUser();
+        $user->username = str_repeat('A', 5);
+        $this->assertTrue($specification->isSatisfiedBy($user));
+
+        //the maximum length of the username property is 100 chars.
+        $user = $this->getValidUser();
+        $user->username = str_repeat('A', 100);
+        $this->assertTrue($specification->isSatisfiedBy($user));
+
+        //the maximum length of the username property is 100 chars.
+        $user = $this->getValidUser();
+        $user->username = str_repeat('A', 101);
+        $this->assertFalse($specification->isSatisfiedBy($user));
+
+        //the username property can not contain special characters.
+        $user = $this->getValidUser();
+        $user->username = '12345abcdeABCDE';
+        $this->assertTrue($specification->isSatisfiedBy($user));
+
+        //no special characters are allowed.
+        $user = $this->getValidUser();
+        $user->username = '12345abcdeABCDE!&%';
+        $this->assertFalse($specification->isSatisfiedBy($user));
+    }
+}
