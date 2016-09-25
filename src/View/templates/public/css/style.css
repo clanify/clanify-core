@@ -155,3 +155,51 @@ div.content form input.form-control {
 .container .jumbotron p {
     font-size:1.1em;
 }
+
+tr[class^="battlefield-4"] td.cover {
+    background-image:url('../img/game-cover/battlefield-4-cover.jpg');
+}
+tr[class^="battlefield-hardline"] td.cover {
+    background-image:url('../img/game-cover/battlefield-hardline-cover.jpg');
+}
+tr[class^="battlefield-1"] td.cover {
+    background-image:url('../img/game-cover/battlefield-1-cover.jpg');
+}
+tr[class^="battlefield-3"] td.cover {
+    background-image:url('../img/game-cover/battlefield-3-cover.jpg');
+}
+tr[class^="overwatch"] td.cover {
+    background-image:url('../img/game-cover/overwatch-cover.jpg');
+}
+tr[class^="americas-army-3"] td.cover {
+    background-image:url('../img/game-cover/americas-army-3-cover.jpg');
+}
+tr[class^="counter-strike-global-offensive"] td.cover {
+    background-image:url('../img/game-cover/counter-strike-global-offensive-cover.jpg');
+}
+tr[class^="world-of-warcraft"] td.cover {
+    background-image:url('../img/game-cover/world-of-warcraft-cover.jpg');
+}
+tr td.cover {
+    background-repeat: no-repeat;
+    background-size: cover ;
+    height:70px;
+    width: 50px;
+}
+tr td {
+    vertical-align: middle !important;
+}
+
+table.accounts tr td {
+    border:0;
+}
+table.accounts tr td span.value {
+    color:#999;
+    font-size:0.9em;
+}
+table.accounts tr td a.btn i {
+    margin:0;
+}
+table.accounts tr td.action {
+    text-align:right;
+}
