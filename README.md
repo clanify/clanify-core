@@ -16,3 +16,10 @@ Sollten Sie Ideen oder Fragen zu Clanify haben, schreiben Sie einfach an:
 daher nicht produktiv eingesetzt werden! Sollte trotzdem das Interesse einer 
 Installation vorhanden sein, kann man sich gerne hier melden: 
 [support@clanify.rocks](mailto:support@clanify.rocks?subject=Support)
+
+## Entwicklung
+
+- [API Dokumentation]( http://dev.clanify.rocks/apigen/) (*ApiGen*)
+- [PHP Metrics](http://dev.clanify.rocks/phpmetrics/) (*PhpMetrics*)
+- [Travis-CI](https://travis-ci.org/Clanify/Clanify)
+- [Coveralls](https://coveralls.io/github/Clanify/Clanify)

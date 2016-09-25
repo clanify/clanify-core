@@ -1,0 +1,7 @@
+clanify:
+  path:
+    extensions: php
+    exclude: test
+  logging:
+    report:
+      html: ./docs/phpmetrics.html
