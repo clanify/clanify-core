@@ -77,7 +77,10 @@ $members = $this->getVar('members', []);
                                     <?php if ($user instanceof User) : ?>
                                         <?php if (in_array($user, $members) === false) : ?>
                                             <tr>
-                                                <td><input type="checkbox" name="members[]" value="<?= $user->id ?>"/></td>
+                                                <td>
+                                                    <label class="sr-only" for="members-add">Add User</label>
+                                                    <input type="checkbox" id="members-add" name="members[]" value="<?= $user->id ?>"/>
+                                                </td>
                                                 <td><?= $user->username ?></td>
                                                 <td><?= $user->getFullname(); ?></td>
                                                 <td>
@@ -98,7 +101,7 @@ $members = $this->getVar('members', []);
                         <?php endif; ?>
                         <?= FormBuilder::getInputHidden('clan_id', $clan->id); ?>
                         <div class="pull-right">
-                            <?= FormBuilder::getButtonSaveForm(); ?>
+                            <?= FormBuilder::getButtonSaveForm('Add User'); ?>
                             <?= FormBuilder::getButtonCancel(URL.'clan/edit/'.$clan->id); ?>
                         </div>
                     </form>
@@ -119,7 +122,10 @@ $members = $this->getVar('members', []);
                                 <?php foreach ($members as $member) : ?>
                                     <?php if ($member instanceof User) : ?>
                                         <tr>
-                                            <td><input type="checkbox" name="members[]" value="<?= $member->id ?>"/></td>
+                                            <td>
+                                                <label class="sr-only" for="members-remove">Remove Member</label>
+                                                <input type="checkbox" id="members-remove" name="members[]" value="<?= $member->id ?>"/>
+                                            </td>
                                             <td><?= $member->username ?></td>
                                             <td><?= $member->getFullname(); ?></td>
                                             <td>
@@ -139,7 +145,7 @@ $members = $this->getVar('members', []);
                         <?php endif; ?>
                         <?= FormBuilder::getInputHidden('clan_id', $clan->id); ?>
                         <div class="pull-right">
-                            <?= FormBuilder::getButtonSaveForm(); ?>
+                            <?= FormBuilder::getButtonSaveForm('Remove Member'); ?>
                             <?= FormBuilder::getButtonCancel(URL.'clan/edit/'.$clan->id); ?>
                         </div>
                     </form>

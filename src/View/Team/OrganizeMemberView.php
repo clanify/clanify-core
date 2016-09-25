@@ -62,7 +62,7 @@ $members = $this->getVar('members', []);
             </div>
             <div class="tab-content">
                 <div class="tab-pane active" id="user">
-                    <form action="<?= URL ?>/team/member-add" method="post">
+                    <form action="<?= URL ?>team/member-add" method="post">
                         <?php if (count($users) > 0) : ?>
                         <table class="table table-hover">
                             <thead>
@@ -78,7 +78,10 @@ $members = $this->getVar('members', []);
                                 <?php if ($user instanceof User) : ?>
                                     <?php if (in_array($user, $members) === false) : ?>
                                         <tr>
-                                            <td><input type="checkbox" name="members[]" value="<?= $user->id ?>"/></td>
+                                            <td>
+                                                <label class="sr-only" for="members-add">Add User</label>
+                                                <input type="checkbox" id="members-add" name="members[]" value="<?= $user->id ?>"/>
+                                            </td>
                                             <td><?= $user->username ?></td>
                                             <td><?= $user->getFullname(); ?></td>
                                             <td><?= $user->email ?></td>
@@ -95,13 +98,13 @@ $members = $this->getVar('members', []);
                         <?php endif; ?>
                         <?= FormBuilder::getInputHidden('team_id', $team->id); ?>
                         <div class="pull-right">
-                            <?= FormBuilder::getButtonSaveForm(); ?>
+                            <?= FormBuilder::getButtonSaveForm('Add User'); ?>
                             <?= FormBuilder::getButtonCancel(URL.'team/edit/'.$team->id, 'Cancel'); ?>
                         </div>
                     </form>
                 </div>
                 <div class="tab-pane" id="member">
-                    <form action="<?= URL ?>/team/member-remove" method="post">
+                    <form action="<?= URL ?>team/member-remove" method="post">
                         <?php if (count($members) > 0) : ?>
                             <table class="table table-hover">
                                 <thead>
@@ -116,7 +119,10 @@ $members = $this->getVar('members', []);
                                 <?php foreach ($members as $member) : ?>
                                     <?php if ($member instanceof User) : ?>
                                         <tr>
-                                            <td><input type="checkbox" name="members[]" value="<?= $member->id ?>"/></td>
+                                            <td>
+                                                <label class="sr-only" for="members-remove">Remove Member</label>
+                                                <input type="checkbox" id="members-remove" name="members[]" value="<?= $member->id ?>"/>
+                                            </td>
                                             <td><?= $member->username ?></td>
                                             <td><?= $member->getFullname(); ?></td>
                                             <td><?= $member->email ?></td>
@@ -132,7 +138,7 @@ $members = $this->getVar('members', []);
                         <?php endif; ?>
                         <?= FormBuilder::getInputHidden('team_id', $team->id); ?>
                         <div class="pull-right">
-                            <?= FormBuilder::getButtonSaveForm(); ?>
+                            <?= FormBuilder::getButtonSaveForm('Remove Member'); ?>
                             <?= FormBuilder::getButtonCancel(URL.'team/edit/'.$team->id); ?>
                         </div>
                     </form>

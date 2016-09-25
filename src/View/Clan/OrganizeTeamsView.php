@@ -77,7 +77,10 @@ $clanTeams = $this->getVar('clan_teams', []);
                                 <?php foreach ($teams as $team) : ?>
                                     <?php if ($team instanceof Team) : ?>
                                         <tr>
-                                            <td><input type="checkbox" name="teams[]" value="<?= $team->id ?>"/></td>
+                                            <td>
+                                                <label class="sr-only" for="teams-add">Add Team</label>
+                                                <input type="checkbox" id="teams-add" name="teams[]" value="<?= $team->id ?>"/>
+                                            </td>
                                             <td><?= $team->tag ?></td>
                                             <td><?= $team->name; ?></td>
                                             <td>
@@ -97,7 +100,7 @@ $clanTeams = $this->getVar('clan_teams', []);
                         <?php endif; ?>
                         <?= FormBuilder::getInputHidden('clan_id', $clan->id); ?>
                         <div class="pull-right">
-                            <?= FormBuilder::getButtonSaveForm(); ?>
+                            <?= FormBuilder::getButtonSaveForm('Add Team'); ?>
                             <?= FormBuilder::getButtonCancel(URL.'clan/edit/'.$clan->id); ?>
                         </div>
                     </form>
@@ -118,7 +121,10 @@ $clanTeams = $this->getVar('clan_teams', []);
                                 <?php foreach ($clanTeams as $clanTeam) : ?>
                                     <?php if ($clanTeam instanceof Team) : ?>
                                         <tr>
-                                            <td><input type="checkbox" name="teams[]" value="<?= $clanTeam->id ?>"/></td>
+                                            <td>
+                                                <label class="sr-only" for="teams-remove">Remove Team</label>
+                                                <input type="checkbox" id="teams-remove" name="teams[]" value="<?= $clanTeam->id ?>"/>
+                                            </td>
                                             <td><?= $clanTeam->tag ?></td>
                                             <td><?= $clanTeam->name; ?></td>
                                             <td>
@@ -138,7 +144,7 @@ $clanTeams = $this->getVar('clan_teams', []);
                         <?php endif; ?>
                         <?= FormBuilder::getInputHidden('clan_id', $clan->id); ?>
                         <div class="pull-right">
-                            <?= FormBuilder::getButtonSaveForm(); ?>
+                            <?= FormBuilder::getButtonSaveForm('Remove Team'); ?>
                             <?= FormBuilder::getButtonCancel(URL.'clan/edit/'.$clan->id); ?>
                         </div>
                     </form>

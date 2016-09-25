@@ -10,6 +10,7 @@ use Clanify\Core\Log\LogLevel;
 use Clanify\Core\View;
 use Clanify\Domain\Entity\User;
 use Clanify\Application\Service\AuthenticationService;
+use Clanify\Domain\Repository\UserRepository;
 use Clanify\Domain\Specification\User\IsUnique;
 use Clanify\Domain\Specification\User\IsValidEmail;
 use Clanify\Domain\Specification\User\IsValidPassword;
@@ -66,7 +67,7 @@ class RegisterController extends Controller
         }
 
         //check if the user is unique.
-        if ((new IsUnique())->isSatisfiedBy($user) === false) {
+        if ((new IsUnique(UserRepository::build()))->isSatisfiedBy($user) === false) {
             $this->jsonOutput('The User already exists!', '', LogLevel::ERROR);
             return false;
         }
