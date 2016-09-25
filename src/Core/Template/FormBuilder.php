@@ -4,6 +4,7 @@
  * @since 0.0.1-dev
  */
 namespace Clanify\Core\Template;
+use Clanify\Core\Database;
 
 /**
  * Class FormBuilder
@@ -168,5 +169,30 @@ class FormBuilder
         //close the select and return the html output.
         $html .= '</select></div>';
         return $html;
+    }
+
+    /**
+     * Method to get a select element for a table.
+     * @param string $table The name of the table for the data.
+     * @param string $name The name of the select element.
+     * @param string $value The value which should be visible on the select.
+     * @return string The HTML markup for output.
+     * @since 1.0.0
+     */
+    public static function getSelectByTable($table, $name, $value = '')
+    {
+        $html = '<div class="form-group">';
+        $html .= '<select name="'.$name.'" class="form-control">';
+        $pdo = Database::getInstance()->getConnection();
+        $rows = $pdo->query('SELECT * FROM '.$table);
+
+        //create the options from database.
+        foreach ($rows as $row) {
+            $html .= '<option value="'.$row['id'].'" '.(($value == $row['id']) ? 'selected' : '').'>';
+            $html .= $row['name'].'</option>';
+        }
+
+        //close the select element and container and return the output.
+        return $html.'</select></div>';
     }
 }
