@@ -47,7 +47,7 @@ $cito->setValue('base_url', URL.'dashboard');
 //set the body classes.
 $cito->setValue('body', 'class="no-bg" id="user-edit"');
 $user = $this->getVar('user');
-$userAccounts = $this->getVar('user_accounts', []);
+$userAccounts = $this->getVar('accounts', []);
 ?>
 <div class="container">
     <div class="row">
@@ -56,7 +56,7 @@ $userAccounts = $this->getVar('user_accounts', []);
             <div class="alert alert-info pill-bar">
                 <ul class="nav nav-pills">
                     <li class="active"><a data-target="#info" data-toggle="tab">Info</a></li>
-                    <li><a data-target="#accounts" data-toggle="tab">Accounts</a></li>
+                    <li><a data-target="#tab-accounts" data-toggle="tab">Accounts</a></li>
                 </ul>
             </div>
             <div class="tab-content">
@@ -94,35 +94,32 @@ $userAccounts = $this->getVar('user_accounts', []);
                         </div>
                     </form>
                 </div>
-                <div class="tab-pane" id="accounts">
+                <div class="tab-pane" id="tab-accounts">
                     <?php if (count($userAccounts) > 0) : ?>
-                        <table class="table table-hover">
-                            <thead>
-                            <tr>
-                                <th></th>
-                                <th>Name</th>
-                                <th>Wert</th>
-                            </tr>
-                            </thead>
+                        <table class="table table-hover accounts table-striped">
                             <tbody>
                             <?php foreach ($userAccounts as $account) : ?>
                                 <?php if ($account instanceof \Clanify\Domain\Entity\Account) : ?>
-                                    <tr>
-                                        <td><img src="http://placehold.it/100x100"/></td>
-                                        <td><?= $account->name ?></td>
-                                        <td><?= $account->value ?></td>
+                                    <tr class="<?= strtolower(str_replace('_', '-', $account->name)) ?> ajax" data-account_id="<?= $account->id ?>" data-user_id="<?= $user->id ?>">
+                                        <td class="cover"></td>
+                                        <td><?= ucwords(strtolower(str_replace('_', ' ', $account->name))) ?><br/>
+                                            <span class="value"><?= $account->value ?></span></td>
+                                        <td class="action">
+                                            <a class="btn btn-md btn-success" href="<?= URL ?>user/edit-account/<?= $user->id ?>/<?= $account->id ?>"><i class="fa fa-pencil"></i></a>
+                                            <a class="btn btn-md btn-danger" data-action="<?= URL ?>user/delete-account"><i class="fa fa-trash-o"></i></a>
+                                        </td>
                                     </tr>
                                 <?php endif; ?>
                             <?php endforeach; ?>
                             </tbody>
                         </table>
                         <div class="pull-right">
-                            <?= FormBuilder::getButtonOrganize(URL.'user/organize-account/'.$user->id, 'Organize Accounts'); ?>
+                            <a class="btn btn-success btn-sm" href="<?= URL ?>user/create-account/<?= $user->id ?>/0"><i class="fa fa-plus"></i>Add a Account.</a>
                         </div>
                     <?php elseif ($user->id > 0) : ?>
                         <div class="alert alert-warning" role="alert">
                             No Account available!
-                            <a href="<?= URL ?>user/create-account" class="alert-link">Add a Account.</a>
+                            <a href="<?= URL ?>user/create-account/<?= $user->id ?>/0" class="alert-link">Add a Account.</a>
                         </div>
                     <?php else : ?>
                         <div class="alert alert-warning" role="alert">

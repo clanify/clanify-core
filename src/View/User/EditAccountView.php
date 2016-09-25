@@ -4,8 +4,8 @@ use Clanify\Core\Template\MenuBuilder;
 use Clanify\Core\CitoEngine;
 use Clanify\Core\Template\FormBuilder;
 use Clanify\Domain\Entity\User;
-use Clanify\Domain\Entity\Team;
 use Clanify\Core\Database;
+use Clanify\Domain\Entity\Account;
 
 //get the instance of the CitoEngine.
 $cito = CitoEngine::getInstance();
@@ -41,28 +41,35 @@ $cito->setValue('base_url', URL.'dashboard');
 
 //set the footer content.
 $cito->setValue('head', '<script src="'.CDN::getJQueryJS().'"></script>');
-$cito->setValue('head', '<script src="'.$clanifyJS.'"></script>');
 $cito->setValue('head', '<script src="'.CDN::getBootstrapJS().'"></script>');
+$cito->setValue('head', '<script src="'.$clanifyJS.'"></script>');
 
 //set the body classes.
 $cito->setValue('body', 'class="no-bg" id="team-edit"');
-$account = $this->getVar('account', new \Clanify\Domain\Entity\Account());
+$account = $this->getVar('account', new Account());
+$user = $this->getVar('user', new User());
+
+if (!($account instanceof Account)) {
+    $account = new Account();
+}
+
 ?>
 <div class="container" id="team-edit">
     <div class="row">
         <div class="col-md-6 col-md-offset-3">
-            <h2 class="hide-text-overflow">Organize Member</h2>
-            <form class="ajax" method="post" data-action="<?= URL ?>team/save">
+            <h2 class="hide-text-overflow"><?= ($account->id > 0) ? 'Edit Account' : 'Add Account'; ?></h2>
+            <form class="ajax" id="table-form" method="post" data-action="<?= URL ?>user/account-save">
                 <div class="alert" role="alert"></div>
-                <?= FormBuilder::getInputText('account_name', 'Name', $account->name); ?>
+                <?= FormBuilder::getSelectByTable('account_games', 'account_name', $account->name); ?>
+                <?= FormBuilder::getInputText('account_value', '', $account->value); ?>
                 <?= FormBuilder::getInputHidden('account_id', $account->id); ?>
-                <?= FormBuilder::getInputHidden('account_user_id', $account->user_id); ?>
+                <?= FormBuilder::getInputHidden('user_id', $user->id); ?>
                 <div class="pull-right">
                     <?= FormBuilder::getButtonSaveForm(); ?>
                     <?php if ($account->id > 0) : ?>
-                        <?= FormBuilder::getButtonDelete(URL.'user/account-delete/'.$account->id); ?>
+                        <a class="btn btn-danger btn-sm ajax" data-action="<?= URL ?>user/delete-account/" data-account_id="<?= $account->id ?>" data-user_id="<?= $user->id ?>"><i class="fa fa-trash"></i>Delete</a>
                     <?php endif; ?>
-                    <?= FormBuilder::getButtonCancel(URL.'user'); ?>
+                    <?= FormBuilder::getButtonCancel(URL.'user/edit/'.$user->id.'#tab-accounts'); ?>
                 </div>
             </form>
         </div>
