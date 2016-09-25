@@ -58,12 +58,6 @@ $cito->setValue('body', 'class="no-bg"');
                     eine kurze E-Mail an: <a href="mailto:hello@clanify.rocks">hello@clanify.rocks</a>
                 </p>
             </div>
-            <div class="jumbotron">
-                <h2>News</h2>
-                <p>
-                    2016-03-15 - Logging und Spam-Schutz.
-                </p>
-            </div>
         </div>
     </div>
 </div>
