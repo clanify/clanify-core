@@ -153,7 +153,7 @@ class TeamController extends Controller
         }
 
         //check if the Team already exists.
-        if ((new IsUnique($team->id > 0))->isSatisfiedBy($team) === false) {
+        if ((new IsUnique(TeamRepository::build()))->isSatisfiedBy($team) === false) {
             $this->jsonOutput('The Team already exists!', '', LogLevel::ERROR);
             return false;
         }
