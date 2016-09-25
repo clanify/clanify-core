@@ -11,16 +11,15 @@ use Clanify\Core\Log\LogLevel;
 use Clanify\Core\View;
 use Clanify\Domain\DataMapper\ClanMapper;
 use Clanify\Domain\Entity\Clan;
-use Clanify\Domain\Entity\Team;
-use Clanify\Domain\Entity\User;
 use Clanify\Domain\Repository\ClanRepository;
 use Clanify\Domain\Repository\TeamRepository;
 use Clanify\Domain\Repository\UserRepository;
-use Clanify\Domain\Service\Clan\ClanService;
 use Clanify\Domain\Specification\Clan\IsUnique;
 use Clanify\Domain\Specification\Clan\IsValidName;
 use Clanify\Domain\Specification\Clan\IsValidTag;
 use Clanify\Domain\Specification\Clan\IsValidWebsite;
+use Clanify\Domain\TableMapper\ClanTeamTableMapper;
+use Clanify\Domain\TableMapper\ClanUserTableMapper;
 
 /**
  * Class ClanController
@@ -157,13 +156,11 @@ class ClanController extends Controller
 
                     //check if Members are available.
                     if (count($users) > 0) {
-                        $clanService = new ClanService();
+                        $clanUserTableMapper = ClanUserTableMapper::build();
 
                         //run through all Members to assign with the Clan.
                         foreach ($users as $user) {
-                            if ($user instanceof User) {
-                                $clanService->addUser($clan, $user);
-                            }
+                            $clanUserTableMapper->create($clan, $user);
                         }
                     }
 
@@ -257,13 +254,11 @@ class ClanController extends Controller
 
                     //check if Members are available.
                     if (count($users) > 0) {
-                        $clanService = new ClanService();
+                        $clanUserTableMapper = ClanUserTableMapper::build();
 
                         //run through all Members to assign with the Clan.
                         foreach ($users as $user) {
-                            if ($user instanceof User) {
-                                $clanService->removeUser($clan, $user);
-                            }
+                            $clanUserTableMapper->delete($clan, $user);
                         }
                     }
 
@@ -313,7 +308,7 @@ class ClanController extends Controller
         }
 
         //check if the Clan already exists.
-        if ((new IsUnique($clan->id > 0))->isSatisfiedBy($clan) === false) {
+        if ((new IsUnique(ClanRepository::build()))->isSatisfiedBy($clan) === false) {
             $this->jsonOutput('The Clan already exists!', '', LogLevel::ERROR);
             return false;
         }
@@ -358,13 +353,11 @@ class ClanController extends Controller
 
                     //check if Teams are available.
                     if (count($teams) > 0) {
-                        $clanService = new ClanService();
+                        $clanTeamTableMapper = ClanTeamTableMapper::build();
 
                         //run through all Teams to link with the Clan.
                         foreach ($teams as $team) {
-                            if ($team instanceof Team) {
-                                $clanService->addTeam($clan, $team);
-                            }
+                            $clanTeamTableMapper->create($clan, $team);
                         }
                     }
 
@@ -458,13 +451,11 @@ class ClanController extends Controller
 
                     //check if Teams are available.
                     if (count($teams) > 0) {
-                        $clanService = new ClanService();
+                        $clanTeamTableMapper = ClanTeamTableMapper::build();
 
                         //run through all Teams to assign with the Clan.
                         foreach ($teams as $team) {
-                            if ($team instanceof Team) {
-                                $clanService->removeTeam($clan, $team);
-                            }
+                            $clanTeamTableMapper->delete($clan, $team);
                         }
                     }
 

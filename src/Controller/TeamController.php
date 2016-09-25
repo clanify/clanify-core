@@ -11,14 +11,13 @@ use Clanify\Core\Log\LogLevel;
 use Clanify\Core\View;
 use Clanify\Domain\DataMapper\TeamMapper;
 use Clanify\Domain\Entity\Team;
-use Clanify\Domain\Entity\User;
 use Clanify\Domain\Repository\TeamRepository;
 use Clanify\Domain\Repository\UserRepository;
-use Clanify\Domain\Service\Team\TeamService;
 use Clanify\Domain\Specification\Team\IsUnique;
 use Clanify\Domain\Specification\Team\IsValidName;
 use Clanify\Domain\Specification\Team\IsValidTag;
 use Clanify\Domain\Specification\Team\IsValidWebsite;
+use Clanify\Domain\TableMapper\TeamUserTableMapper;
 
 /**
  * Class TeamController
@@ -231,20 +230,17 @@ class TeamController extends Controller
 
             //check if a member was found.
             if (($members !== false) && (count($members) > 0)) {
-                $teamService = new TeamService();
                 $teams = TeamRepository::build()->findByID($teamID);
 
                 if (count($teams) === 1) {
-                    $teamDB = $teams[0];
                     $users = UserRepository::build()->findByID($members);
+                    $teamUserTableMapper = TeamUserTableMapper::build();
 
                     foreach ($users as $user) {
-                        if ($user instanceof User) {
-                            $teamService->removeUser($teamDB, $user);
-                        }
+                        $teamUserTableMapper->delete($teams[0], $user);
                     }
 
-                    $this->redirect(URL.'team/edit/'.$teamDB->id);
+                    $this->redirect(URL.'team/edit/'.$teams[0]->id);
                     return;
                 }
             }
@@ -266,20 +262,17 @@ class TeamController extends Controller
 
             //check if a member was found.
             if (($members !== false) && (count($members) > 0)) {
-                $teamService = new TeamService();
                 $teams = TeamRepository::build()->findByID($teamID);
 
                 if (count($teams) === 1) {
-                    $teamDB = $teams[0];
                     $users = UserRepository::build()->findByID($members);
+                    $teamUserTableMapper = TeamUserTableMapper::build();
 
                     foreach ($users as $user) {
-                        if ($user instanceof User) {
-                            $teamService->addUser($teamDB, $user);
-                        }
+                       $teamUserTableMapper->create($teams[0], $user);
                     }
 
-                    $this->redirect(URL.'team/edit/'.$teamDB->id);
+                    $this->redirect(URL.'team/edit/'.$teams[0]->id);
                     return;
                 }
             }

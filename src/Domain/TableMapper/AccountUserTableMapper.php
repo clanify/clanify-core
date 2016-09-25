@@ -10,7 +10,7 @@ use Clanify\Domain\Entity\Account;
 use Clanify\Domain\Entity\User;
 
 /**
- * Class AccountUserTableMapper to persist the association between Account and User.
+ * TableMapper to persist the association between Account and User.
  *
  * @author Sebastian Brosch <support@clanify.rocks>
  * @copyright 2016 Clanify <http://clanify.rocks>
@@ -18,25 +18,8 @@ use Clanify\Domain\Entity\User;
  * @package Clanify\Domain\TableMapper
  * @version 1.0.0
  */
-class AccountUserTableMapper
+class AccountUserTableMapper extends TableMapper
 {
-    /**
-     * The PDO database connection.
-     * @since 1.0.0
-     * @var \PDO|null
-     */
-    private $pdo = null;
-
-    /**
-     * AccountUserTableMapper constructor to initialize the object.
-     * @param \PDO $pdo The PDO database connection.
-     * @since 1.0.0
-     */
-    public function __construct(\PDO $pdo)
-    {
-        $this->pdo = $pdo;
-    }
-
     /**
      * Factory to get a initialized object of the AccountUserTableMapper.
      * @return AccountUserTableMapper The AccountUserTableMapper to persist the association on database.
@@ -62,15 +45,13 @@ class AccountUserTableMapper
             return false;
         }
 
-        //create and set the sql query.
+        //create the association in database and return the state.
         $sql = 'INSERT INTO `account_user` (`account_id`, `user_id`) VALUES (:account_id, :user_id);';
         $sth = $this->pdo->prepare($sql);
 
-        //bind the values to the query.
         $sth->bindParam(':account_id', $account->id, \PDO::PARAM_INT);
         $sth->bindParam(':user_id', $user->id, \PDO::PARAM_INT);
 
-        //execute the query and return the state.
         return $sth->execute();
     }
 
@@ -88,15 +69,13 @@ class AccountUserTableMapper
             return false;
         }
 
-        //create and set the sql query.
+        //delete the association in database and return the state.
         $sql = 'DELETE FROM `account_user` WHERE `account_id` = :account_id AND `user_id` = :user_id;';
         $sth = $this->pdo->prepare($sql);
 
-        //bind the values to the query.
         $sth->bindParam(':account_id', $account->id, \PDO::PARAM_INT);
         $sth->bindParam(':user_id', $user->id, \PDO::PARAM_INT);
 
-        //execute the query and return the state.
         return $sth->execute();
     }
 
@@ -113,14 +92,12 @@ class AccountUserTableMapper
             return false;
         }
 
-        //create and set the sql query.
+        //delete the associations of the Account in database and return the state.
         $sql = 'DELETE FROM `account_user` WHERE `account_id` = :account_id;';
         $sth = $this->pdo->prepare($sql);
 
-        //bind the values to the query.
         $sth->bindParam(':account_id', $account->id, \PDO::PARAM_INT);
 
-        //execute the query and return the state.
         return $sth->execute();
     }
 
@@ -137,14 +114,12 @@ class AccountUserTableMapper
             return false;
         }
 
-        //create and set the sql query.
+        //delete the associations of the User in database and return the state.
         $sql = 'DELETE FROM `account_user` WHERE `user_id` = :user_id;';
         $sth = $this->pdo->prepare($sql);
 
-        //bind the values to the query.
         $sth->bindParam(':user_id', $user->id, \PDO::PARAM_INT);
 
-        //execute the query and return the state.
         return $sth->execute();
     }
 }
