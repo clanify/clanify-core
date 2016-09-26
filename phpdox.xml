@@ -9,7 +9,7 @@
                     <file name="logs/phploc.xml" />
                 </source>
                 <source type="pmd">
-                    <file name="logs/pmd.xml" />
+                    <file name="logs/phpmd.xml" />
                 </source>
                 <source type="phpcs">
                     <file name="logs/phpcs.xml" />

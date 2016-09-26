@@ -25,19 +25,19 @@
   },
 
   "require-dev": {
-    "phpunit/phpunit": "5.5.3",
-    "satooshi/php-coveralls": "1.0.1",
-    "phpunit/dbunit": "2.*",
-    "halleck45/phpmetrics": "1.8.*",
-    "squizlabs/php_codesniffer": "2.*",
-    "phploc/phploc": "2.1.*",
-    "phpmd/phpmd": "2.3.*",
+    "phpunit/phpunit": "5.5.*",
+    "satooshi/php-coveralls": "1.0.*",
+    "phpunit/dbunit": "2.0.*",
+    "phpmetrics/phpmetrics": "1.10.*",
+    "squizlabs/php_codesniffer": "2.7.*",
+    "phploc/phploc": "3.0.*",
+    "phpmd/phpmd": "2.4.*",
     "apigen/apigen": "4.1.*",
     "theseer/phpdox": "0.8.1.1",
-    "sebastian/phpcpd": "*"
+    "sebastian/phpcpd": "2.0.*"
   },
   "require": {
-    "phpunit/phpunit": "5.5.3",
+    "phpunit/phpunit": "5.5.*",
     "satooshi/php-coveralls": "1.0.1"
   }
 }

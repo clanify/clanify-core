@@ -19,7 +19,8 @@ Installation vorhanden sein, kann man sich gerne hier melden:
 
 ## Entwicklung
 
-- [API Dokumentation]( http://dev.clanify.rocks/apigen/) (*ApiGen*)
+- [API Dokumentation](http://dev.clanify.rocks/apigen/) (*ApiGen*)
+- [API Dokumentation](http://dev.clanify.rocks/phpdox/) (*phpDox*)
 - [PHP Metrics](http://dev.clanify.rocks/phpmetrics/) (*PhpMetrics*)
 - [Travis-CI](https://travis-ci.org/Clanify/Clanify)
 - [Coveralls](https://coveralls.io/github/Clanify/Clanify)
