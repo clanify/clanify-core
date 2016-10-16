@@ -1,27 +1,29 @@
 <?php
 /**
  * Namespace for all Repositories of Clanify.
- * @since 0.0.1-dev
+ * @since 1.0.0
  */
 namespace Clanify\Domain\Repository;
 
 use Clanify\Domain\DataMapper\ClanMapper;
+use Clanify\Domain\Entity\User;
 
 /**
- * Class ClanRepository
+ * Class ClanRepository to select Clan Entities.
  *
- * @author Sebastian Brosch <contact@sebastianbrosch.de>
- * @copyright 2016 Clanify
+ * @author Sebastian Brosch <support@clanify.rocks>
+ * @copyright 2016 Clanify <http://clanify.rocks>
  * @license GNU General Public License, version 3
  * @package Clanify\Domain\Repository
- * @version 0.0.1-dev
+ * @version 1.0.0
  */
 class ClanRepository extends Repository
 {
     /**
      * Method to build a new object of ClanRepository.
      * @return ClanRepository The created object of ClanRepository.
-     * @since 0.0.1-dev
+     * @since 1.0.0
+     * @uses ClanMapper::build() to get the connetion to the database.
      */
     public static function build()
     {
@@ -31,7 +33,7 @@ class ClanRepository extends Repository
     /**
      * Method to find all Clan Entities.
      * @return array An array with all found Clan Entities.
-     * @since 0.0.1-dev
+     * @since 1.0.0
      */
     public function findAll()
     {
@@ -47,7 +49,7 @@ class ClanRepository extends Repository
      * Method to find Clan Entities by ID.
      * @param int $id The ID to find the Clan Entities.
      * @return array An array with all found Clan Entities.
-     * @since 0.0.1-dev
+     * @since 1.0.0
      */
     public function findByID($id)
     {
@@ -63,7 +65,7 @@ class ClanRepository extends Repository
      * Method to find Clan Entities by name.
      * @param string $name The name to find the Clan Entities.
      * @return array An array with all found Clan Entities.
-     * @since 0.0.1-dev
+     * @since 1.0.0
      */
     public function findByName($name)
     {
@@ -87,7 +89,7 @@ class ClanRepository extends Repository
      * Method to find Clan Entities by tag.
      * @param string $tag The tag to find the Clan Entities.
      * @return array An array with all found Clan Entities.
-     * @since 0.0.1-dev
+     * @since 1.0.0
      */
     public function findByTag($tag)
     {
@@ -111,7 +113,7 @@ class ClanRepository extends Repository
      * Method to find Clan Entities by website.
      * @param string $website The website to find the Clan Entities.
      * @return array An array with all found Clan Entities.
-     * @since 0.0.1-dev
+     * @since 1.0.0
      */
     public function findByWebsite($website)
     {
@@ -136,7 +138,7 @@ class ClanRepository extends Repository
      * @param string $tag The tag to find the Clan Entity.
      * @param string $name The name to find the Clan Entity.
      * @return array An array with all found Clan Entities.
-     * @since 0.0.1-dev
+     * @since 1.0.0
      */
     public function findUnique($tag, $name)
     {
@@ -147,6 +149,24 @@ class ClanRepository extends Repository
 
         //create the condition and return the result.
         $condition = "tag = '".$tag."' AND name = '".$name."'";
+        return $this->dataMapper->find($condition);
+    }
+
+    /**
+     * Method to find a Clan by a User Entity.
+     * @param User $user The User Entity to find the Clan Entities.
+     * @return array An array with all found Clan Entities.
+     * @since 1.0.0
+     */
+    public function findByUser(User $user)
+    {
+        //check whether a ClanMapper is available.
+        if (!($this->dataMapper instanceof  ClanMapper)) {
+            return [];
+        }
+
+        //create the condition and return the result.
+        $condition = "id IN (SELECT clan_id FROM clan_user WHERE user_id = ".$user->id.")";
         return $this->dataMapper->find($condition);
     }
 }
