@@ -153,7 +153,7 @@ class ClanRepository extends Repository
     }
 
     /**
-     * Method to find a Clan by a User Entity.
+     * Method to find Clan Entities by a User Entity.
      * @param User $user The User Entity to find the Clan Entities.
      * @return array An array with all found Clan Entities.
      * @since 1.0.0

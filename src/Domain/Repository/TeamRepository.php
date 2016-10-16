@@ -1,28 +1,30 @@
 <?php
 /**
  * Namespace for all Repositories of Clanify.
- * @since 0.0.1-dev
+ * @since 1.0.0
  */
 namespace Clanify\Domain\Repository;
 
 use Clanify\Domain\DataMapper\TeamMapper;
 use Clanify\Domain\Entity\Clan;
+use Clanify\Domain\Entity\User;
 
 /**
- * Class TeamRepository
+ * Class TeamRepository to select Team Entities.
  *
- * @author Sebastian Brosch <contact@sebastianbrosch.de>
- * @copyright 2016 Clanify
+ * @author Sebastian Brosch <support@clanify.rocks>
+ * @copyright 2016 Clanify <http://clanify.rocks>
  * @license GNU General Public License, version 3
  * @package Clanify\Domain\Repository
- * @version 0.0.1-dev
+ * @version 1.0.0
  */
 class TeamRepository extends Repository
 {
     /**
      * Method to build a new object of TeamRepository.
      * @return TeamRepository The created object of TeamRepository.
-     * @since 0.0.1-dev
+     * @since 1.0.0
+     * @uses TeamMapper::build() to get the connection to the database.
      */
     public static function build()
     {
@@ -32,7 +34,7 @@ class TeamRepository extends Repository
     /**
      * Method to find all Team Entities.
      * @return array An array with all found Team Entities.
-     * @since 0.0.1-dev
+     * @since 1.0.0
      */
     public function findAll()
     {
@@ -48,7 +50,7 @@ class TeamRepository extends Repository
      * Method to find Team Entities by Clan Entity.
      * @param Clan $clan The Clan Entity to find the Team Entities.
      * @return array An array with all found Team Entities.
-     * @since 0.0.1-dev
+     * @since 1.0.0
      */
     public function findByClan(Clan $clan)
     {
@@ -66,7 +68,7 @@ class TeamRepository extends Repository
      * Method to find Team Entities by ID.
      * @param int $id The ID to find the Team Entities.
      * @return array An array with all found Team Entities.
-     * @since 0.0.1-dev
+     * @since 1.0.0
      */
     public function findByID($id)
     {
@@ -82,7 +84,7 @@ class TeamRepository extends Repository
      * Method to find Team Entities by name.
      * @param string $name The name to find the Team Entities.
      * @return array An array with all found Team Entities.
-     * @since 0.0.1-dev
+     * @since 1.0.0
      */
     public function findByName($name)
     {
@@ -106,7 +108,7 @@ class TeamRepository extends Repository
      * Method to find Team Entities by tag.
      * @param string $tag The tag to find the Team Entities.
      * @return array An array with all found Team Entities.
-     * @since 0.0.1-dev
+     * @since 1.0.0
      */
     public function findByTag($tag)
     {
@@ -130,7 +132,7 @@ class TeamRepository extends Repository
      * Method to find Team Entities by website.
      * @param string $website The website to find the Team Entities.
      * @return array An array with all found Team Entities.
-     * @since 0.0.1-dev
+     * @since 1.0.0
      */
     public function findByWebsite($website)
     {
@@ -155,7 +157,7 @@ class TeamRepository extends Repository
      * @param string $tag The tag to find the Team Entity.
      * @param string $name The name to find the Team Entity.
      * @return array An array with all found Team Entities.
-     * @since 0.0.1-dev
+     * @since 1.0.0
      */
     public function findUnique($tag, $name)
     {
@@ -166,6 +168,24 @@ class TeamRepository extends Repository
 
         //create the condition and return the result.
         $condition = "tag = '".$tag."' AND name = '".$name."'";
+        return $this->dataMapper->find($condition);
+    }
+
+    /**
+     * Method to find Team Entities by a User Entity.
+     * @param User $user The User Entity to find the Team Entities.
+     * @return array An array with all found Team Entities.
+     * @since 1.0.0
+     */
+    public function findByUser(User $user)
+    {
+        //check whether a TeamMapper is available.
+        if (!($this->dataMapper instanceof  TeamMapper)) {
+            return [];
+        }
+
+        //create the condition and return the result.
+        $condition = "id IN (SELECT team_id FROM team_user WHERE user_id = ".$user->id.")";
         return $this->dataMapper->find($condition);
     }
 }
