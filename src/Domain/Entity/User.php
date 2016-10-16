@@ -79,6 +79,11 @@ class User extends Entity
      */
     public function getAge()
     {
+        //check whether the default is available.
+        if ($this->birthday === '0000-00-00') {
+            return -1;
+        }
+
         //create both dates (birthday and today).
         $birthday = date_create($this->birthday);
         $today = date_create(date('Y-m-d'));
